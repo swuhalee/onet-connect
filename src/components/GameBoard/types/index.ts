@@ -1,2 +1,2 @@
-export type { Point } from "./point";
-export type { BFSState } from "./bfs_state";
+export type { Position } from "./position";
+export type { PathSearchState } from "./pathState";

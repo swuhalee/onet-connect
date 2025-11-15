@@ -1,5 +1,5 @@
-import { COLS, EMPTY, GRID_SIZE, ROWS, TILE_COUNTS } from "../CONST";
-import type { Point } from "../types/point";
+import { COLS, EMPTY, GRID_SIZE, ROWS, TILE_COUNTS } from "../constants";
+import type { Position } from "../types";
 
 // 패딩 값 (캔버스 경계에서의 여백)
 const PADDING = GRID_SIZE;
@@ -30,9 +30,6 @@ export function createBoard(): number[][] {
         }
     });
     
-    // 총 140개 타일이 있어야 함 (10x14)
-    console.log(`Total tiles: ${tilePositions.length}`);
-    
     if (tilePositions.length !== ROWS * COLS) {
         console.error(`Tile count mismatch: expected ${ROWS * COLS}, got ${tilePositions.length}`);
     }
@@ -58,40 +55,17 @@ export function createBoard(): number[][] {
 }
 
 /**
- * 격자 중앙점 좌표를 구합니다.
- * @param row 행 인덱스
- * @param col 열 인덱스
- * @returns 중앙점 좌표
- */
-export function getGridCenter(row: number, col: number): Point {
-    return {
-        x: col * GRID_SIZE + GRID_SIZE / 2,
-        y: row * GRID_SIZE + GRID_SIZE / 2,
-    };
-}
-
-/**
- * 타일 중앙점 좌표를 구합니다 (격자 중앙점과 동일).
- * @param row 행 인덱스
- * @param col 열 인덱스
- * @returns 타일 중앙점 좌표
- */
-export function getTileCenter(row: number, col: number): Point {
-    return getGridCenter(row, col);
-}
-
-/**
- * 클릭한 위치가 어떤 격자 셀인지 찾습니다.
+ * 클릭한 위치에서 타일 위치를 찾습니다.
  * @param clientX 클라이언트 X 좌표
  * @param clientY 클라이언트 Y 좌표
  * @param rect 캔버스의 getBoundingClientRect() 결과
- * @returns 격자 위치 또는 null
+ * @returns 타일 위치 또는 null
  */
-export function getGridPosition(
+export function getTilePosition(
     clientX: number, 
     clientY: number, 
     rect: DOMRect | null
-): Point | null {
+): Position | null {
     if (!rect) return null;
 
     const x = clientX - rect.left - PADDING;

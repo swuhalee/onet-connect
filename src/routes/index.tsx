@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import GameBoard from '../components/GameBoard/GameBoard'
+import GameBoard from '../components/GameBoard'
 
 export const Route = createFileRoute('/')({
   component: RouteComponent,
