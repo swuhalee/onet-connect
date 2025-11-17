@@ -7,9 +7,10 @@ interface GameBoardProps {
   board: number[][]
   onTileClick: (position: Position) => void
   selectedTile?: Position | null
+  hintPair?: { from: Position; to: Position } | null
 }
 
-const GameBoard = ({ board, onTileClick, selectedTile }: GameBoardProps) => {
+const GameBoard = ({ board, onTileClick, selectedTile, hintPair }: GameBoardProps) => {
   return (
     <Group>
       {/* 타일들 */}
@@ -24,6 +25,11 @@ const GameBoard = ({ board, onTileClick, selectedTile }: GameBoardProps) => {
               <GameTile
                 value={value}
                 isSelected={selectedTile?.x === rowIndex && selectedTile?.y === colIndex}
+                isHintTarget={
+                  !!hintPair &&
+                  ((hintPair.from.x === rowIndex && hintPair.from.y === colIndex) ||
+                    (hintPair.to.x === rowIndex && hintPair.to.y === colIndex))
+                }
                 onClick={() => onTileClick({ x: rowIndex, y: colIndex })}
               />
             </Group>

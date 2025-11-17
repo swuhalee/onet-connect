@@ -3,9 +3,11 @@ interface GameHUDProps {
   maxTime: number
   score: number
   hints: number
+  onUseHint: () => void
+  canUseHint: boolean
 }
 
-const GameHUD = ({ time, maxTime, score, hints }: GameHUDProps) => {
+const GameHUD = ({ time, maxTime, score, hints, onUseHint, canUseHint }: GameHUDProps) => {
   const timePercentage = (time / maxTime) * 100
 
   return (
@@ -31,9 +33,23 @@ const GameHUD = ({ time, maxTime, score, hints }: GameHUDProps) => {
       </div>
 
       {/* 힌트 */}
-      <div className="flex items-center gap-2">
-        <span className="text-sm font-medium">힌트</span>
-        <span className="text-lg font-bold">{hints}</span>
+      <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
+          <span className="text-sm font-medium">힌트</span>
+          <span className="text-lg font-bold">{hints}</span>
+        </div>
+        <button
+          type="button"
+          onClick={onUseHint}
+          disabled={!canUseHint}
+          className={`px-3 py-1 rounded-md text-sm font-semibold transition ${
+            canUseHint
+              ? "bg-yellow-400 text-gray-900 hover:bg-yellow-300"
+              : "bg-gray-600 text-gray-400 cursor-not-allowed"
+          }`}
+        >
+          힌트 사용
+        </button>
       </div>
     </div>
   )

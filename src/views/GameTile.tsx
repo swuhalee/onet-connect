@@ -12,10 +12,11 @@ const COLORS = [
 interface GameTileProps {
   value: number
   isSelected: boolean
+  isHintTarget?: boolean
   onClick: () => void
 }
 
-const GameTile = ({ value, isSelected, onClick }: GameTileProps) => {
+const GameTile = ({ value, isSelected, isHintTarget = false, onClick }: GameTileProps) => {
   const [imageElement, setImageElement] = useState<HTMLImageElement | null>(null)
   
   const fallbackColor = value >= 1 && value <= 22 ? COLORS[value - 1] : COLORS[0]
@@ -39,18 +40,18 @@ const GameTile = ({ value, isSelected, onClick }: GameTileProps) => {
       ) : (
         <Rect width={TILE_SIZE - GRID_STROKE_WIDTH} height={TILE_SIZE - GRID_STROKE_WIDTH} fill={fallbackColor} />
       )}
-      {isSelected && (
+      {(isSelected || isHintTarget) && (
         <Group x={2} y={2}>
           <Rect
             width={TILE_SIZE - GRID_STROKE_WIDTH * 5}
             height={TILE_SIZE - GRID_STROKE_WIDTH * 5}
-            fill="blue"
-            opacity={0.2}
+            fill={isHintTarget && !isSelected ? "yellow" : "blue"}
+            opacity={isHintTarget && !isSelected ? 0.25 : 0.2}
           />
           <Rect
             width={TILE_SIZE - GRID_STROKE_WIDTH * 5}
             height={TILE_SIZE - GRID_STROKE_WIDTH * 5}
-            stroke="red"
+            stroke={isHintTarget && !isSelected ? "orange" : "red"}
             strokeWidth={GRID_STROKE_WIDTH * 3}
           />
         </Group>

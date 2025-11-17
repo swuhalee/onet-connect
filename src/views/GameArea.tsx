@@ -10,6 +10,7 @@ interface GameAreaProps {
   selectedTile: Position | null
   onTileClick: (position: Position) => void
   path?: Position[] | null
+  hintPair?: { from: Position; to: Position } | null
 }
 
 const GameArea = ({
@@ -17,6 +18,7 @@ const GameArea = ({
   selectedTile,
   onTileClick,
   path = null,
+  hintPair = null,
 }: GameAreaProps) => {
   const stageWidth = (COLS + 2) * (TILE_SIZE + GRID_STROKE_WIDTH)
   const stageHeight = (ROWS + 2) * (TILE_SIZE + GRID_STROKE_WIDTH)
@@ -32,6 +34,7 @@ const GameArea = ({
             board={board}
             onTileClick={onTileClick}
             selectedTile={selectedTile}
+            hintPair={hintPair}
           />
         </Layer>
         <Layer x={TILE_SIZE} y={TILE_SIZE}>

@@ -1,9 +1,14 @@
-import { useState, useEffect, useCallback } from "react"
+import { useState, useEffect, useCallback, useRef } from "react"
 import type { Position } from "../game/gameTypes"
 import GameArea from "../views/GameArea"
 import GameHUD from "../views/GameHUD"
 import { createBoard } from "../game/utils/boardGenerator"
 import { findTilePath } from "../game/utils/connectionChecker"
+import {
+  ensurePlayableBoardState,
+  findFirstMatchOnBoard,
+  type MatchPair,
+} from "../game/utils/hintManager"
 
 const MAX_TIME = 60
 const INITIAL_HINTS = 3
@@ -15,15 +20,21 @@ const GameScreen = () => {
   const [score, setScore] = useState<number>(0)
   const [time, setTime] = useState<number>(MAX_TIME)
   const [hints, setHints] = useState<number>(INITIAL_HINTS)
+  const [nextMatch, setNextMatch] = useState<MatchPair | null>(null)
+  const [hintPair, setHintPair] = useState<MatchPair | null>(null)
+  const hintTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
-    const newBoard = createBoard()
-    setBoard(newBoard)
+    const initialBoard = createBoard()
+    const { board: playableBoard, match } = ensurePlayableBoardState(initialBoard)
+    setBoard(playableBoard)
+    setNextMatch(match)
     setScore(0)
     setTime(MAX_TIME)
     setHints(INITIAL_HINTS)
     setSelectedTile(null)
     setPath(null)
+    setHintPair(null)
   }, [])
 
   // 타이머
@@ -42,10 +53,20 @@ const GameScreen = () => {
     return () => clearInterval(interval)
   }, [time])
 
+  const clearHintIndicators = useCallback(() => {
+    if (hintTimeoutRef.current) {
+      clearTimeout(hintTimeoutRef.current)
+      hintTimeoutRef.current = null
+    }
+    setHintPair(null)
+  }, [])
+
   const handleTileClick = useCallback(
     (position: Position) => {
       const clickedValue = board[position.x]?.[position.y]
       if (!clickedValue) return
+
+      clearHintIndicators()
 
       if (!selectedTile) {
         // 첫 번째 타일 선택
@@ -88,7 +109,13 @@ const GameScreen = () => {
             const next = prev.map((row) => [...row])
             next[fromPosition.x][fromPosition.y] = 0
             next[toPosition.x][toPosition.y] = 0
-            return next
+            const { board: playableBoard, match, wasShuffled } = ensurePlayableBoardState(next)
+            if (wasShuffled) {
+              setHints((prev) => Math.max(prev - 1, 0))
+            }
+            setNextMatch(match)
+            setHintPair(null)
+            return playableBoard
           })
           setScore((prev) => prev + 10)
           setSelectedTile(null)
@@ -100,13 +127,73 @@ const GameScreen = () => {
         setPath(null)
       }
     },
-    [board, selectedTile]
+    [board, selectedTile, clearHintIndicators]
   )
+
+  const handleUseHint = useCallback(() => {
+    if (hints <= 0) return
+
+    let match = nextMatch
+    if (!match) {
+      match = findFirstMatchOnBoard(board)
+      setNextMatch(match)
+    }
+
+    if (!match) return
+
+    let hintPath = findTilePath(board, match.from, match.to)
+    if (!hintPath) {
+      const refreshedMatch = findFirstMatchOnBoard(board)
+      setNextMatch(refreshedMatch)
+      if (!refreshedMatch) return
+      const refreshedPath = findTilePath(board, refreshedMatch.from, refreshedMatch.to)
+      if (!refreshedPath) return
+      match = refreshedMatch
+      hintPath = refreshedPath
+    } else {
+      setNextMatch(match)
+    }
+
+    console.log("[힌트] 연결 가능한 한쌍:", match)
+    setPath(null)
+    setHints((prev) => Math.max(prev - 1, 0))
+    setSelectedTile(null)
+    setHintPair(match)
+
+    if (hintTimeoutRef.current) {
+      clearTimeout(hintTimeoutRef.current)
+    }
+    hintTimeoutRef.current = setTimeout(() => {
+      setHintPair(null)
+      hintTimeoutRef.current = null
+    }, 1500)
+  }, [board, hints, nextMatch])
+
+  useEffect(() => {
+    return () => {
+      if (hintTimeoutRef.current) {
+        clearTimeout(hintTimeoutRef.current)
+      }
+    }
+  }, [])
 
   return (
     <div className="flex flex-col">
-      <GameHUD time={time} maxTime={MAX_TIME} score={score} hints={hints} />
-      <GameArea board={board} selectedTile={selectedTile} onTileClick={handleTileClick} path={path} />
+      <GameHUD
+        time={time}
+        maxTime={MAX_TIME}
+        score={score}
+        hints={hints}
+        onUseHint={handleUseHint}
+        canUseHint={hints > 0 && !!nextMatch}
+      />
+      <GameArea
+        board={board}
+        selectedTile={selectedTile}
+        onTileClick={handleTileClick}
+        path={path}
+        hintPair={hintPair}
+      />
     </div>
   )
 }
