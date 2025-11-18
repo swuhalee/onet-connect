@@ -1,5 +1,5 @@
 import { Group, Rect } from "react-konva"
-import { TILE_SIZE, ROWS, COLS, GRID_STROKE_WIDTH } from "../game/gameConstants"
+import { TILE_SIZE, ROWS, COLS, GRID_STROKE_WIDTH } from "../gameConstants"
 
 const GameGrid = () => {
   return (

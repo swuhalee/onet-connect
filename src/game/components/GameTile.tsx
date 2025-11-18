@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { Group, Image, Rect } from "react-konva"
-import { GRID_STROKE_WIDTH, TILE_SIZE } from "../game/gameConstants"
+import { GRID_STROKE_WIDTH, TILE_SIZE } from "../gameConstants"
 
 const COLORS = [
   '#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#f9ca24', '#6c5ce7',

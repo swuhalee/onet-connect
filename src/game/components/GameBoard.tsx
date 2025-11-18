@@ -1,6 +1,6 @@
 import { Group } from "react-konva"
-import type { Position } from "../game/gameTypes"
-import { TILE_SIZE } from "../game/gameConstants"
+import type { Position } from "../../game/gameTypes"
+import { TILE_SIZE } from "../../game/gameConstants"
 import GameTile from "./GameTile"
 
 interface GameBoardProps {

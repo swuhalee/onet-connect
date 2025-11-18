@@ -1,8 +1,8 @@
-interface StartScreenProps {
+interface StartViewProps {
   onStart: () => void
 }
 
-const StartScreen = ({ onStart }: StartScreenProps) => {
+const StartView = ({ onStart }: StartViewProps) => {
   return (
     <div className="flex flex-col items-center justify-center min-h-[600px] gap-6">
       <h1 className="text-4xl font-bold text-white mb-4">Onet Connect</h1>
@@ -17,5 +17,5 @@ const StartScreen = ({ onStart }: StartScreenProps) => {
   )
 }
 
-export default StartScreen
+export default StartView
 

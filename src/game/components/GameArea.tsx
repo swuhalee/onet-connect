@@ -1,9 +1,9 @@
 import { Stage, Layer } from "react-konva"
-import type { Position } from "../game/gameTypes"
+import type { Position } from "../gameTypes"
 import GameBoard from "./GameBoard"
 import GameGrid from "./GameGrid"
 import PathLineRenderer from "./PathLineRenderer"
-import { COLS, GRID_STROKE_WIDTH, ROWS, TILE_SIZE } from "../game/gameConstants"
+import { COLS, GRID_STROKE_WIDTH, ROWS, TILE_SIZE } from "../gameConstants"
 
 interface GameAreaProps {
   board: number[][]

@@ -1,19 +1,19 @@
 import { useState, useEffect, useCallback, useRef } from "react"
-import type { Position } from "../game/gameTypes"
-import GameArea from "../views/GameArea"
-import GameHUD from "../views/GameHUD"
-import { createBoard } from "../game/utils/boardGenerator"
-import { findTilePath } from "../game/utils/connectionChecker"
+import type { Position } from "../gameTypes"
+import GameArea from "../components/GameArea"
+import GameHUD from "../components/GameHUD"
+import { createBoard } from "../utils/boardGenerator"
+import { findTilePath } from "../utils/connectionChecker"
 import {
   ensurePlayableBoardState,
   findFirstMatchOnBoard,
   type MatchPair,
-} from "../game/utils/hintManager"
+} from "../utils/hintManager"
 
 const MAX_TIME = 60
 const INITIAL_HINTS = 3
 
-const GameScreen = () => {
+const GameView = () => {
   const [board, setBoard] = useState<number[][]>([])
   const [selectedTile, setSelectedTile] = useState<Position | null>(null)
   const [path, setPath] = useState<Position[] | null>(null)
@@ -198,4 +198,4 @@ const GameScreen = () => {
   )
 }
 
-export default GameScreen
+export default GameView

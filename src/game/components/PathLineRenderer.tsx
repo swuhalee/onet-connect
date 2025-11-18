@@ -1,7 +1,7 @@
 import { useMemo } from "react"
-import { Line, Layer } from "react-konva"
-import type { Position } from "../game/gameTypes"
-import { GRID_STROKE_WIDTH, TILE_SIZE } from "../game/gameConstants"
+import { Line } from "react-konva"
+import type { Position } from "../gameTypes"
+import { GRID_STROKE_WIDTH, TILE_SIZE } from "../gameConstants"
 
 interface PathLineRendererProps {
   path: Position[] | null
