@@ -30,8 +30,6 @@ const PathLineRenderer = ({ path }: PathLineRendererProps) => {
         points={points}
         stroke="red"
         strokeWidth={4}
-        // lineCap="round"
-        // lineJoin="round"
         listening={false}
       />
     )

@@ -1,28 +1,28 @@
 import { create } from 'zustand';
 import type { GameStatus, Tile } from '../gameTypes';
 import { createBoard } from '../utils/boardGenerator';
-// 더미 함수들
+
 function boardGenerator(_level: number): Tile[][] {
   // 레벨에 따른 보드 생성 로직 (현재는 레벨 무시하고 기본 보드 생성)
   return createBoard();
 }
 
-function recordScore(score: number): void {
-  // 점수 기록 로직 (더미 구현)
-  console.log('Recording score:', score);
-  // TODO: 실제 점수 기록 로직 구현
+export interface GameRecord {
+  score: number;
+  level: number;
+  timestamp: number;
+  isGameOver: boolean;
 }
 
-// Zustand 스토어 인터페이스 정의
 interface GameStore {
-  // State
   status: GameStatus;
   board: Tile[][];
   score: number;
   hintsLeft: number;
   time: number;
+  currentLevel: number;
+  gameHistory: GameRecord[];
 
-  // Actions
   setStatus: (newStatus: GameStatus) => void;
   startGame: (level: number) => void;
   pauseGame: () => void;
@@ -30,30 +30,35 @@ interface GameStore {
   updateScore: (amount: number) => void;
   decrementTime: () => void;
   useHint: () => void;
+  saveGameRecord: (record: GameRecord) => void;
+  clearGameHistory: () => void;
 }
 
-// Zustand 스토어 생성
 export const useGameStore = create<GameStore>((set, get) => ({
-  // 초기 State
   status: 'IDLE',
   board: [],
   score: 0,
   hintsLeft: 3,
   time: 110,
+  currentLevel: 1,
+  gameHistory: [],
 
-  // Actions 구현
   setStatus: (newStatus: GameStatus) => {
     set({ status: newStatus });
   },
 
   startGame: (level: number) => {
     const newBoard = boardGenerator(level);
+    const currentState = get();
+    // 게임 시작 시에만 점수 리셋 (IDLE 상태에서 시작할 때)
+    const shouldResetScore = currentState.status === 'IDLE' || currentState.status === 'GAME_OVER';
     set({
       status: 'PLAYING',
       board: newBoard,
-      score: 0,
+      score: shouldResetScore ? 0 : currentState.score,
       hintsLeft: 3,
       time: 110,
+      currentLevel: level,
     });
   },
 
@@ -63,8 +68,26 @@ export const useGameStore = create<GameStore>((set, get) => ({
 
   endGame: (finalStatus: 'LEVEL_UP' | 'GAME_OVER') => {
     const currentScore = get().score;
-    set({ status: finalStatus });
-    recordScore(currentScore);
+    const currentLevel = get().currentLevel;
+    const isGameOver = finalStatus === 'GAME_OVER';
+    
+    // 게임 기록 저장 (전역 상태에 저장)
+    const record: GameRecord = {
+      score: currentScore,
+      level: currentLevel,
+      timestamp: Date.now(),
+      isGameOver,
+    };
+    
+    set((state) => ({
+      status: finalStatus,
+      gameHistory: [...state.gameHistory, record],
+    }));
+    
+    // TODO: 게임 오버 상태이고 로그인된 상태일 때만 서버로 저장
+    // if (isGameOver && isLoggedIn) {
+    //   saveScoreToServer(record);
+    // }
   },
 
   updateScore: (amount: number) => {
@@ -89,9 +112,17 @@ export const useGameStore = create<GameStore>((set, get) => ({
       set({
         hintsLeft: currentHints - 1,
       });
-      // 힌트 사용 시 페널티 적용
-      get().updateScore(-50);
     }
+  },
+
+  saveGameRecord: (record: GameRecord) => {
+    set((state) => ({
+      gameHistory: [...state.gameHistory, record],
+    }));
+  },
+
+  clearGameHistory: () => {
+    set({ gameHistory: [] });
   },
 }));
 

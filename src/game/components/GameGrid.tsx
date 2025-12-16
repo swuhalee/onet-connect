@@ -16,7 +16,7 @@ const GameGrid = () => {
               width={TILE_SIZE - GRID_STROKE_WIDTH}
               height={TILE_SIZE - GRID_STROKE_WIDTH}
               fill={isOuterEdge ? "black" : "#3C3C50"}
-              stroke={isOuterEdge ? "black" : "black"}
+              stroke={"black"}
               strokeWidth={GRID_STROKE_WIDTH}
               listening={false}
             />

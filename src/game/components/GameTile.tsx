@@ -46,7 +46,7 @@ const GameTile = ({ value, isSelected, isHintTarget = false, onClick }: GameTile
             width={TILE_SIZE - GRID_STROKE_WIDTH * 5}
             height={TILE_SIZE - GRID_STROKE_WIDTH * 5}
             fill={isHintTarget && !isSelected ? "yellow" : "blue"}
-            opacity={isHintTarget && !isSelected ? 0.25 : 0.2}
+            opacity={0.25}
           />
           <Rect
             width={TILE_SIZE - GRID_STROKE_WIDTH * 5}

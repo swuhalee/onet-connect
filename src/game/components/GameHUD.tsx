@@ -5,9 +5,10 @@ interface GameHUDProps {
   hints: number
   onUseHint: () => void
   canUseHint: boolean
+  onPause: () => void
 }
 
-const GameHUD = ({ time, maxTime, score, hints, onUseHint, canUseHint }: GameHUDProps) => {
+const GameHUD = ({ time, maxTime, score, hints, onUseHint, canUseHint, onPause }: GameHUDProps) => {
   const timePercentage = (time / maxTime) * 100
 
   return (
@@ -51,6 +52,15 @@ const GameHUD = ({ time, maxTime, score, hints, onUseHint, canUseHint }: GameHUD
           힌트 사용
         </button>
       </div>
+
+      {/* 일시 정지 */}
+      <button
+        type="button"
+        onClick={onPause}
+        className="px-3 py-1 rounded-md text-sm font-semibold transition bg-blue-500 text-white hover:bg-blue-400"
+      >
+        일시 정지
+      </button>
     </div>
   )
 }

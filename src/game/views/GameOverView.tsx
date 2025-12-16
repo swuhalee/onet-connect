@@ -5,7 +5,7 @@ interface GameOverViewProps {
 
 const GameOverView = ({ finalScore, onRestart }: GameOverViewProps) => {
   return (
-    <div className="flex flex-col items-center justify-center min-h-[600px] gap-6">
+    <div className="flex flex-col items-center justify-center w-full h-full gap-6">
       <h1 className="text-4xl font-bold text-white mb-4">게임 오버</h1>
       <div className="text-2xl text-gray-300 mb-8">
         최종 점수: <span className="text-yellow-400 font-bold">{finalScore.toLocaleString()}</span>
