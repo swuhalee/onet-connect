@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Onet Connect</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: #000000;
+            color: white;
+            font-family: 'Malgun Gothic', sans-serif;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        /* 게임 헤더 영역 */
+        .header {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            padding: 20px;
+            z-index: 5;
+        }
+
+        .info {
+            font-size: 18px;
+            font-weight: bold;
+            min-width: 50px;
+        }
+
+        #timerContainer {
+            width: 400px;
+            height: 18px;
+            background: #333;
+            overflow: hidden;
+            border: 1px solid #ffffff;
+        }
+
+        #timerBar {
+            width: 100%;
+            height: 100%;
+            background: #75daff;
+            transition: width 0.1s linear;
+        }
+
+        /* 버튼 공통 스타일 */
+        .btn {
+            background: #eb1dbe;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .btn:hover {
+            background: #d716ad;
+            transform: scale(1.05);
+        }
+
+        /* 게임 메인 컨테이너 */
+        #gameWrapper {
+            position: relative;
+            margin-top: -5px;
+        }
+
+        canvas {
+            background: #001726;
+            display: block;
+            cursor: pointer;
+        }
+
+        /* 오버레이 화면 (시작, 일시정지, 결과) */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 23, 38, 0.95);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            text-align: center;
+        }
+
+        .overlay h1 {
+            font-size: 50px;
+            margin-bottom: 20px;
+            color: #75daff;
+        }
+
+        .play-btn {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            font-size: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .large-btn {
+            padding: 15px 40px;
+            font-size: 20px;
+            border-radius: 5px;
+        }
+
+        #scoreInfo {
+            color: #FFEB3B;
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div id="stageInfo" class="info">Stage 1</div>
+        <div id="scoreDisplay" class="info" style="color:#FFEB3B">Score: 0</div>
+        <button id="hintBtn" class="btn" style="padding: 5px 15px;" onclick="useHint()">HINT (6, F5)</button>
+        <div id="timerContainer">
+            <div id="timerBar"></div>
+        </div>
+        <button id="pauseBtn" class="btn" style="padding: 5px 15px;" onclick="togglePause()">STOP (Space)</button>
+    </div>
+
+    <div id="gameWrapper">
+        <canvas id="gameCanvas"></canvas>
+
+        <div id="startOverlay" class="overlay">
+            <h1>ONET CONNECT</h1>
+            <button class="btn play-btn" onclick="startGame()">▶</button>
+        </div>
+
+        <div id="pauseOverlay" class="overlay hidden">
+            <h1>PAUSED</h1>
+            <button class="btn play-btn" onclick="togglePause()">▶</button>
+        </div>
+
+        <div id="resultOverlay" class="overlay hidden">
+            <h1 id="resultTitle">STAGE CLEAR</h1>
+            <div id="scoreInfo">Total Score: 0</div>
+            <p id="resultMsg" style="font-size:18px; line-height:1.6; margin-bottom:25px;">Next stage is ready!</p>
+            <button id="resultBtn" class="btn large-btn" onclick="handleResultAction()">NEXT STAGE</button>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        const VISIBLE_ROWS = 10;
+        const VISIBLE_COLS = 14;
+        const ROWS = VISIBLE_ROWS + 2;
+        const COLS = VISIBLE_COLS + 2;
+        const TILE_SIZE = 50;
+
+        canvas.width = COLS * TILE_SIZE;
+        canvas.height = ROWS * TILE_SIZE;
+
+        // 게임 상태 변수
+        let gameState = 'START'; // START, PLAYING, PAUSED, STAGE_CLEAR, GAME_OVER
+        let grid = [];
+        let selected = null;
+        let currentStage = 1;
+        let hintCount = 6;
+        let totalScore = 0;
+        let timeLeft = 200;
+        const TOTAL_TIME = 200;
+        let timerId = null;
+        let highlightedPair = null;
+
+        // 효과음
+        const soundClick = new Audio('sounds/click.mp3');
+        const soundMatch = new Audio('sounds/match.mp3');
+        const soundClear = new Audio('sounds/clear.mp3');
+        [soundClick, soundMatch, soundClear].forEach(s => { s.volume = 0.1; s.load(); });
+
+        // 이미지 로딩
+        const tileImages = [];
+        for (let i = 1; i <= 38; i++) {
+            const img = new Image();
+            img.src = `images/tile${i}.png`;
+            tileImages[i] = img;
+        }
+
+        /*
+        * 게임 제어 함수
+        */
+        function startGame() {
+            document.getElementById('startOverlay').classList.add('hidden');
+            gameState = 'PLAYING';
+            totalScore = 0;
+            currentStage = 1;
+            hintCount = 6;
+            initGame();
+        }
+
+        function initGame() {
+            grid = Array.from({ length: ROWS }, () => Array(COLS).fill(0));
+            highlightedPair = null;
+            selected = null;
+            timeLeft = TOTAL_TIME;
+
+            let items = [];
+            const pairCount = (VISIBLE_ROWS * VISIBLE_COLS) / 2;
+            const tileTypes = Math.min(30 + (currentStage - 1) * 2, 38);
+
+            for (let i = 0; i < pairCount; i++) {
+                let val = (i % tileTypes) + 1;
+                items.push(val, val);
+            }
+            items.sort(() => Math.random() - 0.5);
+
+            let idx = 0;
+            for (let r = 1; r <= VISIBLE_ROWS; r++) {
+                for (let c = 1; c <= VISIBLE_COLS; c++) {
+                    grid[r][c] = items[idx++];
+                }
+            }
+
+            updateUI();
+            startTimer();
+            draw();
+        }
+
+        function startTimer() {
+            if (timerId) clearInterval(timerId);
+            timerId = setInterval(() => {
+                if (gameState === 'PLAYING') {
+                    timeLeft--;
+                    updateTimerUI();
+                    if (timeLeft <= 0) endGame(false);
+                }
+            }, 1000);
+        }
+
+        function togglePause() {
+            if (gameState !== 'PLAYING' && gameState !== 'PAUSED') return;
+
+            if (gameState === 'PLAYING') {
+                gameState = 'PAUSED';
+                document.getElementById('pauseOverlay').classList.remove('hidden');
+            } else {
+                gameState = 'PLAYING';
+                document.getElementById('pauseOverlay').classList.add('hidden');
+            }
+            draw();
+        }
+
+        function endGame(isClear) {
+            clearInterval(timerId);
+            const overlay = document.getElementById('resultOverlay');
+            const title = document.getElementById('resultTitle');
+            const msg = document.getElementById('resultMsg');
+            const btn = document.getElementById('resultBtn');
+            const scoreInfo = document.getElementById('scoreInfo');
+
+            overlay.classList.remove('hidden');
+
+            if (isClear) {
+                gameState = 'STAGE_CLEAR';
+                soundClear.play();
+                const timeBonus = timeLeft * 10;
+                const hintBonus = hintCount * 10;
+                totalScore += timeBonus + hintBonus;
+                title.innerText = "STAGE CLEAR";
+                msg.innerText = `보너스 점수: +${timeBonus + hintBonus}\n다음 스테이지를 준비하세요!`;
+                btn.innerText = "NEXT STAGE";
+            } else {
+                gameState = 'GAME_OVER';
+                const hintBonus = hintCount * 10;
+                totalScore += hintBonus;
+                title.innerText = "GAME OVER";
+                msg.innerText = `보너스 점수: +${hintBonus}\n다시 도전하시겠습니까?`;
+                btn.innerText = "RESTART";
+            }
+            scoreInfo.innerText = `Total Score: ${totalScore}`;
+            reportFinalScore(totalScore);
+        }
+
+        function handleResultAction() {
+            document.getElementById('resultOverlay').classList.add('hidden');
+            if (gameState === 'STAGE_CLEAR') {
+                currentStage++;
+                hintCount = Math.min(hintCount + 1, 8);
+                gameState = 'PLAYING';
+                initGame();
+            } else {
+                startGame();
+            }
+        }
+
+        function reportFinalScore(score) {
+            // 부모 창(React)으로 점수 데이터를 보냄
+            window.parent.postMessage({
+                type: 'ONET_GAME_END',
+                score: score
+            }, window.location.origin);
+        }
+
+        /*
+        * 중력 및 경로 탐색 로직
+        */
+        const pushUp = (c, startR, endR) => {
+            let tiles = [];
+            for (let r = startR; r <= endR; r++) if (grid[r][c] !== 0) tiles.push(grid[r][c]);
+            while (tiles.length < (endR - startR + 1)) tiles.push(0);
+            for (let r = startR; r <= endR; r++) grid[r][c] = tiles[r - startR];
+        };
+        const pushDown = (c, startR, endR) => {
+            let tiles = [];
+            for (let r = startR; r <= endR; r++) if (grid[r][c] !== 0) tiles.push(grid[r][c]);
+            while (tiles.length < (endR - startR + 1)) tiles.unshift(0);
+            for (let r = startR; r <= endR; r++) grid[r][c] = tiles[r - startR];
+        };
+        const pushLeft = (r, startC, endC) => {
+            let tiles = [];
+            for (let c = startC; c <= endC; c++) if (grid[r][c] !== 0) tiles.push(grid[r][c]);
+            while (tiles.length < (endC - startC + 1)) tiles.push(0);
+            for (let c = startC; c <= endC; c++) grid[r][c] = tiles[c - startC];
+        };
+        const pushRight = (r, startC, endC) => {
+            let tiles = [];
+            for (let c = startC; c <= endC; c++) if (grid[r][c] !== 0) tiles.push(grid[r][c]);
+            while (tiles.length < (endC - startC + 1)) tiles.unshift(0);
+            for (let c = startC; c <= endC; c++) grid[r][c] = tiles[c - startC];
+        };
+
+        function applyStageGravity(stage) {
+            if (stage < 3) return;
+            const midR = Math.floor(VISIBLE_ROWS / 2);
+            const midC = Math.floor(VISIBLE_COLS / 2);
+            if (stage === 3) {
+                for (let c = 1; c <= VISIBLE_COLS; c++) { pushUp(c, 1, midR); pushDown(c, midR + 1, VISIBLE_ROWS); }
+            } else if (stage === 4) {
+                for (let r = 1; r <= VISIBLE_ROWS; r++) { pushLeft(r, 1, midC); pushRight(r, midC + 1, VISIBLE_COLS); }
+            } else if (stage >= 5 && stage <= 8) {
+                const order = [pushDown, pushUp, pushLeft, pushRight];
+                const fn = order[stage - 5];
+                if (stage <= 6) for (let c = 1; c <= VISIBLE_COLS; c++) fn(c, 1, VISIBLE_ROWS);
+                else for (let r = 1; r <= VISIBLE_ROWS; r++) fn(r, 1, VISIBLE_COLS);
+            } else if (stage === 9) {
+                for (let c = 1; c <= VISIBLE_COLS; c++) pushUp(c, 1, VISIBLE_ROWS);
+                for (let r = 1; r <= VISIBLE_ROWS; r++) pushLeft(r, 1, VISIBLE_COLS);
+            } else if (stage === 10) {
+                for (let c = 1; c <= VISIBLE_COLS; c++) pushDown(c, 1, VISIBLE_ROWS);
+                for (let r = 1; r <= VISIBLE_ROWS; r++) pushRight(r, 1, VISIBLE_COLS);
+            } else if (stage === 11) {
+                for (let c = 1; c <= VISIBLE_COLS; c++) pushUp(c, 1, VISIBLE_ROWS);
+                for (let r = 1; r <= VISIBLE_ROWS; r++) pushRight(r, 1, VISIBLE_COLS);
+            } else if (stage === 12) {
+                for (let c = 1; c <= VISIBLE_COLS; c++) pushDown(c, 1, VISIBLE_ROWS);
+                for (let r = 1; r <= VISIBLE_ROWS; r++) pushLeft(r, 1, VISIBLE_COLS);
+            } else if (stage === 13) {
+                for (let c = 1; c <= VISIBLE_COLS; c++) { pushDown(c, 1, midR); pushUp(c, midR + 1, VISIBLE_ROWS); }
+                for (let r = 1; r <= VISIBLE_ROWS; r++) { pushRight(r, 1, midC); pushLeft(r, midC + 1, VISIBLE_COLS); }
+            }
+        }
+
+        function getConnectPath(p1, p2) {
+            if (grid[p1.r][p1.c] !== grid[p2.r][p2.c]) return null;
+            const queue = [{ r: p1.r, c: p1.c, dir: -1, turns: 0, path: [{ r: p1.r, c: p1.c }] }];
+            const visited = new Map();
+            while (queue.length > 0) {
+                const curr = queue.shift();
+                if (curr.turns > 2) continue;
+                if (curr.r === p2.r && curr.c === p2.c) return curr.path;
+                const dirs = [[0, 1], [0, -1], [1, 0], [-1, 0]];
+                for (let i = 0; i < 4; i++) {
+                    let nr = curr.r + dirs[i][0]; let nc = curr.c + dirs[i][1];
+                    if (nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS) {
+                        if (grid[nr][nc] === 0 || (nr === p2.r && nc === p2.c)) {
+                            let nTurns = curr.turns;
+                            if (curr.dir !== -1 && curr.dir !== i) nTurns++;
+                            const key = `${nr},${nc},${i}`;
+                            if (nTurns <= 2 && (!visited.has(key) || visited.get(key) > nTurns)) {
+                                visited.set(key, nTurns);
+                                queue.push({ r: nr, c: nc, dir: i, turns: nTurns, path: [...curr.path, { r: nr, c: nc }] });
+                            }
+                        }
+                    }
+                }
+            }
+            return null;
+        }
+
+        function drawLine(path) {
+            ctx.beginPath(); ctx.strokeStyle = "#0000FF"; ctx.lineWidth = 4;
+            const startX = path[0].c * TILE_SIZE + TILE_SIZE / 2;
+            const startY = path[0].r * TILE_SIZE + TILE_SIZE / 2;
+            ctx.moveTo(startX, startY);
+            for (let i = 1; i < path.length; i++) {
+                ctx.lineTo(path[i].c * TILE_SIZE + TILE_SIZE / 2, path[i].r * TILE_SIZE + TILE_SIZE / 2);
+            }
+            ctx.stroke();
+        }
+
+        function hasAvailableMoves() {
+            let tiles = [];
+            for (let r = 1; r <= VISIBLE_ROWS; r++) {
+                for (let c = 1; c <= VISIBLE_COLS; c++) if (grid[r][c] !== 0) tiles.push({ r, c, val: grid[r][c] });
+            }
+            for (let i = 0; i < tiles.length; i++) {
+                for (let j = i + 1; j < tiles.length; j++) {
+                    if (tiles[i].val === tiles[j].val && getConnectPath(tiles[i], tiles[j])) return true;
+                }
+            }
+            return false;
+        }
+
+        function shuffleGrid(attempts = 0) {
+            if (attempts > 100) {
+                console.warn("Could not find valid shuffle after 100 attempts");
+                return;
+            }
+            let positions = [], values = [];
+            for (let r = 1; r <= VISIBLE_ROWS; r++) {
+                for (let c = 1; c <= VISIBLE_COLS; c++) {
+                    if (grid[r][c] !== 0) { positions.push({ r, c }); values.push(grid[r][c]); }
+                }
+            }
+            values.sort(() => Math.random() - 0.5);
+            for (let i = 0; i < positions.length; i++) grid[positions[i].r][positions[i].c] = values[i];
+            if (values.length > 0 && !hasAvailableMoves()) shuffleGrid(attempts + 1);
+        }
+
+        /*
+        * 렌더링 및 UI 업데이트
+        */
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            if (gameState === 'PAUSED') return; // 일시정지 시 타일 안 보임
+
+            for (let r = 0; r < ROWS; r++) {
+                for (let c = 0; c < COLS; c++) {
+                    let val = grid[r][c];
+                    if (val === 0) continue;
+
+                    const img = tileImages[val];
+                    if (img && img.complete) {
+                        ctx.drawImage(img, c * TILE_SIZE + 1, r * TILE_SIZE + 1, TILE_SIZE - 2, TILE_SIZE - 2);
+                    } else {
+                        ctx.fillStyle = '#555';
+                        ctx.fillRect(c * TILE_SIZE + 1, r * TILE_SIZE + 1, TILE_SIZE - 2, TILE_SIZE - 2);
+                    }
+
+                    if (selected && selected.r === r && selected.c === c) {
+                        ctx.strokeStyle = "#0000FF";
+                        ctx.lineWidth = 3;
+                        ctx.strokeRect(c * TILE_SIZE + 1, r * TILE_SIZE + 1, TILE_SIZE - 2, TILE_SIZE - 2);
+                    }
+
+                    if (highlightedPair && highlightedPair.some(p => p.r === r && p.c === c)) {
+                        ctx.strokeStyle = "#FF00FF";
+                        ctx.lineWidth = 4;
+                        ctx.strokeRect(c * TILE_SIZE + 1, r * TILE_SIZE + 1, TILE_SIZE - 2, TILE_SIZE - 2);
+                    }
+                }
+            }
+        }
+
+        function updateUI() {
+            document.getElementById('stageInfo').innerText = `Stage ${currentStage}`;
+            document.getElementById('scoreDisplay').innerText = `Score: ${totalScore}`;
+            const btn = document.getElementById('hintBtn');
+            btn.innerText = `HINT (${hintCount}, F5)`;
+            btn.disabled = hintCount <= 0;
+        }
+
+        function updateTimerUI() {
+            const bar = document.getElementById('timerBar');
+            const percentage = (timeLeft / TOTAL_TIME) * 100;
+            bar.style.width = percentage + "%";
+            bar.style.background = percentage > 50 ? "#75daff" : (percentage > 20 ? "#FFEB3B" : "#FF5252");
+        }
+
+        function useHint() {
+            if (hintCount <= 0 || highlightedPair || gameState !== 'PLAYING') return;
+            let tiles = [];
+            for (let r = 1; r <= VISIBLE_ROWS; r++) {
+                for (let c = 1; c <= VISIBLE_COLS; c++) if (grid[r][c] !== 0) tiles.push({ r, c, val: grid[r][c] });
+            }
+            for (let i = 0; i < tiles.length; i++) {
+                for (let j = i + 1; j < tiles.length; j++) {
+                    if (tiles[i].val === tiles[j].val && getConnectPath(tiles[i], tiles[j])) {
+                        highlightedPair = [tiles[i], tiles[j]];
+                        hintCount--;
+                        updateUI();
+                        draw();
+                        setTimeout(() => { highlightedPair = null; draw(); }, 2000);
+                        return;
+                    }
+                }
+            }
+        }
+
+        /*
+        * 이벤트 리스너
+        */
+        canvas.addEventListener('mousedown', e => {
+            if (gameState !== 'PLAYING') return;
+            const rect = canvas.getBoundingClientRect();
+            const c = Math.floor((e.clientX - rect.left) / TILE_SIZE);
+            const r = Math.floor((e.clientY - rect.top) / TILE_SIZE);
+
+            if (r < 0 || r >= ROWS || c < 0 || c >= COLS || grid[r][c] === 0) return;
+
+            highlightedPair = null;
+            soundClick.currentTime = 0;
+            soundClick.play();
+
+            if (!selected) {
+                selected = { r, c }; draw();
+            } else {
+                if (selected.r === r && selected.c === c) {
+                    selected = null; draw(); return;
+                }
+                const path = getConnectPath(selected, { r, c });
+                if (path) {
+                    draw(); drawLine(path);
+                    soundMatch.currentTime = 0; soundMatch.play();
+
+                    // 점수 10점 추가
+                    totalScore += 10;
+
+                    // 짝을 맞출 때마다 시간 3초 추가
+                    timeLeft = Math.min(timeLeft + 3, TOTAL_TIME);
+                    updateTimerUI();
+
+                    grid[selected.r][selected.c] = 0; grid[r][c] = 0;
+                    selected = null;
+
+                    setTimeout(() => {
+                        applyStageGravity(currentStage);
+                        updateUI();
+                        draw();
+                        if (!hasAvailableMoves()) {
+                            if (grid.flat().filter(v => v !== 0).length > 0) {
+                                shuffleGrid(); draw();
+                            } else {
+                                endGame(true);
+                            }
+                        }
+                    }, 250);
+                } else {
+                    selected = { r, c }; draw();
+                }
+            }
+        });
+
+        window.addEventListener('keydown', e => {
+            if (e.code === 'Space') {
+                e.preventDefault();
+                togglePause();
+            } else if (e.key === 'F5' || e.code === 'F5') {
+                e.preventDefault();
+                useHint();
+            }
+        });
+    </script>
+</body>
+
+</html>
