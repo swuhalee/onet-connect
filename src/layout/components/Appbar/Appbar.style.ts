@@ -9,14 +9,14 @@ export const AppbarWrapper = styled(Box)(({ theme }) => ({
     borderBottom: `1px solid ${theme.palette.divider}`,
 }));
 
-export const AppbarContainer = styled(Container)({
+export const AppbarContainer = styled(Container)(({ theme }) => ({
     height: "100%",
-    maxWidth: "lg",
+    maxWidth: theme.breakpoints.values.lg,
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
     padding: "0 20px",
-});
+}));
 
 export const LeftSection = styled(Box)({
     height: "100%",
@@ -50,7 +50,9 @@ export const NavigationLinks = styled(Box)({
     gap: "32px",
 });
 
-export const NavLink = styled(Link)<{ active?: boolean }>(({ theme, active }) => ({
+export const NavLink = styled(Link, {
+    shouldForwardProp: (prop) => prop !== 'active',
+})<{ active?: boolean }>(({ theme, active }) => ({
     height: "100%",
     display: "flex",
     alignItems: "center",

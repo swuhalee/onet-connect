@@ -1,7 +1,6 @@
 import React from 'react';
 import { Route, Routes } from 'react-router'
-import { ThemeProvider } from '@emotion/react';
-import { CssBaseline } from '@mui/material';
+import { ThemeProvider, CssBaseline } from '@mui/material';
 import { useAppTheme } from './theme';
 
 const AppLayout = React.lazy(() => import('./layout/AppLayout'));

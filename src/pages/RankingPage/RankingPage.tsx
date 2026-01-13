@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { Typography, Box, Select, MenuItem, FormControl } from "@mui/material";
-import type { RankingData } from "../../models/ranking";
 import RankingTable from "./components/RankingTable/RankingTable";
+import type { RankingData } from "../../models/ranking";
 
 const generateMockData = (): RankingData[] => {
     const players = ["JZE", "boru", "jabajop", "Archeaic", "Mannerless guy", "Gadget", "Md-101", "Mario Pro Gamer", "Bensie", "ralokt"];
     const data: RankingData[] = [];
-    
+
     for (let i = 0; i < 100; i++) {
         data.push({
             id: i + 1,
@@ -20,7 +20,7 @@ const generateMockData = (): RankingData[] => {
             }),
         });
     }
-    
+
     return data;
 };
 
@@ -33,15 +33,15 @@ const RankingPage = () => {
     };
 
     return (
-        <Box sx={{padding: '28px'}}>
+        <Box sx={{ padding: '28px' }}>
             <Typography variant="h4" sx={{ marginBottom: 1.5, fontWeight: "bold" }}>
                 랭킹
             </Typography>
 
-            <Box 
-                sx={{ 
-                    display: "flex", 
-                    justifyContent: "space-between", 
+            <Box
+                sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
                     alignItems: "flex-end",
                     marginBottom: 1
                 }}
@@ -49,7 +49,7 @@ const RankingPage = () => {
                 <Typography variant="body1">
                     내 순위: n/a
                 </Typography>
-                
+
                 <FormControl size="small" sx={{ minWidth: 200 }}>
                     <Select
                         value={sortBy}
@@ -61,7 +61,7 @@ const RankingPage = () => {
                     </Select>
                 </FormControl>
             </Box>
-            
+
             <RankingTable data={data} />
         </Box>
     );

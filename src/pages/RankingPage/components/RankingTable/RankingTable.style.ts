@@ -37,7 +37,5 @@ export const StyledBodyCell = styled(TableCell)(({ theme }) => ({
 }));
 
 export const StyledTablePagination = styled(TablePagination)({
-    display: "flex",
-    justifyContent: "flex-end",
     border: "none",
 });

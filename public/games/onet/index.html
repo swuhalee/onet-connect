@@ -306,7 +306,7 @@
             window.parent.postMessage({
                 type: 'ONET_GAME_END',
                 score: score
-            }, '*');
+            }, window.location.origin);
         }
 
         /*
@@ -419,7 +419,11 @@
             return false;
         }
 
-        function shuffleGrid() {
+        function shuffleGrid(attempts = 0) {
+            if (attempts > 100) {
+                console.warn("Could not find valid shuffle after 100 attempts");
+                return;
+            }
             let positions = [], values = [];
             for (let r = 1; r <= VISIBLE_ROWS; r++) {
                 for (let c = 1; c <= VISIBLE_COLS; c++) {
@@ -428,7 +432,7 @@
             }
             values.sort(() => Math.random() - 0.5);
             for (let i = 0; i < positions.length; i++) grid[positions[i].r][positions[i].c] = values[i];
-            if (values.length > 0 && !hasAvailableMoves()) shuffleGrid();
+            if (values.length > 0 && !hasAvailableMoves()) shuffleGrid(attempts + 1);
         }
 
         /*

@@ -7,8 +7,7 @@
 - React 19.2.0
 - TypeScript
 - Vite 7.2.4
-- Material-UI (MUI) 7.3.7
-- Emotion (CSS-in-JS)
+- Material-UI (MUI) ^7.3.7
 - React Router 7.12.0
 - ESLint with TypeScript
 

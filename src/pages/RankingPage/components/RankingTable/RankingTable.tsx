@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { TableBody, TableRow } from "@mui/material";
-import type { RankingData } from "../../../models/ranking";
+import type { RankingData } from "../../../../models/ranking";
 import {
     StyledTableContainer,
     StyledTable,
@@ -50,20 +50,22 @@ const RankingTable = ({ data }: RankingTableProps) => {
                                 <StyledBodyCell>{row.date}</StyledBodyCell>
                             </TableRow>
                         ))}
+                        <TableRow>
+                            <StyledTablePagination
+                                count={data.length}
+                                page={page}
+                                onPageChange={handleChangePage}
+                                rowsPerPage={rowsPerPage}
+                                onRowsPerPageChange={handleChangeRowsPerPage}
+                                rowsPerPageOptions={[10, 25, 50]}
+                                labelRowsPerPage="페이지당 행 수:"
+                                labelDisplayedRows={({ from, to, count }) => `${from}-${to} / ${count !== -1 ? count : `${to}개 이상`}`}
+                                colSpan={4}
+                            />
+                        </TableRow>
                     </TableBody>
                 </StyledTable>
             </StyledTableContainer>
-
-            <StyledTablePagination
-                count={data.length}
-                page={page}
-                onPageChange={handleChangePage}
-                rowsPerPage={rowsPerPage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-                rowsPerPageOptions={[10, 25, 50]}
-                labelRowsPerPage="페이지당 행 수:"
-                labelDisplayedRows={({ from, to, count }) => `${from}-${to} / ${count !== -1 ? count : `${to}개 이상`}`}
-            />
         </>
     );
 };

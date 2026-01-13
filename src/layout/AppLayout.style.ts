@@ -5,6 +5,6 @@ export const OutletWrapper = styled(Box)(({ theme }) => ({
     backgroundColor: theme.palette.background.default,
 }));
 
-export const OutletContainer = styled(Container)({
-    maxWidth: "lg",
-});
+export const OutletContainer = styled(Container)(({ theme }) => ({
+    maxWidth: theme.breakpoints.values.lg,
+}));
