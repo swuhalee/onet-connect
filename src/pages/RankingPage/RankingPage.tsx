@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Typography, Box, Select, MenuItem, FormControl } from "@mui/material";
-import RankingTable from "./components/RankingTable/RankingTable";
+import RankingTable from "./components/RankingTable";
 import type { RankingData } from "../../models/ranking";
 
 const generateMockData = (): RankingData[] => {
