@@ -1,18 +1,50 @@
 import { useState } from "react";
-import { TableBody, TableRow } from "@mui/material";
-import type { RankingData } from "../../../../models/ranking";
-import {
-    StyledTableContainer,
-    StyledTable,
-    StyledTableHead,
-    StyledHeaderCell,
-    StyledBodyCell,
-    StyledTablePagination,
-} from "./RankingTable.style";
+import { styled } from "@mui/material/styles";
+import { Table, TableBody, TableRow, TableCell, TableContainer, TableHead, TablePagination } from "@mui/material";
+import type { RankingData } from "../../../models/ranking";
 
 interface RankingTableProps {
     data: RankingData[];
 }
+
+const StyledTableContainer = styled(TableContainer)(({ theme }) => ({
+    border: "1px solid",
+    borderColor: theme.palette.divider,
+}));
+
+const StyledTable = styled(Table)({
+    borderCollapse: "collapse",
+});
+
+const StyledTableHead = styled(TableHead)(({ theme }) => ({
+    backgroundColor: theme.palette.mode === 'dark'
+        ? 'rgba(255, 255, 255, 0.05)'
+        : 'rgba(0, 0, 0, 0.02)',
+}));
+
+const StyledHeaderCell = styled(TableCell)(({ theme }) => ({
+    fontWeight: "bold",
+    borderRight: "1px solid",
+    borderColor: theme.palette.divider,
+    borderBottom: `2px solid ${theme.palette.divider}`,
+    padding: "8px 16px",
+    "&:last-of-type": {
+        borderRight: "none",
+    },
+}));
+
+const StyledBodyCell = styled(TableCell)(({ theme }) => ({
+    borderRight: "1px solid",
+    borderColor: theme.palette.divider,
+    padding: "8px 16px",
+    "&:last-of-type": {
+        borderRight: "none",
+    },
+}));
+
+const StyledTablePagination = styled(TablePagination)({
+    border: "none",
+});
 
 const RankingTable = ({ data }: RankingTableProps) => {
     const [page, setPage] = useState(0);
