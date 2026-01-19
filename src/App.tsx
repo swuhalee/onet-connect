@@ -2,10 +2,12 @@ import React from 'react';
 import { Route, Routes } from 'react-router'
 import { ThemeProvider, CssBaseline } from '@mui/material';
 import { useAppTheme } from './theme';
+import { SnackbarProvider } from 'notistack';
 
 const AppLayout = React.lazy(() => import('./layout/AppLayout'));
 const HomePage = React.lazy(() => import('./pages/HomePage/HomePage'));
 const RankingPage = React.lazy(() => import('./pages/RankingPage/RankingPage'));
+const AccountPage = React.lazy(() => import('./pages/AccountPage/AccountPage'));
 
 function App() {
   const theme = useAppTheme();
@@ -13,11 +15,13 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      <SnackbarProvider />
 
       <Routes>
         <Route element={<AppLayout />}>
-          <Route path="/" element={<HomePage />} />
+          <Route index element={<HomePage />} />
           <Route path="ranking" element={<RankingPage />} />
+          <Route path="account" element={<AccountPage />} />
         </Route>
       </Routes>
     </ThemeProvider>

@@ -1,7 +1,15 @@
-export interface RankingData {
-    id: number;
-    rank: number;
-    player: string;
+import type { FieldValue } from "firebase/firestore";
+
+export interface RankingObject {
+    id?: string;
+    uid: string;
+    displayName: string;
+    country: string;
     score: number;
-    date: string;
+    createdAt: FieldValue;
+}
+
+export interface GetRankingParams {
+    pageSize: number;
+    pageParam: any | null;
 }
