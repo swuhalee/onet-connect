@@ -169,7 +169,7 @@
         canvas.height = ROWS * TILE_SIZE;
 
         // 게임 상태 변수
-        let gameState = 'START'; // START, PLAYING, PAUSED, STAGE_CLEAR, GAME_OVER
+        let gameState = 'START'; // START, PLAYING, PAUSED, STAGE_CLEAR, GAME_CLEAR, GAME_OVER
         let grid = [];
         let selected = null;
         let currentStage = 1;
@@ -269,14 +269,24 @@
             overlay.classList.remove('hidden');
 
             if (isClear) {
-                gameState = 'STAGE_CLEAR';
                 soundClear.play();
                 const timeBonus = timeLeft * 10;
                 const hintBonus = hintCount * 10;
                 totalScore += timeBonus + hintBonus;
-                title.innerText = "STAGE CLEAR";
-                msg.innerText = `보너스 점수: +${timeBonus + hintBonus}\n다음 스테이지를 준비하세요!`;
-                btn.innerText = "NEXT STAGE";
+                
+                // 게임 클리어 시
+                if (currentStage === 13) {
+                    gameState = 'GAME_CLEAR';
+                    title.innerText = "GAME CLEAR";
+                    msg.innerText = `축하합니다!\n당신은 오넷 커넥트의 마스터입니다!`;
+                    btn.innerText = "RESTART";
+                    reportFinalScore(totalScore);
+                } else {
+                    gameState = 'STAGE_CLEAR';
+                    title.innerText = "STAGE CLEAR";
+                    msg.innerText = `보너스 점수: +${timeBonus + hintBonus}\n다음 스테이지를 준비하세요!`;
+                    btn.innerText = "NEXT STAGE";
+                }
             } else {
                 gameState = 'GAME_OVER';
                 const hintBonus = hintCount * 10;
@@ -284,9 +294,9 @@
                 title.innerText = "GAME OVER";
                 msg.innerText = `보너스 점수: +${hintBonus}\n다시 도전하시겠습니까?`;
                 btn.innerText = "RESTART";
+                reportFinalScore(totalScore);
             }
             scoreInfo.innerText = `Total Score: ${totalScore}`;
-            reportFinalScore(totalScore);
         }
 
         function handleResultAction() {
@@ -297,6 +307,7 @@
                 gameState = 'PLAYING';
                 initGame();
             } else {
+                // 게임 클리어 또는 게임 오버 시 초기화
                 startGame();
             }
         }
