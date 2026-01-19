@@ -1,6 +1,7 @@
 import { styled } from "@mui/material/styles";
 import { Table, TableBody, TableRow, TableCell, TableContainer, TableHead, Box, CircularProgress } from "@mui/material";
 import type { RankingObject } from "../../../models/ranking";
+import { getFlagEmoji } from "../../../utils/flags";
 
 interface RankingTableProps {
     data: RankingObject[];
@@ -65,7 +66,7 @@ const RankingTable = ({ data, isLoading, currentPage, pageSize }: RankingTablePr
                                 <StyledBodyCell>
                                     {(currentPage - 1) * pageSize + index + 1}
                                 </StyledBodyCell>
-                                <StyledBodyCell>{row.displayName}</StyledBodyCell>
+                                <StyledBodyCell>{row.displayName} {getFlagEmoji(row.country)}</StyledBodyCell>
                                 <StyledBodyCell>{row.score.toLocaleString()}</StyledBodyCell>
                                 <StyledBodyCell>{formatDate(row.createdAt)}</StyledBodyCell>
                             </TableRow>
