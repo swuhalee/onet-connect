@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { Typography, Box, Select, MenuItem, FormControl, Button } from "@mui/material";
+import { Typography, Box, Select, MenuItem, FormControl, Button, Divider } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { QueryDocumentSnapshot } from "firebase/firestore";
 import RankingTable from "./components/RankingTable";
 import { getRanking } from "../../services/rankingService";
+import { MainContainer } from "../../common/styles/MainContainer";
 
 const RankingPage = () => {
     const [pageSize] = useState(10);
@@ -35,15 +36,17 @@ const RankingPage = () => {
     };
 
     return (
-        <Box sx={{ padding: '28px' }}>
-            <Typography variant="h4" sx={{ marginBottom: 1.5, fontWeight: "bold" }}>
+        <MainContainer>
+            <Typography variant="h5" sx={{ fontWeight: "bold" }}>
                 랭킹
             </Typography>
 
-            <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 1 }}>
+            <Divider sx={{ marginTop: "8px", marginBottom: "24px" }} />
+
+            <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "8px" }}>
                 <Typography variant="body1">내 순위: n/a</Typography>
                 <FormControl size="small" sx={{ minWidth: 200 }}>
-                    <Select value={sortBy} onChange={(e) => setSortBy(e.target.value)} displayEmpty>
+                    <Select value={sortBy} onChange={(e) => setSortBy(e.target.value)} displayEmpty sx={{ height: "32px" }}>
                         <MenuItem value="all">전체 순위</MenuItem>
                         <MenuItem value="2026-01">2026년 1월 순위</MenuItem>
                     </Select>
@@ -57,11 +60,12 @@ const RankingPage = () => {
                 pageSize={pageSize}
             />
 
-            <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 3, marginTop: 3 }}>
+            <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 3, marginTop: "12px" }}>
                 <Button 
                     variant="outlined" 
                     onClick={handlePrevPage} 
                     disabled={page === 1 || isFetching}
+                    sx={{ height: "32px" }}
                 >
                     이전
                 </Button>
@@ -70,11 +74,12 @@ const RankingPage = () => {
                     variant="outlined" 
                     onClick={handleNextPage} 
                     disabled={(data?.count || 0) < pageSize || isFetching}
+                    sx={{ height: "32px" }}
                 >
                     다음
                 </Button>
             </Box>
-        </Box>
+        </MainContainer>
     );
 };
 

@@ -8,6 +8,7 @@ export const StyledButton = styled(Button)(({ theme }) => ({
     borderRadius: "0px",
     fontSize: "14px",
     fontWeight: 500,
+    boxShadow: "none",
     "&:hover": {
         backgroundColor: theme.palette.mode === 'dark' ? '#4a4a6a' : '#d0d0d0',
     },
