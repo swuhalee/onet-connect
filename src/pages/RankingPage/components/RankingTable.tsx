@@ -1,104 +1,79 @@
-import { useState } from "react";
 import { styled } from "@mui/material/styles";
-import { Table, TableBody, TableRow, TableCell, TableContainer, TableHead, TablePagination } from "@mui/material";
-import type { RankingData } from "../../../models/ranking";
+import { Table, TableBody, TableRow, TableCell, TableContainer, TableHead, Box, CircularProgress } from "@mui/material";
+import type { RankingObject } from "../../../models/ranking";
 
 interface RankingTableProps {
-    data: RankingData[];
+    data: RankingObject[];
+    isLoading: boolean;
+    currentPage: number;
+    pageSize: number;
 }
 
 const StyledTableContainer = styled(TableContainer)(({ theme }) => ({
     border: "1px solid",
     borderColor: theme.palette.divider,
-}));
-
-const StyledTable = styled(Table)({
-    borderCollapse: "collapse",
-});
-
-const StyledTableHead = styled(TableHead)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark'
-        ? 'rgba(255, 255, 255, 0.05)'
-        : 'rgba(0, 0, 0, 0.02)',
+    minHeight: '500px', // 로딩 시 레이아웃 무너짐 방지
 }));
 
 const StyledHeaderCell = styled(TableCell)(({ theme }) => ({
     fontWeight: "bold",
+    backgroundColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.02)',
     borderRight: "1px solid",
     borderColor: theme.palette.divider,
     borderBottom: `2px solid ${theme.palette.divider}`,
-    padding: "8px 16px",
-    "&:last-of-type": {
-        borderRight: "none",
-    },
 }));
 
 const StyledBodyCell = styled(TableCell)(({ theme }) => ({
     borderRight: "1px solid",
     borderColor: theme.palette.divider,
-    padding: "8px 16px",
-    "&:last-of-type": {
-        borderRight: "none",
-    },
 }));
 
-const StyledTablePagination = styled(TablePagination)({
-    border: "none",
-});
+const formatDate = (createdAt: any): string => {
+    if (!createdAt) return "-";
+    const date = createdAt.toDate ? createdAt.toDate() : new Date(createdAt);
+    return date.toLocaleDateString("ko-KR");
+};
 
-const RankingTable = ({ data }: RankingTableProps) => {
-    const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(10);
-
-    const handleChangePage = (_event: unknown, newPage: number) => {
-        setPage(newPage);
-    };
-
-    const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setRowsPerPage(parseInt(event.target.value, 10));
-        setPage(0);
-    };
-
-    const paginatedData = data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
-
+const RankingTable = ({ data, isLoading, currentPage, pageSize }: RankingTableProps) => {
     return (
-        <>
-            <StyledTableContainer>
-                <StyledTable>
-                    <StyledTableHead>
+        <StyledTableContainer>
+            <Table>
+                <TableHead>
+                    <TableRow>
+                        <StyledHeaderCell width="10%">순위</StyledHeaderCell>
+                        <StyledHeaderCell width="40%">플레이어</StyledHeaderCell>
+                        <StyledHeaderCell width="25%">점수</StyledHeaderCell>
+                        <StyledHeaderCell width="25%">날짜</StyledHeaderCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {isLoading ? (
                         <TableRow>
-                            <StyledHeaderCell>순위</StyledHeaderCell>
-                            <StyledHeaderCell>플레이어</StyledHeaderCell>
-                            <StyledHeaderCell>점수</StyledHeaderCell>
-                            <StyledHeaderCell>날짜</StyledHeaderCell>
+                            <StyledBodyCell colSpan={4} align="center" sx={{ height: 400 }}>
+                                <CircularProgress size={24} sx={{ mr: 1 }} /> 로딩 중...
+                            </StyledBodyCell>
                         </TableRow>
-                    </StyledTableHead>
-                    <TableBody>
-                        {paginatedData.map((row) => (
+                    ) : data.length === 0 ? (
+                        <TableRow>
+                            <StyledBodyCell colSpan={4} align="center" sx={{ height: 400 }}>
+                                데이터가 없습니다.
+                            </StyledBodyCell>
+                        </TableRow>
+                    ) : (
+                        data.map((row, index) => (
                             <TableRow key={row.id}>
-                                <StyledBodyCell>{row.rank}</StyledBodyCell>
-                                <StyledBodyCell>{row.player}</StyledBodyCell>
+                                <StyledBodyCell>
+                                    {(currentPage - 1) * pageSize + index + 1}
+                                </StyledBodyCell>
+                                <StyledBodyCell>{row.displayName}</StyledBodyCell>
                                 <StyledBodyCell>{row.score.toLocaleString()}</StyledBodyCell>
-                                <StyledBodyCell>{row.date}</StyledBodyCell>
+                                <StyledBodyCell>{formatDate(row.createdAt)}</StyledBodyCell>
                             </TableRow>
-                        ))}
-                        <TableRow>
-                            <StyledTablePagination
-                                count={data.length}
-                                page={page}
-                                onPageChange={handleChangePage}
-                                rowsPerPage={rowsPerPage}
-                                onRowsPerPageChange={handleChangeRowsPerPage}
-                                rowsPerPageOptions={[10, 25, 50]}
-                                labelRowsPerPage="페이지당 행 수:"
-                                labelDisplayedRows={({ from, to, count }) => `${from}-${to} / ${count !== -1 ? count : `${to}개 이상`}`}
-                                colSpan={4}
-                            />
-                        </TableRow>
-                    </TableBody>
-                </StyledTable>
-            </StyledTableContainer>
-        </>
+                        ))
+                    )}
+                </TableBody>
+            </Table>
+        </StyledTableContainer>
     );
 };
 

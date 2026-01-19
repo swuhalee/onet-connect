@@ -6,6 +6,7 @@ import { useAppTheme } from './theme';
 const AppLayout = React.lazy(() => import('./layout/AppLayout'));
 const HomePage = React.lazy(() => import('./pages/HomePage/HomePage'));
 const RankingPage = React.lazy(() => import('./pages/RankingPage/RankingPage'));
+const AccountPage = React.lazy(() => import('./pages/AccountPage/AccountPage'));
 
 function App() {
   const theme = useAppTheme();
@@ -16,8 +17,9 @@ function App() {
 
       <Routes>
         <Route element={<AppLayout />}>
-          <Route path="/" element={<HomePage />} />
+          <Route index element={<HomePage />} />
           <Route path="ranking" element={<RankingPage />} />
+          <Route path="account" element={<AccountPage />} />
         </Route>
       </Routes>
     </ThemeProvider>
