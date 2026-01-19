@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, Routes } from 'react-router'
 import { ThemeProvider, CssBaseline } from '@mui/material';
 import { useAppTheme } from './theme';
+import { SnackbarProvider } from 'notistack';
 
 const AppLayout = React.lazy(() => import('./layout/AppLayout'));
 const HomePage = React.lazy(() => import('./pages/HomePage/HomePage'));
@@ -14,6 +15,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      <SnackbarProvider />
 
       <Routes>
         <Route element={<AppLayout />}>

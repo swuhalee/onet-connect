@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { logout } from "../services/authService";
+import { enqueueSnackbar } from "notistack";
 
 export const useLogout = () => {
   const queryClient = useQueryClient();
@@ -9,10 +10,19 @@ export const useLogout = () => {
       await logout();
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["auth", "profile"] });
+      queryClient.invalidateQueries({ queryKey: ["auth", "userId"]});
+      queryClient.invalidateQueries({ queryKey: ["auth", "profile"]});
+
+      enqueueSnackbar("로그아웃에 성공했습니다.", {
+        variant: "success",
+        anchorOrigin: { vertical: 'top', horizontal: 'center' }
+      });
     },
     onError: () => {
-      throw new Error("로그아웃에 실패했습니다.");
+      enqueueSnackbar("로그아웃에 실패했습니다.", {
+        variant: "error",
+        anchorOrigin: { vertical: 'top', horizontal: 'center' }
+      });
     },
   });
 };
