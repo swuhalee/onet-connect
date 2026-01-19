@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { Typography, Box, Select, MenuItem, FormControl, Button, Divider } from "@mui/material";
-import { useQuery } from "@tanstack/react-query";
 import { QueryDocumentSnapshot } from "firebase/firestore";
 import RankingTable from "./components/RankingTable";
-import { getRanking } from "../../services/rankingService";
 import { MainContainer } from "../../common/styles/MainContainer";
+import { useGetRanking } from "../../hooks/useGetRanking";
 
 const RankingPage = () => {
     const [pageSize] = useState(10);
@@ -13,11 +12,7 @@ const RankingPage = () => {
     const [cursor, setCursor] = useState<QueryDocumentSnapshot | null>(null);
     const [sortBy, setSortBy] = useState<string>("all");
 
-    const { data, isLoading, isFetching } = useQuery({
-        queryKey: ["getRanking", pageSize, direction, cursor?.id],
-        queryFn: () => getRanking({ pageSize, direction, cursor }),
-        placeholderData: (prev) => prev,
-    });
+    const { data, isLoading, isFetching } = useGetRanking(pageSize, direction, cursor);
 
     const handleNextPage = () => {
         if (data?.lastDoc) {
@@ -53,26 +48,26 @@ const RankingPage = () => {
                 </FormControl>
             </Box>
 
-            <RankingTable 
-                data={data?.data || []} 
-                isLoading={isLoading || isFetching} 
+            <RankingTable
+                data={data?.data || []}
+                isLoading={isLoading || isFetching}
                 currentPage={page}
                 pageSize={pageSize}
             />
 
             <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 3, marginTop: "12px" }}>
-                <Button 
-                    variant="outlined" 
-                    onClick={handlePrevPage} 
+                <Button
+                    variant="outlined"
+                    onClick={handlePrevPage}
                     disabled={page === 1 || isFetching}
                     sx={{ height: "32px" }}
                 >
                     이전
                 </Button>
                 <Typography fontWeight="bold">{page} 페이지</Typography>
-                <Button 
-                    variant="outlined" 
-                    onClick={handleNextPage} 
+                <Button
+                    variant="outlined"
+                    onClick={handleNextPage}
                     disabled={(data?.count || 0) < pageSize || isFetching}
                     sx={{ height: "32px" }}
                 >

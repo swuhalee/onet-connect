@@ -12,8 +12,9 @@ const OnetWebView: React.FC = () => {
                 return;
             }
             // 보안을 위해 특정 타입의 메시지만 처리
-            if (event.data.type === 'ONET_GAME_END') {
-                const score = event.data.score;
+            if (event.data?.type === 'ONET_GAME_END') {
+                const score = Number(event.data?.score);
+                if (!Number.isFinite(score)) return;
                 saveScore(score);
             }
         };

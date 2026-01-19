@@ -25,7 +25,9 @@ export const getUserProfile = async (): Promise<UserProfile | null> => {
   if (uid) {
     const userRef = doc(db, "users", uid);
     const user = await getDoc(userRef);
-    return user.data() as UserProfile;
+    if (user.exists()) {
+      return user.data() as UserProfile;
+    }
   }
   return null;
 };

@@ -62,7 +62,7 @@ const RankingTable = ({ data, isLoading, currentPage, pageSize }: RankingTablePr
                         </TableRow>
                     ) : (
                         data.map((row, index) => (
-                            <TableRow key={row.id}>
+                            <TableRow key={row.id ?? `row-${index}`}>
                                 <StyledBodyCell>
                                     {(currentPage - 1) * pageSize + index + 1}
                                 </StyledBodyCell>

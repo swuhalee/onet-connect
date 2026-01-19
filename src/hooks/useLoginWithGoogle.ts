@@ -2,6 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import { loginWithGoogle } from "../services/authService";
 import { useSyncUserProfile } from "./useSyncUserProfile";
 import { useQueryClient } from "@tanstack/react-query";
+import { enqueueSnackbar } from "notistack";
 
 export const useLoginWithGoogle = () => {
   const queryClient = useQueryClient();
@@ -15,15 +16,24 @@ export const useLoginWithGoogle = () => {
       if (data?.isNewUser) {
         syncUserProfile();
       } else {
+        queryClient.invalidateQueries({ queryKey: ["auth", "userId"] });
         queryClient.invalidateQueries({ queryKey: ["auth", "profile"] });
       }
+
+      enqueueSnackbar("로그인에 성공했습니다.", {
+        variant: "success",
+        anchorOrigin: { vertical: 'top', horizontal: 'center' }
+      });
     },
-    onError: (err: unknown) => {
-      const authError = err as { code?: string };
-      if (authError?.code === "auth/popup-closed-by-user") {
-        throw new Error("로그인 창이 닫혔습니다.");
-      }
-      throw new Error("로그인에 실패했습니다.");
+    onError: (err: any) => {
+      const message = err?.code === "auth/popup-closed-by-user"
+        ? "로그인 창이 닫혔습니다."
+        : "로그인에 실패했습니다.";
+
+      enqueueSnackbar(message, {
+        variant: "error",
+        anchorOrigin: { vertical: 'top', horizontal: 'center' }
+      });
     },
   });
 };
