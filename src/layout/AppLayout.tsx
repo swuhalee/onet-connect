@@ -10,6 +10,9 @@ const OutletWrapper = styled(Box)(({ theme }) => ({
 const OutletContainer = styled(Container)(({ theme }) => ({
     maxWidth: theme.breakpoints.values.lg,
     padding: "28px",
+    [theme.breakpoints.down('sm')]: {
+        padding: 0,
+    },
 }));
 
 const AppLayout = () => {

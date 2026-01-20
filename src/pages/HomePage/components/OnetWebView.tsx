@@ -31,6 +31,7 @@ const OnetWebView: React.FC = () => {
                 style={{
                     width: '1000px',
                     height: '690px',
+                    flexShrink: 0,
                 }}
             />
         </>
