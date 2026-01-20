@@ -9,6 +9,7 @@ const AppLayout = React.lazy(() => import('./layout/AppLayout'));
 const HomePage = React.lazy(() => import('./pages/HomePage/HomePage'));
 const RankingPage = React.lazy(() => import('./pages/RankingPage/RankingPage'));
 const AccountPage = React.lazy(() => import('./pages/AccountPage/AccountPage'));
+const NotFoundPage = React.lazy(() => import('./pages/NotFoundPage/NotFoundPage'));
 
 function App() {
   const theme = useAppTheme();
@@ -26,10 +27,12 @@ function App() {
           <Route index element={<HomePage />} />
           <Route path="ranking" element={<RankingPage />} />
           <Route path="account" element={<AccountPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Route>
         
         {/* 기본 경로 접속 시 브라우저 언어로 리다이렉트 */}
         <Route path="/" element={<Navigate to={`/${detectBrowserLanguage()}`} replace />} />
+        <Route path="*" element={<Navigate to={`/${detectBrowserLanguage()}`} replace />} />
       </Routes>
     </ThemeProvider>
   )

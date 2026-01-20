@@ -1,19 +1,17 @@
 import { updateUserProfile } from "../services/authService";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
-import { useGetUserId } from "./useGetUserId";
 import type { UserProfile } from "../models/user";
 import { enqueueSnackbar } from "notistack";
 
 export const useUpdateUserProfile = () => {
     const { t } = useTranslation();
     const queryClient = useQueryClient();
-    const { data: uid } = useGetUserId();
     
     return useMutation({
         mutationFn: async (userProfile: UserProfile) => {
-            if (uid) {
-                return await updateUserProfile(uid, userProfile);
+            if (userProfile?.uid) {
+                return await updateUserProfile(userProfile.uid, userProfile);
             }
             throw new Error("User not found");
         },

@@ -44,6 +44,11 @@
     "score": "Puntuación",
     "date": "Fecha"
   },
+  "notFound": {
+    "title": "Página no encontrada",
+    "message": "La página solicitada no existe.",
+    "goHome": "Ir al inicio"
+  },
   "countries": {
     "AC": "Isla de Ascensión",
     "AD": "Andorra",

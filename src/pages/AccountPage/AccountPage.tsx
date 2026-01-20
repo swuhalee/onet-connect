@@ -1,9 +1,9 @@
 import { Box, Button, Stack, TextField, Typography, Select, MenuItem, FormControl, Divider, CircularProgress, styled } from "@mui/material";
 import React, { useEffect, useState, useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router";
 import { useGetUserProfile } from "../../hooks/useGetUserProfile";
 import { useUpdateUserProfile } from "../../hooks/useUpdateUserProfile";
-import { auth } from "../../utils/firebase";
 import countriesData from "../../constants/countries.json";
 import { getFlagEmoji } from "../../utils/flags";
 import MainContainer from "../../layout/styles/MainContainer";
@@ -19,14 +19,21 @@ const FormContainer = styled(Box)<{ component?: React.ElementType }>(({ theme })
 
 const AccountPage = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const { data: profile, isLoading } = useGetUserProfile();
   const { mutate: updateProfile, isPending } = useUpdateUserProfile();
-  const user = auth.currentUser;
 
   const [displayName, setDisplayName] = useState("");
   const [country, setCountry] = useState("");
 
   const countries = useMemo(() => countriesData as Country[], []);
+
+  // 프로필이 없고 로딩이 완료되었으면 홈으로 리다이렉트
+  useEffect(() => {
+    if (!isLoading && !profile) {
+      navigate("/");
+    }
+  }, [isLoading, profile, navigate]);
 
   // 프로필 조회 결과가 오면 폼 초기값 설정
   useEffect(() => {
@@ -39,7 +46,9 @@ const AccountPage = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     updateProfile({
+      uid: profile?.uid ?? "",
       displayName,
+      email: profile?.email ?? "",
       country,
     });
   };
@@ -92,7 +101,7 @@ const AccountPage = () => {
               {t('account.email')}
             </Typography>
             <TextField
-              value={user?.email || ""}
+              value={profile?.email || ""}
               fullWidth
               disabled
               placeholder={t('account.emailPlaceholder')}
@@ -124,7 +133,7 @@ const AccountPage = () => {
                 }}
                 renderValue={(selected) => {
                   if (!selected) {
-                    return <Typography color="text.secondary">{t('account.countryPlaceholder')}</Typography>;
+                    return <Typography color="text.disabled">{t('account.countryPlaceholder')}</Typography>;
                   }
                   const selectedCountry = countries.find(c => c.code === selected);
                   const countryName = t(`countries.${selected}`, { defaultValue: selectedCountry?.name || selected });

@@ -44,6 +44,11 @@
     "score": "Punkte",
     "date": "Datum"
   },
+  "notFound": {
+    "title": "Seite nicht gefunden",
+    "message": "Die angeforderte Seite existiert nicht.",
+    "goHome": "Zur Startseite"
+  },
   "countries": {
     "AC": "Ascension",
     "AD": "Andorra",

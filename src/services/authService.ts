@@ -16,17 +16,16 @@ export const logout = async (): Promise<void> => {
   await signOut(auth);
 };
 
-export const getUserId = async (): Promise<string | undefined> => {
-  return auth.currentUser?.uid;
-};
-
 export const getUserProfile = async (): Promise<UserProfile | null> => {
-  const uid = await getUserId();
+  const uid = auth.currentUser?.uid ?? null;
   if (uid) {
     const userRef = doc(db, "users", uid);
     const user = await getDoc(userRef);
     if (user.exists()) {
-      return user.data() as UserProfile;
+      return {
+        ...user.data(),
+        uid,
+      } as UserProfile;
     }
   }
   return null;
@@ -42,11 +41,13 @@ export const syncUserProfile = async () => {
   const userRef = doc(db, "users", user.uid);
   await setDoc(userRef, {
     displayName: user.displayName,
+    email: user.email,
     country: navigator.language.split('-')[1] || 'KR',
   }, { merge: true });
 };
 
 export const updateUserProfile = async (uid: string, user: UserProfile) => {
   const userRef = doc(db, "users", uid);
-  await setDoc(userRef, user, { merge: true });
+  const { uid: _, ...userData } = user; // uid를 제외한 나머지 데이터만 저장함
+  await setDoc(userRef, userData, { merge: true });
 };
