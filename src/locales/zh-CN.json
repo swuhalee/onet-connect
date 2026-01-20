@@ -44,6 +44,11 @@
     "score": "分数",
     "date": "日期"
   },
+  "notFound": {
+    "title": "找不到页面",
+    "message": "您请求的页面不存在。",
+    "goHome": "返回首页"
+  },
   "countries": {
     "AC": "阿森松岛",
     "AD": "安道尔",

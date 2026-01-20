@@ -36,7 +36,7 @@ const RightSection = styled(Box)({
 });
 
 const AppBar = () => {
-    const { data: userProfile } = useGetUserProfile();
+    const { data: userProfile, isLoading } = useGetUserProfile();
 
     return (
         <AppbarWrapper>
@@ -49,9 +49,11 @@ const AppBar = () => {
                 <RightSection>
                     <LanguageSwitcher />
                     {
-                        userProfile
-                            ? <UserMenu displayName={userProfile.displayName} />
-                            : <LoginButton />
+                        isLoading
+                            ? null // 로딩 중일 때는 아무것도 표시하지 않음
+                            : userProfile
+                                ? <UserMenu displayName={userProfile.displayName} />
+                                : <LoginButton />
                     }
                 </RightSection>
             </AppbarContainer>

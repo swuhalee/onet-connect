@@ -1,18 +1,18 @@
 import { useQuery } from "@tanstack/react-query";
 import { getMyRanking } from "../services/rankingService";
-import { useGetUserId } from "./useGetUserId";
+import { useGetUserProfile } from "./useGetUserProfile";
 
 export const useGetMyRanking = () => {
-    const { data: uid } = useGetUserId();
+    const { data: userProfile } = useGetUserProfile();
 
     return useQuery({
-        queryKey: ["getMyRanking", uid],
+        queryKey: ["getMyRanking", userProfile?.uid],
         queryFn: () => {
-            if (uid) {
-                return getMyRanking(uid);
+            if (userProfile?.uid) {
+                return getMyRanking(userProfile.uid);
             }
             throw new Error("User not found");
         },
-        enabled: !!uid,
+        enabled: !!userProfile?.uid,
     });
 };

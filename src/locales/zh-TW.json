@@ -44,6 +44,11 @@
     "score": "分數",
     "date": "日期"
   },
+  "notFound": {
+    "title": "找不到頁面",
+    "message": "您請求的頁面不存在。",
+    "goHome": "返回首頁"
+  },
   "countries": {
     "AC": "亞森松島",
     "AD": "安道爾",
