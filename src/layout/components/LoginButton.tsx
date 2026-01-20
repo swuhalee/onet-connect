@@ -14,7 +14,7 @@ const LoginButton = () => {
         <StyledButton onClick={() => mutate()} disabled={isPending}>
             {
                 isPending
-                    ? <CircularProgress size={14} />
+                    ? <CircularProgress size={24} />
                     : <>
                         <GoogleIcon fontSize={"small"} />
                         {isMobile ? t('common.login') : t('common.googleLogin')}
