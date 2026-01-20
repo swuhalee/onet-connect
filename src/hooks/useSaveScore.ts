@@ -16,6 +16,7 @@ export const useSaveScore = () => {
       throw new Error("로그인 후 점수를 저장할 수 있습니다.");
     },
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["getMyRanking", uid] });
       queryClient.invalidateQueries({ queryKey: ["getRanking"] });
     },
   });

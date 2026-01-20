@@ -1,5 +1,5 @@
-import { Box, Button, Stack, TextField, Typography, Select, MenuItem, FormControl, Divider, CircularProgress } from "@mui/material";
-import { useEffect, useState, useMemo } from "react";
+import { Box, Button, Stack, TextField, Typography, Select, MenuItem, FormControl, Divider, CircularProgress, styled } from "@mui/material";
+import React, { useEffect, useState, useMemo } from "react";
 import { useGetUserProfile } from "../../hooks/useGetUserProfile";
 import { useUpdateUserProfile } from "../../hooks/useUpdateUserProfile";
 import { auth } from "../../utils/firebase";
@@ -7,6 +7,14 @@ import countriesData from "../../constants/countries.json";
 import { getFlagEmoji } from "../../utils/flags";
 import { MainContainer } from "../../common/styles/MainContainer";
 import type { Country } from "../../models/country";
+
+const FormContainer = styled(Box)<{ component?: React.ElementType }>(({ theme }) => ({
+    width: "50%",
+    margin: "0 auto 60px",
+    [theme.breakpoints.down('sm')]: {
+        width: "100%",
+    },
+}));
 
 const AccountPage = () => {
   const { data: profile, isLoading } = useGetUserProfile();
@@ -42,10 +50,9 @@ const AccountPage = () => {
 
       <Divider sx={{ marginTop: "8px", marginBottom: "24px" }} />
 
-      <Box
+      <FormContainer
         component="form"
         onSubmit={handleSubmit}
-        sx={{ width: "50%", marginX: "auto", marginBottom: "60px" }}
       >
         <Stack spacing={3}>
           <Box>
@@ -158,7 +165,7 @@ const AccountPage = () => {
             {isPending ? <CircularProgress size={14} sx={{ marginY: "4px" }} /> : "프로필 업데이트"}
           </Button>
         </Stack>
-      </Box>
+      </FormContainer>
     </MainContainer>
   );
 };
