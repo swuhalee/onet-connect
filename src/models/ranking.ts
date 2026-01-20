@@ -1,4 +1,4 @@
-import type { FieldValue } from "firebase/firestore";
+import type { FieldValue, QueryDocumentSnapshot } from "firebase/firestore";
 
 export interface RankingObject {
     id?: string;
@@ -11,5 +11,11 @@ export interface RankingObject {
 
 export interface GetRankingParams {
     pageSize: number;
-    pageParam: any | null;
+    direction: 'next' | 'prev' | 'first';
+    cursor: QueryDocumentSnapshot | null;
+}
+
+export interface MyRanking {
+    rank: number;
+    score: number;
 }
