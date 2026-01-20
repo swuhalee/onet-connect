@@ -3,6 +3,7 @@ import LoginButton from "./LoginButton";
 import Logo from "./Logo";
 import NavigationLinks from "./NavigationLinks";
 import UserMenu from "./UserMenu";
+import LanguageSwitcher from "./LanguageSwitcher";
 import { useGetUserProfile } from "../../hooks/useGetUserProfile";
 
 const AppbarWrapper = styled(Box)(({ theme }) => ({
@@ -28,6 +29,12 @@ const LeftSection = styled(Box)({
     gap: "48px",
 });
 
+const RightSection = styled(Box)({
+    display: "flex",
+    alignItems: "center",
+    gap: "12px",
+});
+
 const AppBar = () => {
     const { data: userProfile } = useGetUserProfile();
 
@@ -39,11 +46,14 @@ const AppBar = () => {
                     <NavigationLinks />
                 </LeftSection>
 
-                {
-                    userProfile
-                        ? <UserMenu displayName={userProfile.displayName} />
-                        : <LoginButton />
-                }
+                <RightSection>
+                    <LanguageSwitcher />
+                    {
+                        userProfile
+                            ? <UserMenu displayName={userProfile.displayName} />
+                            : <LoginButton />
+                    }
+                </RightSection>
             </AppbarContainer>
         </AppbarWrapper>
     )

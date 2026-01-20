@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link, useParams } from "react-router";
 import { Typography, styled, useMediaQuery, useTheme } from "@mui/material";
 import { useState } from "react";
 import MobileDrawer from "./MobileDrawer";
@@ -33,6 +33,8 @@ const Logo = () => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     const [drawerOpen, setDrawerOpen] = useState(false);
+    const { lng } = useParams();
+    const currentLng = lng || 'ko';
 
     const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
         if (isMobile) {
@@ -47,7 +49,7 @@ const Logo = () => {
 
     return (
         <>
-            <LogoLink to="/" onClick={handleClick}>
+            <LogoLink to={`/${currentLng}`} onClick={handleClick}>
                 <LogoImage src="/logo.svg" alt="Onet Connect Logo" />
                 <LogoText>Onet Connect</LogoText>
             </LogoLink>
