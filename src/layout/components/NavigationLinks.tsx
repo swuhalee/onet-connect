@@ -1,5 +1,6 @@
-import { Link, useLocation } from "react-router";
+import { Link, useLocation, useParams } from "react-router";
 import { Box, styled } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 const NavigationLinksContainer = styled(Box)(({ theme }) => ({
     height: "100%",
@@ -41,16 +42,20 @@ const NavLink = styled(Link, {
 
 const NavigationLinks = () => {
     const location = useLocation();
-    const isGameActive = location.pathname === "/";
-    const isRankingActive = location.pathname === "/ranking";
+    const { lng } = useParams();
+    const { t } = useTranslation();
+    const currentLng = lng || 'ko';
+    
+    const isGameActive = location.pathname === `/${currentLng}` || location.pathname === `/${currentLng}/`;
+    const isRankingActive = location.pathname === `/${currentLng}/ranking`;
 
     return (
         <NavigationLinksContainer>
-            <NavLink to="/" active={isGameActive}>
-                게임
+            <NavLink to={`/${currentLng}`} active={isGameActive}>
+                {t('navigation.game')}
             </NavLink>
-            <NavLink to="/ranking" active={isRankingActive}>
-                랭킹
+            <NavLink to={`/${currentLng}/ranking`} active={isRankingActive}>
+                {t('navigation.ranking')}
             </NavLink>
         </NavigationLinksContainer>
     );

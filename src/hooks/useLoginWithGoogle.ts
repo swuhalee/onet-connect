@@ -1,10 +1,12 @@
 import { useMutation } from "@tanstack/react-query";
+import { useTranslation } from "react-i18next";
 import { loginWithGoogle } from "../services/authService";
 import { useSyncUserProfile } from "./useSyncUserProfile";
 import { useQueryClient } from "@tanstack/react-query";
 import { enqueueSnackbar } from "notistack";
 
 export const useLoginWithGoogle = () => {
+  const { t } = useTranslation();
   const queryClient = useQueryClient();
   const { mutate: syncUserProfile } = useSyncUserProfile();
 
@@ -20,15 +22,15 @@ export const useLoginWithGoogle = () => {
         queryClient.invalidateQueries({ queryKey: ["auth", "profile"] });
       }
 
-      enqueueSnackbar("로그인에 성공했습니다.", {
+      enqueueSnackbar(t('messages.loginSuccess'), {
         variant: "success",
         anchorOrigin: { vertical: 'top', horizontal: 'center' }
       });
     },
     onError: (err: any) => {
       const message = err?.code === "auth/popup-closed-by-user"
-        ? "로그인 창이 닫혔습니다."
-        : "로그인에 실패했습니다.";
+        ? t('messages.loginPopupClosed')
+        : t('messages.loginFailed');
 
       enqueueSnackbar(message, {
         variant: "error",
