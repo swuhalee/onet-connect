@@ -54,10 +54,22 @@ const AccountPage = () => {
   };
 
   return (
-    <MainContainer>
-      <Typography variant="h5" sx={{ fontWeight: "bold" }}>
-        {t('account.title')}
-      </Typography>
+    <>
+      <title>{t('meta.account.title')}</title>
+      <meta name="description" content={t('meta.account.description')} />
+      <meta property="og:title" content={t('meta.account.title')} />
+      <meta property="og:description" content={t('meta.account.description')} />
+      <meta property="og:type" content="website" />
+      <meta property="og:image" content="/og-image.png" />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content={t('meta.account.title')} />
+      <meta name="twitter:description" content={t('meta.account.description')} />
+      <meta name="twitter:image" content="/og-image.png" />
+
+      <MainContainer>
+        <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+          {t('account.title')}
+        </Typography>
 
       <Divider sx={{ marginTop: "8px", marginBottom: "24px" }} />
 
@@ -181,7 +193,8 @@ const AccountPage = () => {
           </Button>
         </Stack>
       </FormContainer>
-    </MainContainer>
+      </MainContainer>
+    </>
   );
 };
 

@@ -49,6 +49,24 @@
     "message": "您请求的页面不存在。",
     "goHome": "返回首页"
   },
+  "meta": {
+    "home": {
+      "title": "Onet Connect - 游戏",
+      "description": "玩Onet Connect！经典的方块匹配益智游戏。连接相同的图案方块，清空棋盘，赢得胜利！"
+    },
+    "ranking": {
+      "title": "Onet Connect - 排行榜",
+      "description": "查看Onet Connect全球排行榜。与顶尖玩家竞争，攀登排行榜！"
+    },
+    "account": {
+      "title": "Onet Connect - 账户",
+      "description": "管理您的个人资料和游戏设置。更新您的显示名称和国家信息。"
+    },
+    "notFound": {
+      "title": "Onet Connect - 找不到页面",
+      "description": "您请求的页面不存在。返回首页享受游戏吧！"
+    }
+  },
   "countries": {
     "AC": "阿森松岛",
     "AD": "安道尔",

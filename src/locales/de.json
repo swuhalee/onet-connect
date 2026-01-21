@@ -49,6 +49,24 @@
     "message": "Die angeforderte Seite existiert nicht.",
     "goHome": "Zur Startseite"
   },
+  "meta": {
+    "home": {
+      "title": "Onet Connect - Spiel",
+      "description": "Spielen Sie Onet Connect! Ein klassisches Kachel-Matching-Puzzlespiel. Verbinden Sie passende Paare und räumen Sie das Brett ab, um zu gewinnen!"
+    },
+    "ranking": {
+      "title": "Onet Connect - Rangliste",
+      "description": "Sehen Sie sich die globale Onet Connect Rangliste an. Treten Sie gegen die besten Spieler an und steigen Sie in der Rangliste auf!"
+    },
+    "account": {
+      "title": "Onet Connect - Konto",
+      "description": "Verwalten Sie Ihr Profil und Ihre Spieleinstellungen. Aktualisieren Sie Ihren Anzeigenamen und Ihre Länderinformationen."
+    },
+    "notFound": {
+      "title": "Onet Connect - Seite nicht gefunden",
+      "description": "Die angeforderte Seite existiert nicht. Kehren Sie zur Startseite zurück und genießen Sie das Spiel!"
+    }
+  },
   "countries": {
     "AC": "Ascension",
     "AD": "Andorra",

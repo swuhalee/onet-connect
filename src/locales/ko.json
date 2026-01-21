@@ -49,6 +49,24 @@
     "message": "요청하신 페이지가 존재하지 않습니다.",
     "goHome": "홈으로 이동"
   },
+  "meta": {
+    "home": {
+      "title": "Onet Connect - 게임",
+      "description": "Onet Connect를 플레이하세요! 클래식 타일 매칭 퍼즐 게임입니다. 같은 그림의 타일을 연결하고 보드를 클리어하세요!"
+    },
+    "ranking": {
+      "title": "Onet Connect - 랭킹",
+      "description": "Onet Connect 글로벌 랭킹을 확인하세요. 최고 점수를 기록한 플레이어들과 경쟁하고 순위를 올리세요!"
+    },
+    "account": {
+      "title": "Onet Connect - 계정",
+      "description": "프로필을 관리하고 게임 설정을 변경하세요. 이름, 국가 정보를 업데이트할 수 있습니다."
+    },
+    "notFound": {
+      "title": "Onet Connect - 페이지를 찾을 수 없습니다",
+      "description": "요청하신 페이지가 존재하지 않습니다. 홈으로 돌아가서 게임을 즐겨보세요!"
+    }
+  },
   "countries": {
     "AC": "어센션 섬",
     "AD": "안도라",
