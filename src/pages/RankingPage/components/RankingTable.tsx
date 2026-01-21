@@ -1,5 +1,6 @@
 import { styled } from "@mui/material/styles";
 import { Table, TableBody, TableRow, TableCell, TableContainer, TableHead, CircularProgress } from "@mui/material";
+import { useTranslation } from "react-i18next";
 import type { RankingObject } from "../../../models/ranking";
 import { getFlagEmoji } from "../../../utils/flags";
 
@@ -46,15 +47,17 @@ const formatDate = (createdAt: any): string => {
 };
 
 const RankingTable = ({ data, isLoading, currentPage, pageSize }: RankingTableProps) => {
+    const { t } = useTranslation();
+
     return (
         <StyledTableContainer>
             <Table>
                 <TableHead>
                     <TableRow>
-                        <StyledHeaderCell width="15%">순위</StyledHeaderCell>
-                        <StyledHeaderCell width="30%">플레이어</StyledHeaderCell>
-                        <StyledHeaderCell width="25%">점수</StyledHeaderCell>
-                        <StyledHeaderCell width="30%">날짜</StyledHeaderCell>
+                        <StyledHeaderCell width="15%">{t('ranking.rank')}</StyledHeaderCell>
+                        <StyledHeaderCell width="30%">{t('ranking.player')}</StyledHeaderCell>
+                        <StyledHeaderCell width="25%">{t('ranking.score')}</StyledHeaderCell>
+                        <StyledHeaderCell width="30%">{t('ranking.date')}</StyledHeaderCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -67,7 +70,7 @@ const RankingTable = ({ data, isLoading, currentPage, pageSize }: RankingTablePr
                     ) : data.length === 0 ? (
                         <TableRow>
                             <StyledBodyCell colSpan={4} align="center" sx={{ height: 400 }}>
-                                데이터가 없습니다.
+                                {t('common.noData')}
                             </StyledBodyCell>
                         </TableRow>
                     ) : (

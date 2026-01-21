@@ -1,5 +1,6 @@
 import { Box, Drawer, styled, Typography, useMediaQuery, useTheme } from "@mui/material";
-import { Link, useLocation } from "react-router";
+import { Link, useLocation, useParams } from "react-router";
+import { useTranslation } from "react-i18next";
 import GameIcon from '@mui/icons-material/Casino';
 import RankingIcon from '@mui/icons-material/Stars';
 
@@ -37,9 +38,12 @@ const MobileDrawer = ({ open, onClose }: MobileDrawerProps) => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     const location = useLocation();
+    const { lng } = useParams();
+    const { t } = useTranslation();
+    const currentLng = lng || 'ko';
 
-    const isGameActive = location.pathname === "/";
-    const isRankingActive = location.pathname === "/ranking";
+    const isGameActive = location.pathname === `/${currentLng}` || location.pathname === `/${currentLng}/`;
+    const isRankingActive = location.pathname === `/${currentLng}/ranking`;
 
     if (!isMobile) {
         return null;
@@ -71,13 +75,13 @@ const MobileDrawer = ({ open, onClose }: MobileDrawerProps) => {
         >
             <DrawerHeader />
             <MenuContainer>
-                <MenuItem to="/" active={isGameActive} onClick={onClose}>
+                <MenuItem to={`/${currentLng}`} active={isGameActive} onClick={onClose}>
                     <GameIcon />
-                    <Typography>게임</Typography>
+                    <Typography>{t('navigation.game')}</Typography>
                 </MenuItem>
-                <MenuItem to="/ranking" active={isRankingActive} onClick={onClose}>
+                <MenuItem to={`/${currentLng}/ranking`} active={isRankingActive} onClick={onClose}>
                     <RankingIcon />
-                    <Typography>랭킹</Typography>
+                    <Typography>{t('navigation.ranking')}</Typography>
                 </MenuItem>
             </MenuContainer>
         </Drawer>

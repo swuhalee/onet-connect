@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { Typography, Box, Button, Divider } from "@mui/material";
 import { QueryDocumentSnapshot } from "firebase/firestore";
+import { useTranslation } from "react-i18next";
 import RankingTable from "./components/RankingTable";
-import { MainContainer } from "../../common/styles/MainContainer";
+import MainContainer from "../../layout/styles/MainContainer";
 import { useGetRanking } from "../../hooks/useGetRanking";
 import { useGetMyRanking } from "../../hooks/useGetMyRanking";
 
 const RankingPage = () => {
+    const { t } = useTranslation();
     const [pageSize] = useState(10);
     const [page, setPage] = useState(1);
     const [direction, setDirection] = useState<'next' | 'prev' | 'first'>('first');
@@ -35,14 +37,14 @@ const RankingPage = () => {
     return (
         <MainContainer>
             <Typography variant="h5" sx={{ fontWeight: "bold" }}>
-                랭킹
+                {t('ranking.title')}
             </Typography>
 
             <Divider sx={{ marginTop: "8px", marginBottom: "24px" }} />
 
             <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "8px" }}>
                 <Typography variant="body1">
-                    내 순위: {myRanking ? `${myRanking.rank} (${myRanking.score.toLocaleString()})` : "N/A"}
+                    {t('ranking.myRank')}: {myRanking ? `${myRanking.rank} (${myRanking.score.toLocaleString()})` : t('common.n/a')}
                 </Typography>
                 {/* <FormControl size="small" sx={{ minWidth: 200 }}>
                     <Select value={sortBy} onChange={(e) => setSortBy(e.target.value)} displayEmpty sx={{ height: "32px" }}>
@@ -66,16 +68,16 @@ const RankingPage = () => {
                     disabled={page === 1 || isFetching}
                     sx={{ height: "32px" }}
                 >
-                    이전
+                    {t('common.previous')}
                 </Button>
-                <Typography fontWeight="bold">{page} 페이지</Typography>
+                <Typography fontWeight="bold">{page} {t('common.page')}</Typography>
                 <Button
                     variant="outlined"
                     onClick={handleNextPage}
                     disabled={(data?.count || 0) < pageSize || isFetching}
                     sx={{ height: "32px" }}
                 >
-                    다음
+                    {t('common.next')}
                 </Button>
             </Box>
         </MainContainer>
