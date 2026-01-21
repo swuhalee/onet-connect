@@ -8,8 +8,9 @@ export const detectBrowserLanguage = (): SupportedLanguage => {
   for (const browserLang of browserLanguages) {
     const lang = browserLang.toLowerCase();
     
-    if (supportedLanguages.includes(lang as SupportedLanguage)) {
-      return lang as SupportedLanguage;
+    const exactMatch = supportedLanguages.find(s => s.toLowerCase() === lang);
+    if (exactMatch) {
+      return exactMatch;
     }
     
     const langCode = lang.split('-')[0];

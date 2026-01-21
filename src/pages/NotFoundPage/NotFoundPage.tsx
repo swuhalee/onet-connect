@@ -2,6 +2,7 @@ import { Box, Button, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import MainContainer from "../../layout/styles/MainContainer";
+import i18n from "../../i18n";
 
 const NotFoundPage = () => {
   const { t } = useTranslation();
@@ -31,7 +32,7 @@ const NotFoundPage = () => {
         <Button
           variant="contained"
           color="primary"
-          onClick={() => navigate("/")}
+          onClick={() => navigate(`/${i18n.language}`)}
           sx={{
             marginTop: 2,
             padding: "8px 24px",

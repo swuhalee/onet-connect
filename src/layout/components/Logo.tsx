@@ -2,6 +2,7 @@ import { Link, useParams } from "react-router";
 import { Typography, styled, useMediaQuery, useTheme } from "@mui/material";
 import { useState } from "react";
 import MobileDrawer from "./MobileDrawer";
+import i18n from "../../i18n";
 
 const LogoLink = styled(Link)({
     display: "flex",
@@ -34,7 +35,7 @@ const Logo = () => {
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     const [drawerOpen, setDrawerOpen] = useState(false);
     const { lng } = useParams();
-    const currentLng = lng || 'ko';
+    const currentLng = lng || i18n.language;
 
     const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
         if (isMobile) {

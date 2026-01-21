@@ -23,6 +23,9 @@ export const getUserProfile = async (): Promise<UserProfile | null> => {
     const user = await getDoc(userRef);
     if (user.exists()) {
       return {
+        displayName: '',
+        email: '',
+        country: '',
         ...user.data(),
         uid,
       } as UserProfile;
@@ -42,7 +45,7 @@ export const syncUserProfile = async () => {
   await setDoc(userRef, {
     displayName: user.displayName,
     email: user.email,
-    country: navigator.language.split('-')[1] || 'KR',
+    country: navigator.language.split('-')[1]?.toUpperCase() || '',
   }, { merge: true });
 };
 
