@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import { logout } from "../services/authService";
 import { enqueueSnackbar } from "notistack";
+import i18n from "../i18n";
 
 export const useLogout = () => {
   const { t } = useTranslation();
@@ -21,7 +22,7 @@ export const useLogout = () => {
         anchorOrigin: { vertical: 'top', horizontal: 'center' }
       });
 
-      navigate("/");
+      navigate(`/${i18n.language}`);
     },
     onError: () => {
       enqueueSnackbar(t('messages.logoutFailed'), {

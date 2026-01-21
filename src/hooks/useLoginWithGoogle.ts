@@ -5,6 +5,7 @@ import { loginWithGoogle } from "../services/authService";
 import { useSyncUserProfile } from "./useSyncUserProfile";
 import { useQueryClient } from "@tanstack/react-query";
 import { enqueueSnackbar } from "notistack";
+import i18n from "../i18n";
 
 export const useLoginWithGoogle = () => {
   const { t } = useTranslation();
@@ -28,7 +29,7 @@ export const useLoginWithGoogle = () => {
         anchorOrigin: { vertical: 'top', horizontal: 'center' }
       });
 
-      navigate("/");
+      navigate(`/${i18n.language}`);
     },
     onError: (err: any) => {
       const message = err?.code === "auth/popup-closed-by-user"

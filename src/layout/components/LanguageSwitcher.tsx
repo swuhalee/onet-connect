@@ -50,7 +50,7 @@ const LanguageSwitcher = () => {
             navigate(`/${pathSegments.join('/')}`);
         } else {
             // 경로 구조가 예상과 다를 경우 기본 경로로 이동
-            navigate(`/${newLng}`);
+            navigate(`/${newLng}${location.pathname}`);
         }
         i18n.changeLanguage(newLng);
     };
