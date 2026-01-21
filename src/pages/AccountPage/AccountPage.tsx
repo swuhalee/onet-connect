@@ -1,11 +1,12 @@
 import { Box, Button, Stack, TextField, Typography, Select, MenuItem, FormControl, Divider, CircularProgress, styled } from "@mui/material";
 import React, { useEffect, useState, useMemo } from "react";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router";
 import { useGetUserProfile } from "../../hooks/useGetUserProfile";
 import { useUpdateUserProfile } from "../../hooks/useUpdateUserProfile";
-import { auth } from "../../utils/firebase";
 import countriesData from "../../constants/countries.json";
 import { getFlagEmoji } from "../../utils/flags";
-import { MainContainer } from "../../common/styles/MainContainer";
+import MainContainer from "../../layout/styles/MainContainer";
 import type { Country } from "../../models/country";
 
 const FormContainer = styled(Box)<{ component?: React.ElementType }>(({ theme }) => ({
@@ -17,14 +18,22 @@ const FormContainer = styled(Box)<{ component?: React.ElementType }>(({ theme })
 }));
 
 const AccountPage = () => {
+  const { t } = useTranslation();
+  const navigate = useNavigate();
   const { data: profile, isLoading } = useGetUserProfile();
   const { mutate: updateProfile, isPending } = useUpdateUserProfile();
-  const user = auth.currentUser;
 
   const [displayName, setDisplayName] = useState("");
   const [country, setCountry] = useState("");
 
   const countries = useMemo(() => countriesData as Country[], []);
+
+  // 프로필이 없고 로딩이 완료되었으면 홈으로 리다이렉트
+  useEffect(() => {
+    if (!isLoading && !profile) {
+      navigate("/");
+    }
+  }, [isLoading, profile, navigate]);
 
   // 프로필 조회 결과가 오면 폼 초기값 설정
   useEffect(() => {
@@ -37,7 +46,9 @@ const AccountPage = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     updateProfile({
+      uid: profile?.uid ?? "",
       displayName,
+      email: profile?.email ?? "",
       country,
     });
   };
@@ -45,7 +56,7 @@ const AccountPage = () => {
   return (
     <MainContainer>
       <Typography variant="h5" sx={{ fontWeight: "bold" }}>
-        계정
+        {t('account.title')}
       </Typography>
 
       <Divider sx={{ marginTop: "8px", marginBottom: "24px" }} />
@@ -63,14 +74,14 @@ const AccountPage = () => {
                 fontWeight: 500
               }}
             >
-              이름
+              {t('account.name')}
             </Typography>
             <TextField
               value={displayName}
               onChange={(e) => setDisplayName(e.target.value)}
               fullWidth
               disabled={isLoading || isPending}
-              placeholder="이름을 입력하세요"
+              placeholder={t('account.namePlaceholder')}
               sx={{
                 "& .MuiOutlinedInput-root": {
                   backgroundColor: "background.default",
@@ -87,13 +98,13 @@ const AccountPage = () => {
                 fontWeight: 500
               }}
             >
-              Email
+              {t('account.email')}
             </Typography>
             <TextField
-              value={user?.email || ""}
+              value={profile?.email || ""}
               fullWidth
               disabled
-              placeholder="이메일"
+              placeholder={t('account.emailPlaceholder')}
               sx={{
                 "& .MuiOutlinedInput-root": {
                   backgroundColor: "background.default",
@@ -110,7 +121,7 @@ const AccountPage = () => {
                 fontWeight: 500
               }}
             >
-              국가
+              {t('account.country')}
             </Typography>
             <FormControl fullWidth disabled={isLoading || isPending}>
               <Select
@@ -122,25 +133,29 @@ const AccountPage = () => {
                 }}
                 renderValue={(selected) => {
                   if (!selected) {
-                    return <Typography color="text.secondary">국가를 선택하세요</Typography>;
+                    return <Typography color="text.disabled">{t('account.countryPlaceholder')}</Typography>;
                   }
                   const selectedCountry = countries.find(c => c.code === selected);
+                  const countryName = t(`countries.${selected}`, { defaultValue: selectedCountry?.name || selected });
                   return (
                     <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                       <span>{selectedCountry?.emoji || getFlagEmoji(selected)}</span>
-                      <span>{selectedCountry?.name || selected}</span>
+                      <span>{countryName}</span>
                     </Box>
                   );
                 }}
               >
-                {countries.map((country) => (
-                  <MenuItem key={country.code} value={country.code}>
-                    <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                      <span>{country.emoji}</span>
-                      <span>{country.name}</span>
-                    </Box>
-                  </MenuItem>
-                ))}
+                {countries.map((country) => {
+                  const countryName = t(`countries.${country.code}`, { defaultValue: country.name });
+                  return (
+                    <MenuItem key={country.code} value={country.code}>
+                      <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                        <span>{country.emoji}</span>
+                        <span>{countryName}</span>
+                      </Box>
+                    </MenuItem>
+                  );
+                })}
               </Select>
             </FormControl>
           </Box>
@@ -162,7 +177,7 @@ const AccountPage = () => {
               },
             }}
           >
-            {isPending ? <CircularProgress size={14} sx={{ marginY: "4px" }} /> : "프로필 업데이트"}
+            {isPending ? <CircularProgress size={14} sx={{ marginY: "4px" }} /> : t('account.updateProfile')}
           </Button>
         </Stack>
       </FormContainer>
