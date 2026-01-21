@@ -35,10 +35,22 @@ const RankingPage = () => {
     };
 
     return (
-        <MainContainer>
-            <Typography variant="h5" sx={{ fontWeight: "bold" }}>
-                {t('ranking.title')}
-            </Typography>
+        <>
+            <title>{t('meta.ranking.title')}</title>
+            <meta name="description" content={t('meta.ranking.description')} />
+            <meta property="og:title" content={t('meta.ranking.title')} />
+            <meta property="og:description" content={t('meta.ranking.description')} />
+            <meta property="og:type" content="website" />
+            <meta property="og:image" content="/og-image.png" />
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:title" content={t('meta.ranking.title')} />
+            <meta name="twitter:description" content={t('meta.ranking.description')} />
+            <meta name="twitter:image" content="/og-image.png" />
+
+            <MainContainer>
+                <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+                    {t('ranking.title')}
+                </Typography>
 
             <Divider sx={{ marginTop: "8px", marginBottom: "24px" }} />
 
@@ -80,7 +92,8 @@ const RankingPage = () => {
                     {t('common.next')}
                 </Button>
             </Box>
-        </MainContainer>
+            </MainContainer>
+        </>
     );
 };
 

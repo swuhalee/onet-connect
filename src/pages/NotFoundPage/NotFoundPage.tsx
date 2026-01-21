@@ -9,17 +9,29 @@ const NotFoundPage = () => {
   const navigate = useNavigate();
 
   return (
-    <MainContainer>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          minHeight: "60vh",
-          gap: 3,
-        }}
-      >
+    <>
+      <title>{t('meta.notFound.title')}</title>
+      <meta name="description" content={t('meta.notFound.description')} />
+      <meta property="og:title" content={t('meta.notFound.title')} />
+      <meta property="og:description" content={t('meta.notFound.description')} />
+      <meta property="og:type" content="website" />
+      <meta property="og:image" content="/og-image.png" />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content={t('meta.notFound.title')} />
+      <meta name="twitter:description" content={t('meta.notFound.description')} />
+      <meta name="twitter:image" content="/og-image.png" />
+
+      <MainContainer>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            minHeight: "60vh",
+            gap: 3,
+          }}
+        >
         <Typography variant="h1" sx={{ fontSize: "72px", fontWeight: "bold" }}>
           404
         </Typography>
@@ -47,8 +59,9 @@ const NotFoundPage = () => {
         >
           {t('notFound.goHome')}
         </Button>
-      </Box>
-    </MainContainer>
+        </Box>
+      </MainContainer>
+    </>
   );
 };
 
