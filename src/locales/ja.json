@@ -49,6 +49,24 @@
     "message": "リクエストされたページは存在しません。",
     "goHome": "ホームに戻る"
   },
+  "meta": {
+    "home": {
+      "title": "Onet Connect - ゲーム",
+      "description": "Onet Connectをプレイしよう！クラシックなタイルマッチングパズルゲームです。同じ絵柄のタイルをつなげてボードをクリアしましょう！"
+    },
+    "ranking": {
+      "title": "Onet Connect - ランキング",
+      "description": "Onet Connectのグローバルランキングをチェック。トッププレイヤーと競い合い、順位を上げましょう！"
+    },
+    "account": {
+      "title": "Onet Connect - アカウント",
+      "description": "プロフィールとゲーム設定を管理。表示名と国情報を更新できます。"
+    },
+    "notFound": {
+      "title": "Onet Connect - ページが見つかりません",
+      "description": "リクエストされたページは存在しません。ホームに戻ってゲームをお楽しみください！"
+    }
+  },
   "countries": {
     "AC": "アセンション島",
     "AD": "アンドラ",
