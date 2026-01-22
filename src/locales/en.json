@@ -49,6 +49,24 @@
     "message": "The page you requested does not exist.",
     "goHome": "Go to Home"
   },
+  "meta": {
+    "home": {
+      "title": "Onet Connect - Game",
+      "description": "Play Onet Connect, a classic tile matching puzzle game! Connect matching pairs and clear the board to win!"
+    },
+    "ranking": {
+      "title": "Onet Connect - Ranking",
+      "description": "Check out the global Onet Connect rankings. Compete with top players and climb the leaderboard!"
+    },
+    "account": {
+      "title": "Onet Connect - Account",
+      "description": "Manage your profile and game settings. Update your display name and country information."
+    },
+    "notFound": {
+      "title": "Onet Connect - Page Not Found",
+      "description": "The page you requested does not exist. Return to home and enjoy the game!"
+    }
+  },
   "countries": {
     "AC": "Ascension Island",
     "AD": "Andorra",

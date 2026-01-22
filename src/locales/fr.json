@@ -49,6 +49,24 @@
     "message": "La page demandée n'existe pas.",
     "goHome": "Retour à l'accueil"
   },
+  "meta": {
+    "home": {
+      "title": "Onet Connect - Jeu",
+      "description": "Jouez à Onet Connect ! Un jeu de puzzle classique d'association de tuiles. Connectez les paires identiques et nettoyez le plateau pour gagner !"
+    },
+    "ranking": {
+      "title": "Onet Connect - Classement",
+      "description": "Consultez le classement mondial d'Onet Connect. Affrontez les meilleurs joueurs et grimpez dans le classement !"
+    },
+    "account": {
+      "title": "Onet Connect - Compte",
+      "description": "Gérez votre profil et les paramètres du jeu. Mettez à jour votre nom d'affichage et vos informations de pays."
+    },
+    "notFound": {
+      "title": "Onet Connect - Page introuvable",
+      "description": "La page demandée n'existe pas. Retournez à l'accueil et profitez du jeu !"
+    }
+  },
   "countries": {
     "AC": "Île de l'Ascension",
     "AD": "Andorre",

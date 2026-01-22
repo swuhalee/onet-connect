@@ -49,6 +49,24 @@
     "message": "La página solicitada no existe.",
     "goHome": "Ir al inicio"
   },
+  "meta": {
+    "home": {
+      "title": "Onet Connect - Juego",
+      "description": "¡Juega Onet Connect! Un clásico juego de rompecabezas de emparejamiento de fichas. ¡Conecta pares coincidentes y limpia el tablero para ganar!"
+    },
+    "ranking": {
+      "title": "Onet Connect - Clasificación",
+      "description": "Consulta la clasificación global de Onet Connect. ¡Compite con los mejores jugadores y escala en el ranking!"
+    },
+    "account": {
+      "title": "Onet Connect - Cuenta",
+      "description": "Gestiona tu perfil y configuración del juego. Actualiza tu nombre de usuario e información de país."
+    },
+    "notFound": {
+      "title": "Onet Connect - Página no encontrada",
+      "description": "La página solicitada no existe. ¡Regresa al inicio y disfruta del juego!"
+    }
+  },
   "countries": {
     "AC": "Isla de Ascensión",
     "AD": "Andorra",
