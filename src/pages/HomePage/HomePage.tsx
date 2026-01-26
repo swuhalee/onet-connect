@@ -1,15 +1,14 @@
-import { Box } from "@mui/material"
-import { useTranslation } from "react-i18next"
-import OnetWebView from "./components/OnetWebView"
+import { Typography, Divider } from '@mui/material';
+import { useTranslation, Trans } from 'react-i18next';
+import MainContainer from '../../layout/styles/MainContainer';
 
 const HomePage = () => {
-    const { t } = useTranslation()
+    const { t } = useTranslation();
 
     return (
         <>
             <title>{t('meta.home.title')}</title>
             <meta name="description" content={t('meta.home.description')} />
-            <meta name="keywords" content="onet, connect, puzzle, game, matching, tiles" />
             <meta property="og:title" content={t('meta.home.title')} />
             <meta property="og:description" content={t('meta.home.description')} />
             <meta property="og:type" content="website" />
@@ -19,24 +18,62 @@ const HomePage = () => {
             <meta name="twitter:description" content={t('meta.home.description')} />
             <meta name="twitter:image" content="/og-image.png" />
 
-            <Box
-                sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: { xs: 'flex-start', sm: 'center' },
-                    width: '100%',
-                    overflowX: 'auto',
-                    padding: { xs: '20px', sm: 0 },
-                    scrollbarWidth: 'none',
-                    '&::-webkit-scrollbar': {
-                        display: 'none',
-                    },
-                }}
-            >
-                <OnetWebView />
-            </Box>
-        </>
-    )
-}
+            <MainContainer>
+                <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+                    {t('home.gameIntroduction')}
+                </Typography>
+                <Divider sx={{ marginTop: "8px", marginBottom: "12px" }} />
+                <Typography variant="body1" sx={{ marginBottom: "24px" }}>
+                    <Trans
+                        i18nKey="home.gameIntroductionText"
+                        components={[
+                            <Typography key="0" component="span" sx={{ fontWeight: 500 }} />
+                        ]}
+                    />
+                </Typography>
 
-export default HomePage
+                <Typography variant="h5" sx={{ fontWeight: "bold", marginTop: "24px" }}>
+                    {t('home.rules')}
+                </Typography>
+                <Divider sx={{ marginTop: "8px", marginBottom: "12px" }} />
+
+                <Typography variant="body1" sx={{ marginBottom: "16px" }}>
+                    {t('home.rulesText1')}
+                </Typography>
+
+                <Typography variant="body1" sx={{ marginBottom: "24px" }}>
+                    <Trans
+                        i18nKey="home.rulesText2"
+                        components={[
+                            <Typography key="0" component="span" sx={{ fontWeight: 700 }} />
+                        ]}
+                    />
+                </Typography>
+
+                <Typography variant="h5" sx={{ fontWeight: "bold", marginTop: "24px" }}>
+                    {t('home.gravityPattern')}
+                </Typography>
+                <Divider sx={{ marginTop: "8px", marginBottom: "12px" }} />
+                <Typography variant="body1" sx={{ marginBottom: "24px" }}>
+                    {t('home.gravityPatternText')}
+                </Typography>
+
+                <Typography variant="h5" sx={{ fontWeight: "bold", marginTop: "24px" }}>
+                    {t('home.hintAndShuffle')}
+                </Typography>
+                <Divider sx={{ marginTop: "8px", marginBottom: "12px" }} />
+                <Typography variant="body1" sx={{ marginBottom: "24px" }}>
+                    <Trans
+                        i18nKey="home.hintAndShuffleText"
+                        components={[
+                            <Typography key="0" component="span" sx={{ fontWeight: 700 }} />,
+                            <Typography key="1" component="span" sx={{ fontWeight: 500 }} />
+                        ]}
+                    />
+                </Typography>
+            </MainContainer>
+        </>
+    );
+};
+
+export default HomePage;

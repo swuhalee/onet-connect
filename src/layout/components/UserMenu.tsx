@@ -8,6 +8,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import React from "react";
 import { useLogout } from "../../hooks/useLogout";
 import StyledMenu from "../styles/StyledMenu";
+import { getCurrentLanguage } from "../../utils/languageDetection";
 
 interface UserMenuProps {
     displayName: string;
@@ -18,8 +19,8 @@ const UserMenu = ({ displayName }: UserMenuProps) => {
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     const { mutate: logout, isPending: isLogoutPending } = useLogout();
     const { lng } = useParams();
-    const { t } = useTranslation();
-    const currentLng = lng || 'ko';
+    const { t, i18n } = useTranslation();
+    const currentLng = getCurrentLanguage(lng, i18n.language);
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
 

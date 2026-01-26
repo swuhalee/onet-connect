@@ -20,7 +20,10 @@
     "logoutSuccess": "登出成功。",
     "logoutFailed": "登出失敗。",
     "profileUpdateSuccess": "個人資料更新成功。",
-    "profileUpdateFailed": "個人資料更新失敗。"
+    "profileUpdateFailed": "個人資料更新失敗。",
+    "deleteAccountSuccess": "帳戶刪除成功。",
+    "deleteAccountFailed": "帳戶刪除失敗。",
+    "deleteAccountRequiresRecentLogin": "需要最近登入。請重新登入後再試。"
   },
   "navigation": {
     "game": "遊戲",
@@ -34,7 +37,9 @@
     "emailPlaceholder": "電子郵件",
     "country": "國家",
     "countryPlaceholder": "請選擇國家",
-    "updateProfile": "更新個人資料"
+    "updateProfile": "更新個人資料",
+    "deleteAccount": "刪除帳戶",
+    "privacyPolicy": "隱私權政策"
   },
   "ranking": {
     "title": "排行榜",
@@ -54,6 +59,10 @@
       "title": "Onet Connect - 遊戲",
       "description": "玩Onet Connect！經典的方塊配對益智遊戲。連接相同的圖案方塊，清空棋盤，贏得勝利！"
     },
+    "game": {
+      "title": "Onet Connect - 遊戲遊玩",
+      "description": "遊玩Onet Connect遊戲！連接相同圖案的方塊來清空棋盤的經典益智遊戲。"
+    },
     "ranking": {
       "title": "Onet Connect - 排行榜",
       "description": "查看Onet Connect全球排行榜。與頂尖玩家競爭，攀登排行榜！"
@@ -66,6 +75,17 @@
       "title": "Onet Connect - 找不到頁面",
       "description": "您請求的頁面不存在。返回首頁享受遊戲吧！"
     }
+  },
+  "home": {
+    "gameIntroduction": "遊戲介紹",
+    "gameIntroductionText": "<0>Onet Connect</0>是一款方塊配對益智遊戲。目標是找到並連接棋盤上兩個相同圖案的方塊來移除它們。如果您在時間限制內移除所有方塊，可以進入下一階段。隨著階段增加，會應用難度遞增的重力系統。這是一款需要快速判斷和戰略思維的挑戰性遊戲。",
+    "rules": "規則",
+    "rulesText1": "棋盤被分成繪有各種動物的方塊。要獲勝，您需要在時間限制內移除除有方塊的儲存格外的所有儲存格。您可以通過選擇兩個相同圖案的方塊來移除方塊，兩個方塊之間的連接路徑最多只能彎曲2次。",
+    "rulesText2": "要開始新遊戲，請點擊螢幕中央的<0>開始遊戲</0>按鈕或按空格鍵。剩餘提示數顯示在左上角，時間條顯示在上方中央。",
+    "gravityPattern": "各階段重力模式",
+    "gravityPatternText": "隨著階段增加，移除方塊後，剩餘方塊會朝特定方向移動以填充空白空間。從第3階段開始，上下左右移動開始，在最後的第13階段，您可以體驗所有方向重力複合作用的最高難度。",
+    "hintAndShuffle": "提示和自動洗牌",
+    "hintAndShuffleText": "如果沒有更多可以連接的方塊，棋盤會自動<0>洗牌（Shuffle）</0>並重新排列。洗牌時不會消耗提示。當自己難以找到路徑時，您可以使用<0>提示（Hint）</0>按鈕或<1>F5</1>鍵來查看一對可連接的方塊。"
   },
   "countries": {
     "AC": "亞森松島",
@@ -329,5 +349,38 @@
     "ENGLAND": "英格蘭",
     "SCOTLAND": "蘇格蘭",
     "WALES": "威爾斯"
+  },
+  "privacyPolicy": {
+    "title": "隱私權政策",
+    "effectiveDate": "生效日期: 2026年1月25日",
+    "introduction": "本服務（以下簡稱「Onet Connect」）由個人開發者（以下簡稱「營運者」）營運，為保護使用者個人資訊並迅速處理相關投訴，特制定並公開以下處理政策。",
+    "section1": {
+      "title": "1. 個人資訊的收集和使用目的",
+      "content": "營運者為以下目的處理最少的個人資訊。",
+      "item1": "使用者識別和遊戲資料管理: 使用Google唯一識別碼（UID）儲存遊戲分數和進度資料",
+      "item2": "服務使用統計和排名系統: 使用使用者暱稱（displayName）和國家資訊（country）顯示排名",
+      "item3": "使用者諮詢回應: 使用電子郵件地址接收錯誤報告並提供回覆指導"
+    },
+    "section2": {
+      "title": "2. 收集的個人資訊項目",
+      "content": "在服務使用過程中，透過Google登入（Firebase Auth）自動收集以下資訊。",
+      "items": "收集項目: Google UID、電子郵件地址、姓名（暱稱）、存取國家資訊"
+    },
+    "section3": {
+      "title": "3. 個人資訊的處理和保留期限",
+      "content": "營運者僅在使用者使用服務期間保留個人資訊，當使用者請求退出服務或使用目的達成時，將立即銷毀該資訊。"
+    },
+    "section4": {
+      "title": "4. 個人資訊處理的委託和境外轉移",
+      "content": "本服務為資料管理使用外部服務，在此過程中會發生個人資訊的境外轉移。",
+      "item1": "受託方: Google LLC（Firebase服務）",
+      "item2": "委託業務: 使用者認證、資料庫管理（Firestore）",
+      "item3": "轉移國家: 美國等Google伺服器所在地"
+    },
+    "section5": {
+      "title": "5. 個人資訊保護負責人及聯絡方式",
+      "officer": "個人資訊保護負責人: 李秀河",
+      "email": "聯絡信箱: swuhalee@gmail.com"
+    }
   }
 }

@@ -1,6 +1,6 @@
-import { getAdditionalUserInfo, signInWithPopup, signOut } from "firebase/auth";
+import { deleteUser, getAdditionalUserInfo, signInWithPopup, signOut } from "firebase/auth";
 import { auth, db, googleProvider } from "../utils/firebase";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
 import type { UserProfile } from "../models/user";
 
 export const loginWithGoogle = async (): Promise<{ isNewUser: boolean }> => {
@@ -53,4 +53,17 @@ export const updateUserProfile = async (uid: string, user: UserProfile) => {
   const userRef = doc(db, "users", uid);
   const { uid: _, ...userData } = user; // uid를 제외한 나머지 데이터만 저장함
   await setDoc(userRef, userData, { merge: true });
+};
+
+export const deleteUserAccount = async (): Promise<void> => {
+  const user = auth.currentUser;
+
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  const uid = user.uid;
+  await deleteUser(user);
+  const userRef = doc(db, "users", uid);
+  await deleteDoc(userRef);
 };

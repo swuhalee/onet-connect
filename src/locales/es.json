@@ -20,7 +20,10 @@
     "logoutSuccess": "Cierre de sesión exitoso.",
     "logoutFailed": "Error al cerrar sesión.",
     "profileUpdateSuccess": "Perfil actualizado exitosamente.",
-    "profileUpdateFailed": "Error al actualizar el perfil."
+    "profileUpdateFailed": "Error al actualizar el perfil.",
+    "deleteAccountSuccess": "Cuenta eliminada exitosamente.",
+    "deleteAccountFailed": "Error al eliminar la cuenta.",
+    "deleteAccountRequiresRecentLogin": "Se requiere un inicio de sesión reciente. Por favor, inicie sesión nuevamente e intente de nuevo."
   },
   "navigation": {
     "game": "Juego",
@@ -34,7 +37,9 @@
     "emailPlaceholder": "Email",
     "country": "País",
     "countryPlaceholder": "Seleccione un país",
-    "updateProfile": "Actualizar perfil"
+    "updateProfile": "Actualizar perfil",
+    "deleteAccount": "Eliminar cuenta",
+    "privacyPolicy": "Política de privacidad"
   },
   "ranking": {
     "title": "Clasificación",
@@ -54,6 +59,10 @@
       "title": "Onet Connect - Juego",
       "description": "¡Juega Onet Connect! Un clásico juego de rompecabezas de emparejamiento de fichas. ¡Conecta pares coincidentes y limpia el tablero para ganar!"
     },
+    "game": {
+      "title": "Onet Connect - Jugar",
+      "description": "¡Juega Onet Connect! Un clásico juego de rompecabezas donde conectas fichas con el mismo patrón para limpiar el tablero."
+    },
     "ranking": {
       "title": "Onet Connect - Clasificación",
       "description": "Consulta la clasificación global de Onet Connect. ¡Compite con los mejores jugadores y escala en el ranking!"
@@ -66,6 +75,17 @@
       "title": "Onet Connect - Página no encontrada",
       "description": "La página solicitada no existe. ¡Regresa al inicio y disfruta del juego!"
     }
+  },
+  "home": {
+    "gameIntroduction": "Introducción al juego",
+    "gameIntroductionText": "<0>Onet Connect</0> es un juego de rompecabezas de emparejamiento de fichas. El objetivo es encontrar y conectar dos fichas con el mismo patrón colocadas en el tablero para eliminarlas. Si eliminas todas las fichas dentro del límite de tiempo, puedes avanzar a la siguiente etapa. A medida que aumenta la etapa, se aplica un sistema de gravedad con dificultad creciente. Es un juego desafiante que requiere juicio rápido y pensamiento estratégico.",
+    "rules": "Reglas",
+    "rulesText1": "El tablero está dividido en fichas con varios animales dibujados en ellas. Para ganar, necesitas eliminar todas las celdas excepto las que tienen fichas dentro del límite de tiempo. Puedes eliminar fichas seleccionando dos fichas con el mismo patrón, y la ruta de conexión entre las dos fichas solo puede doblarse hasta 2 veces.",
+    "rulesText2": "Para comenzar un nuevo juego, haz clic en el botón <0>Iniciar juego</0> en el centro de la pantalla o presiona la barra espaciadora. El número de pistas restantes se muestra en la parte superior izquierda, y la barra de tiempo se muestra en la parte superior central.",
+    "gravityPattern": "Patrón de gravedad por etapa",
+    "gravityPatternText": "A medida que aumenta la etapa, las fichas restantes se mueven en una dirección específica para llenar el espacio vacío después de eliminar fichas. El movimiento en todas las direcciones (arriba, abajo, izquierda, derecha) comienza desde la Etapa 3, y en la etapa final 13, puedes experimentar la mayor dificultad con la gravedad funcionando en todas las direcciones.",
+    "hintAndShuffle": "Pistas y barajado automático",
+    "hintAndShuffleText": "Si no hay más fichas que se puedan conectar, el tablero se <0>barajará (Shuffle)</0> y reorganizará automáticamente. Las pistas no se consumen al barajar. Cuando sea difícil encontrar un camino por ti mismo, puedes usar el botón <0>Pista</0> o la tecla <1>F5</1> para verificar un par de fichas conectables."
   },
   "countries": {
     "AC": "Isla de Ascensión",
@@ -329,5 +349,38 @@
     "ENGLAND": "Inglaterra",
     "SCOTLAND": "Escocia",
     "WALES": "Gales"
+  },
+  "privacyPolicy": {
+    "title": "Política de Privacidad",
+    "effectiveDate": "Fecha de vigencia: 25 de enero de 2026",
+    "introduction": "Este servicio (en adelante 'Onet Connect') es operado por un desarrollador individual (en adelante 'Operador'), y hemos establecido y divulgado la siguiente política de procesamiento para proteger la información personal de los usuarios y manejar rápidamente las quejas relacionadas.",
+    "section1": {
+      "title": "1. Propósito de la recopilación y uso de información personal",
+      "content": "El operador procesa información personal mínima para los siguientes propósitos.",
+      "item1": "Identificación de usuario y gestión de datos del juego: Almacenamiento de puntuaciones del juego y datos de progreso utilizando el identificador único de Google (UID)",
+      "item2": "Estadísticas de uso del servicio y sistema de clasificación: Visualización de clasificaciones utilizando el apodo del usuario (displayName) y la información del país (country)",
+      "item3": "Respuesta a consultas del usuario: Recepción de informes de errores y orientación de respuesta utilizando la dirección de correo electrónico"
+    },
+    "section2": {
+      "title": "2. Elementos de información personal recopilados",
+      "content": "La siguiente información se recopila automáticamente a través del inicio de sesión de Google (Firebase Auth) durante el uso del servicio.",
+      "items": "Elementos recopilados: Google UID, dirección de correo electrónico, nombre (apodo), información del país de acceso"
+    },
+    "section3": {
+      "title": "3. Procesamiento y período de retención de información personal",
+      "content": "El operador retiene información personal solo durante el período de uso del servicio, y destruye la información sin demora cuando el usuario solicita la retirada del servicio o cuando se logra el propósito de uso."
+    },
+    "section4": {
+      "title": "4. Encargo y transferencia al extranjero del procesamiento de información personal",
+      "content": "Este servicio utiliza servicios externos para la gestión de datos, y en este proceso se transfiere información personal al extranjero.",
+      "item1": "Consignatario: Google LLC (servicio Firebase)",
+      "item2": "Tareas encargadas: Autenticación de usuario, gestión de base de datos (Firestore)",
+      "item3": "País de transferencia: Estados Unidos y otras ubicaciones de servidores de Google"
+    },
+    "section5": {
+      "title": "5. Oficial de Protección de Información Personal y Contacto",
+      "officer": "Oficial de Protección de Información Personal: Suha Lee",
+      "email": "Correo electrónico de contacto: swuhalee@gmail.com"
+    }
   }
 }

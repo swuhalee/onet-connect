@@ -20,7 +20,10 @@
     "logoutSuccess": "Abmeldung erfolgreich.",
     "logoutFailed": "Abmeldung fehlgeschlagen.",
     "profileUpdateSuccess": "Profil erfolgreich aktualisiert.",
-    "profileUpdateFailed": "Profilaktualisierung fehlgeschlagen."
+    "profileUpdateFailed": "Profilaktualisierung fehlgeschlagen.",
+    "deleteAccountSuccess": "Konto erfolgreich gelöscht.",
+    "deleteAccountFailed": "Kontolöschung fehlgeschlagen.",
+    "deleteAccountRequiresRecentLogin": "Eine kürzliche Anmeldung ist erforderlich. Bitte melden Sie sich erneut an und versuchen Sie es erneut."
   },
   "navigation": {
     "game": "Spiel",
@@ -34,7 +37,9 @@
     "emailPlaceholder": "E-Mail",
     "country": "Land",
     "countryPlaceholder": "Wählen Sie ein Land",
-    "updateProfile": "Profil aktualisieren"
+    "updateProfile": "Profil aktualisieren",
+    "deleteAccount": "Konto löschen",
+    "privacyPolicy": "Datenschutzrichtlinie"
   },
   "ranking": {
     "title": "Rangliste",
@@ -54,6 +59,10 @@
       "title": "Onet Connect - Spiel",
       "description": "Spielen Sie Onet Connect! Ein klassisches Kachel-Matching-Puzzlespiel. Verbinden Sie passende Paare und räumen Sie das Brett ab, um zu gewinnen!"
     },
+    "game": {
+      "title": "Onet Connect - Spiel spielen",
+      "description": "Spielen Sie Onet Connect! Ein klassisches Puzzlespiel, bei dem Sie Kacheln mit demselben Muster verbinden, um das Brett zu räumen."
+    },
     "ranking": {
       "title": "Onet Connect - Rangliste",
       "description": "Sehen Sie sich die globale Onet Connect Rangliste an. Treten Sie gegen die besten Spieler an und steigen Sie in der Rangliste auf!"
@@ -66,6 +75,17 @@
       "title": "Onet Connect - Seite nicht gefunden",
       "description": "Die angeforderte Seite existiert nicht. Kehren Sie zur Startseite zurück und genießen Sie das Spiel!"
     }
+  },
+  "home": {
+    "gameIntroduction": "Spielvorstellung",
+    "gameIntroductionText": "<0>Onet Connect</0> ist ein Kachel-Matching-Puzzlespiel. Das Ziel ist es, zwei Kacheln mit demselben Muster zu finden und zu verbinden, die auf dem Brett platziert sind, um sie zu entfernen. Wenn Sie alle Kacheln innerhalb des Zeitlimits entfernen, können Sie zur nächsten Stufe übergehen. Mit steigender Stufe wird ein Schwerkraftsystem mit zunehmendem Schwierigkeitsgrad angewendet. Es ist ein herausforderndes Spiel, das schnelles Urteilsvermögen und strategisches Denken erfordert.",
+    "rules": "Regeln",
+    "rulesText1": "Das Brett ist in Kacheln mit verschiedenen darauf gezeichneten Tieren unterteilt. Um zu gewinnen, müssen Sie innerhalb des Zeitlimits alle Zellen außer denen mit Kacheln entfernen. Sie können Kacheln entfernen, indem Sie zwei Kacheln mit demselben Muster auswählen, und der Verbindungspfad zwischen den beiden Kacheln kann sich nur bis zu 2 Mal biegen.",
+    "rulesText2": "Um ein neues Spiel zu starten, klicken Sie auf die Schaltfläche <0>Spiel starten</0> in der Mitte des Bildschirms oder drücken Sie die Leertaste. Die Anzahl der verbleibenden Hinweise wird oben links angezeigt, und die Zeitleiste wird oben in der Mitte angezeigt.",
+    "gravityPattern": "Schwerkraftmuster nach Stufe",
+    "gravityPatternText": "Mit steigender Stufe bewegen sich die verbleibenden Kacheln in eine bestimmte Richtung, um den leeren Raum nach dem Entfernen von Kacheln zu füllen. Die Bewegung in alle Richtungen (oben, unten, links, rechts) beginnt ab Stufe 3, und in der finalen 13. Stufe können Sie die höchste Schwierigkeit mit Schwerkraft in alle Richtungen erleben.",
+    "hintAndShuffle": "Hinweise und automatisches Mischen",
+    "hintAndShuffleText": "Wenn keine Kacheln mehr verbunden werden können, wird das Brett automatisch <0>gemischt (Shuffle)</0> und neu angeordnet. Hinweise werden beim Mischen nicht verbraucht. Wenn es schwierig ist, selbst einen Weg zu finden, können Sie die <0>Hinweis</0>-Schaltfläche oder die <1>F5</1>-Taste verwenden, um ein Paar verbindbarer Kacheln zu überprüfen."
   },
   "countries": {
     "AC": "Ascension",
@@ -329,5 +349,38 @@
     "ENGLAND": "England",
     "SCOTLAND": "Schottland",
     "WALES": "Wales"
+  },
+  "privacyPolicy": {
+    "title": "Datenschutzrichtlinie",
+    "effectiveDate": "Gültigkeitsdatum: 25. Januar 2026",
+    "introduction": "Dieser Service (im Folgenden 'Onet Connect') wird von einem einzelnen Entwickler (im Folgenden 'Betreiber') betrieben, und wir haben die folgende Verarbeitungsrichtlinie erstellt und veröffentlicht, um die persönlichen Daten der Benutzer zu schützen und verwandte Beschwerden schnell zu bearbeiten.",
+    "section1": {
+      "title": "1. Zweck der Erhebung und Verwendung personenbezogener Daten",
+      "content": "Der Betreiber verarbeitet minimale personenbezogene Daten für die folgenden Zwecke.",
+      "item1": "Benutzeridentifikation und Spieldatenverwaltung: Speicherung von Spielpunkten und Fortschrittsdaten unter Verwendung der Google-Eindeutigkeitskennung (UID)",
+      "item2": "Service-Nutzungsstatistiken und Ranglistensystem: Anzeige von Ranglisten unter Verwendung des Benutzernamens (displayName) und der Länderinformationen (country)",
+      "item3": "Benutzeranfragen: Entgegennahme von Fehlermeldungen und Antwortanleitung unter Verwendung der E-Mail-Adresse"
+    },
+    "section2": {
+      "title": "2. Erhobene personenbezogene Daten",
+      "content": "Die folgenden Informationen werden während der Nutzung des Dienstes automatisch über Google-Anmeldung (Firebase Auth) erfasst.",
+      "items": "Erhobene Daten: Google UID, E-Mail-Adresse, Name (Spitzname), Zugriffslandinformationen"
+    },
+    "section3": {
+      "title": "3. Verarbeitung und Aufbewahrungsdauer personenbezogener Daten",
+      "content": "Der Betreiber speichert personenbezogene Daten nur während der Nutzungsdauer des Dienstes und löscht die Daten unverzüglich, wenn der Benutzer die Kündigung des Dienstes beantragt oder wenn der Verwendungszweck erreicht wurde."
+    },
+    "section4": {
+      "title": "4. Auftragsverarbeitung und Übermittlung personenbezogener Daten ins Ausland",
+      "content": "Dieser Service nutzt externe Dienste für das Datenmanagement, und in diesem Prozess werden personenbezogene Daten ins Ausland übermittelt.",
+      "item1": "Auftragnehmer: Google LLC (Firebase-Dienst)",
+      "item2": "Auftragsaufgaben: Benutzerauthentifizierung, Datenbankverwaltung (Firestore)",
+      "item3": "Übermittlungsland: Vereinigte Staaten und andere Google-Serverstandorte"
+    },
+    "section5": {
+      "title": "5. Datenschutzbeauftragter und Kontakt",
+      "officer": "Datenschutzbeauftragter: Suha Lee",
+      "email": "Kontakt-E-Mail: swuhalee@gmail.com"
+    }
   }
 }

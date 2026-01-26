@@ -3,6 +3,7 @@ import { Link, useLocation, useParams } from "react-router";
 import { useTranslation } from "react-i18next";
 import GameIcon from '@mui/icons-material/Casino';
 import RankingIcon from '@mui/icons-material/Stars';
+import { getCurrentLanguage } from "../../utils/languageDetection";
 
 interface MobileDrawerProps {
     open: boolean;
@@ -39,10 +40,10 @@ const MobileDrawer = ({ open, onClose }: MobileDrawerProps) => {
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     const location = useLocation();
     const { lng } = useParams();
-    const { t } = useTranslation();
-    const currentLng = lng || 'ko';
+    const { t, i18n } = useTranslation();
+    const currentLng = getCurrentLanguage(lng, i18n.language);
 
-    const isGameActive = location.pathname === `/${currentLng}` || location.pathname === `/${currentLng}/`;
+    const isGameActive = location.pathname === `/${currentLng}/game`;
     const isRankingActive = location.pathname === `/${currentLng}/ranking`;
 
     if (!isMobile) {
@@ -75,7 +76,7 @@ const MobileDrawer = ({ open, onClose }: MobileDrawerProps) => {
         >
             <DrawerHeader />
             <MenuContainer>
-                <MenuItem to={`/${currentLng}`} active={isGameActive} onClick={onClose}>
+                <MenuItem to={`/${currentLng}/game`} active={isGameActive} onClick={onClose}>
                     <GameIcon />
                     <Typography>{t('navigation.game')}</Typography>
                 </MenuItem>

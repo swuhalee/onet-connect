@@ -37,7 +37,7 @@ const AppLayout = () => {
                 </OutletContainer>
             </OutletWrapper>
         </>
-    )
-}
+    );
+};
 
-export default AppLayout
+export default AppLayout;
