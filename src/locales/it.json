@@ -20,7 +20,10 @@
     "logoutSuccess": "Disconnessione riuscita.",
     "logoutFailed": "Disconnessione fallita.",
     "profileUpdateSuccess": "Profilo aggiornato con successo.",
-    "profileUpdateFailed": "Aggiornamento del profilo fallito."
+    "profileUpdateFailed": "Aggiornamento del profilo fallito.",
+    "deleteAccountSuccess": "Account eliminato con successo.",
+    "deleteAccountFailed": "Eliminazione dell'account fallita.",
+    "deleteAccountRequiresRecentLogin": "È richiesto un accesso recente. Effettua nuovamente l'accesso e riprova."
   },
   "navigation": {
     "game": "Gioco",
@@ -34,7 +37,9 @@
     "emailPlaceholder": "Email",
     "country": "Paese",
     "countryPlaceholder": "Seleziona un paese",
-    "updateProfile": "Aggiorna profilo"
+    "updateProfile": "Aggiorna profilo",
+    "deleteAccount": "Elimina account",
+    "privacyPolicy": "Informativa sulla privacy"
   },
   "ranking": {
     "title": "Classifica",
@@ -54,6 +59,10 @@
       "title": "Onet Connect - Gioco",
       "description": "Gioca a Onet Connect! Un classico gioco di puzzle di abbinamento di tessere. Collega le coppie corrispondenti e pulisci la tavola per vincere!"
     },
+    "game": {
+      "title": "Onet Connect - Gioca",
+      "description": "Gioca a Onet Connect! Un classico gioco di puzzle dove colleghi tessere con lo stesso motivo per pulire la tavola."
+    },
     "ranking": {
       "title": "Onet Connect - Classifica",
       "description": "Controlla la classifica globale di Onet Connect. Competi con i migliori giocatori e scala la classifica!"
@@ -66,6 +75,17 @@
       "title": "Onet Connect - Pagina non trovata",
       "description": "La pagina richiesta non esiste. Torna alla home e goditi il gioco!"
     }
+  },
+  "home": {
+    "gameIntroduction": "Introduzione al gioco",
+    "gameIntroductionText": "<0>Onet Connect</0> è un gioco di puzzle di abbinamento di tessere. L'obiettivo è trovare e collegare due tessere con lo stesso motivo posizionate sulla tavola per rimuoverle. Se rimuovi tutte le tessere entro il limite di tempo, puoi procedere alla fase successiva. Man mano che la fase aumenta, viene applicato un sistema di gravità con difficoltà crescente. È un gioco impegnativo che richiede giudizio rapido e pensiero strategico.",
+    "rules": "Regole",
+    "rulesText1": "La tavola è divisa in tessere con vari animali disegnati su di esse. Per vincere, devi rimuovere tutte le celle tranne quelle con tessere entro il limite di tempo. Puoi rimuovere le tessere selezionando due tessere con lo stesso motivo, e il percorso di connessione tra le due tessere può piegarsi solo fino a 2 volte.",
+    "rulesText2": "Per iniziare un nuovo gioco, fai clic sul pulsante <0>Inizia gioco</0> al centro dello schermo o premi la barra spaziatrice. Il numero di suggerimenti rimanenti è visualizzato in alto a sinistra e la barra del tempo è visualizzata in alto al centro.",
+    "gravityPattern": "Modello di gravità per fase",
+    "gravityPatternText": "Man mano che la fase aumenta, le tessere rimanenti si muovono in una direzione specifica per riempire lo spazio vuoto dopo aver rimosso le tessere. Il movimento in tutte le direzioni (su, giù, sinistra, destra) inizia dalla Fase 3, e nella fase finale 13, puoi sperimentare la massima difficoltà con la gravità che funziona in tutte le direzioni.",
+    "hintAndShuffle": "Suggerimenti e mescolamento automatico",
+    "hintAndShuffleText": "Se non ci sono più tessere che possono essere collegate, la tavola verrà automaticamente <0>mescolata (Shuffle)</0> e riorganizzata. I suggerimenti non vengono consumati durante il mescolamento. Quando è difficile trovare un percorso da soli, puoi usare il pulsante <0>Suggerimento</0> o il tasto <1>F5</1> per controllare una coppia di tessere collegabili."
   },
   "countries": {
     "AC": "Isola di Ascensione",
@@ -329,5 +349,38 @@
     "ENGLAND": "Inghilterra",
     "SCOTLAND": "Scozia",
     "WALES": "Galles"
+  },
+  "privacyPolicy": {
+    "title": "Informativa sulla Privacy",
+    "effectiveDate": "Data di entrata in vigore: 25 gennaio 2026",
+    "introduction": "Questo servizio (di seguito 'Onet Connect') è gestito da uno sviluppatore individuale (di seguito 'Operatore'), e abbiamo stabilito e divulgato la seguente politica di trattamento per proteggere le informazioni personali degli utenti e gestire rapidamente le relative denunce.",
+    "section1": {
+      "title": "1. Scopo della raccolta e dell'uso delle informazioni personali",
+      "content": "L'operatore elabora informazioni personali minime per i seguenti scopi.",
+      "item1": "Identificazione utente e gestione dei dati di gioco: Archiviazione dei punteggi di gioco e dei dati di progresso utilizzando l'identificatore univoco Google (UID)",
+      "item2": "Statistiche di utilizzo del servizio e sistema di classificazione: Visualizzazione delle classifiche utilizzando il soprannome dell'utente (displayName) e le informazioni sul paese (country)",
+      "item3": "Risposta alle richieste degli utenti: Ricezione di segnalazioni di errori e guida alle risposte utilizzando l'indirizzo email"
+    },
+    "section2": {
+      "title": "2. Elementi di informazioni personali raccolti",
+      "content": "Le seguenti informazioni vengono raccolte automaticamente tramite l'accesso Google (Firebase Auth) durante l'uso del servizio.",
+      "items": "Elementi raccolti: Google UID, indirizzo email, nome (soprannome), informazioni sul paese di accesso"
+    },
+    "section3": {
+      "title": "3. Elaborazione e periodo di conservazione delle informazioni personali",
+      "content": "L'operatore conserva le informazioni personali solo durante il periodo di utilizzo del servizio e distrugge le informazioni senza ritardo quando l'utente richiede il ritiro dal servizio o quando lo scopo di utilizzo è raggiunto."
+    },
+    "section4": {
+      "title": "4. Affidamento e trasferimento all'estero dell'elaborazione delle informazioni personali",
+      "content": "Questo servizio utilizza servizi esterni per la gestione dei dati e in questo processo le informazioni personali vengono trasferite all'estero.",
+      "item1": "Consignatario: Google LLC (servizio Firebase)",
+      "item2": "Attività affidate: Autenticazione utente, gestione del database (Firestore)",
+      "item3": "Paese di trasferimento: Stati Uniti e altre posizioni dei server Google"
+    },
+    "section5": {
+      "title": "5. Responsabile della Protezione delle Informazioni Personali e Contatto",
+      "officer": "Responsabile della Protezione delle Informazioni Personali: Suha Lee",
+      "email": "Email di contatto: swuhalee@gmail.com"
+    }
   }
 }

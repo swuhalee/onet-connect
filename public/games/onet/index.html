@@ -278,13 +278,13 @@
                 if (currentStage === 13) {
                     gameState = 'GAME_CLEAR';
                     title.innerText = "GAME CLEAR";
-                    msg.innerText = `축하합니다!\n당신은 오넷 커넥트의 마스터입니다!`;
+                    msg.innerText = `Congratulations!\nYou are the master of Onet Connect!`;
                     btn.innerText = "RESTART";
                     reportFinalScore(totalScore);
                 } else {
                     gameState = 'STAGE_CLEAR';
                     title.innerText = "STAGE CLEAR";
-                    msg.innerText = `보너스 점수: +${timeBonus + hintBonus}\n다음 스테이지를 준비하세요!`;
+                    msg.innerText = `Bonus Score: +${timeBonus + hintBonus}\nGet ready for the next stage!`;
                     btn.innerText = "NEXT STAGE";
                 }
             } else {
@@ -292,7 +292,7 @@
                 const hintBonus = hintCount * 10;
                 totalScore += hintBonus;
                 title.innerText = "GAME OVER";
-                msg.innerText = `보너스 점수: +${hintBonus}\n다시 도전하시겠습니까?`;
+                msg.innerText = `Bonus Score: +${hintBonus}\nWould you like to try again?`;
                 btn.innerText = "RESTART";
                 reportFinalScore(totalScore);
             }
