@@ -20,7 +20,10 @@
     "logoutSuccess": "Logout realizado com sucesso.",
     "logoutFailed": "Falha no logout.",
     "profileUpdateSuccess": "Perfil atualizado com sucesso.",
-    "profileUpdateFailed": "Falha ao atualizar o perfil."
+    "profileUpdateFailed": "Falha ao atualizar o perfil.",
+    "deleteAccountSuccess": "Conta excluída com sucesso.",
+    "deleteAccountFailed": "Falha ao excluir a conta.",
+    "deleteAccountRequiresRecentLogin": "É necessário um login recente. Por favor, faça login novamente e tente novamente."
   },
   "navigation": {
     "game": "Jogo",
@@ -34,7 +37,9 @@
     "emailPlaceholder": "Email",
     "country": "País",
     "countryPlaceholder": "Selecione um país",
-    "updateProfile": "Atualizar perfil"
+    "updateProfile": "Atualizar perfil",
+    "deleteAccount": "Excluir conta",
+    "privacyPolicy": "Política de privacidade"
   },
   "ranking": {
     "title": "Classificação",
@@ -54,6 +59,10 @@
       "title": "Onet Connect - Jogo",
       "description": "Jogue Onet Connect! Um clássico jogo de quebra-cabeça de correspondência de peças. Conecte pares correspondentes e limpe o tabuleiro para vencer!"
     },
+    "game": {
+      "title": "Onet Connect - Jogar",
+      "description": "Jogue Onet Connect! Um clássico jogo de quebra-cabeça onde você conecta peças com o mesmo padrão para limpar o tabuleiro."
+    },
     "ranking": {
       "title": "Onet Connect - Classificação",
       "description": "Confira a classificação global do Onet Connect. Compita com os melhores jogadores e suba no ranking!"
@@ -66,6 +75,17 @@
       "title": "Onet Connect - Página não encontrada",
       "description": "A página solicitada não existe. Volte para o início e aproveite o jogo!"
     }
+  },
+  "home": {
+    "gameIntroduction": "Introdução ao jogo",
+    "gameIntroductionText": "<0>Onet Connect</0> é um jogo de quebra-cabeça de correspondência de peças. O objetivo é encontrar e conectar duas peças com o mesmo padrão colocadas no tabuleiro para removê-las. Se você remover todas as peças dentro do limite de tempo, pode prosseguir para a próxima etapa. À medida que a etapa aumenta, um sistema de gravidade com dificuldade crescente é aplicado. É um jogo desafiador que requer julgamento rápido e pensamento estratégico.",
+    "rules": "Regras",
+    "rulesText1": "O tabuleiro está dividido em peças com vários animais desenhados nelas. Para vencer, você precisa remover todas as células, exceto aquelas com peças, dentro do limite de tempo. Você pode remover peças selecionando duas peças com o mesmo padrão, e o caminho de conexão entre as duas peças pode dobrar apenas até 2 vezes.",
+    "rulesText2": "Para iniciar um novo jogo, clique no botão <0>Iniciar jogo</0> no centro da tela ou pressione a barra de espaço. O número de dicas restantes é exibido no canto superior esquerdo, e a barra de tempo é exibida no centro superior.",
+    "gravityPattern": "Padrão de gravidade por etapa",
+    "gravityPatternText": "À medida que a etapa aumenta, as peças restantes se movem em uma direção específica para preencher o espaço vazio após remover peças. O movimento em todas as direções (cima, baixo, esquerda, direita) começa a partir da Etapa 3, e na etapa final 13, você pode experimentar a maior dificuldade com a gravidade funcionando em todas as direções.",
+    "hintAndShuffle": "Dicas e embaralhamento automático",
+    "hintAndShuffleText": "Se não houver mais peças que possam ser conectadas, o tabuleiro será automaticamente <0>embaralhado (Shuffle)</0> e reorganizado. As dicas não são consumidas ao embaralhar. Quando for difícil encontrar um caminho sozinho, você pode usar o botão <0>Dica</0> ou a tecla <1>F5</1> para verificar um par de peças conectáveis."
   },
   "countries": {
     "AC": "Ilha de Ascensão",
@@ -329,5 +349,38 @@
     "ENGLAND": "Inglaterra",
     "SCOTLAND": "Escócia",
     "WALES": "País de Gales"
+  },
+  "privacyPolicy": {
+    "title": "Política de Privacidade",
+    "effectiveDate": "Data de vigência: 25 de janeiro de 2026",
+    "introduction": "Este serviço (doravante 'Onet Connect') é operado por um desenvolvedor individual (doravante 'Operador'), e estabelecemos e divulgamos a seguinte política de processamento para proteger as informações pessoais dos usuários e lidar rapidamente com reclamações relacionadas.",
+    "section1": {
+      "title": "1. Finalidade da coleta e uso de informações pessoais",
+      "content": "O operador processa informações pessoais mínimas para os seguintes fins.",
+      "item1": "Identificação do usuário e gerenciamento de dados do jogo: Armazenamento de pontuações do jogo e dados de progresso usando o identificador único do Google (UID)",
+      "item2": "Estatísticas de uso do serviço e sistema de classificação: Exibição de classificações usando o apelido do usuário (displayName) e informações do país (country)",
+      "item3": "Resposta a consultas do usuário: Recebimento de relatórios de erro e orientação de resposta usando o endereço de e-mail"
+    },
+    "section2": {
+      "title": "2. Itens de informações pessoais coletados",
+      "content": "As seguintes informações são coletadas automaticamente através do login do Google (Firebase Auth) durante o uso do serviço.",
+      "items": "Itens coletados: Google UID, endereço de e-mail, nome (apelido), informações do país de acesso"
+    },
+    "section3": {
+      "title": "3. Processamento e período de retenção de informações pessoais",
+      "content": "O operador retém informações pessoais apenas durante o período de uso do serviço e destrói as informações sem demora quando o usuário solicita a retirada do serviço ou quando o propósito de uso é alcançado."
+    },
+    "section4": {
+      "title": "4. Confiança e transferência para o exterior do processamento de informações pessoais",
+      "content": "Este serviço usa serviços externos para o gerenciamento de dados, e neste processo as informações pessoais são transferidas para o exterior.",
+      "item1": "Consignatário: Google LLC (serviço Firebase)",
+      "item2": "Tarefas confiadas: Autenticação de usuário, gerenciamento de banco de dados (Firestore)",
+      "item3": "País de transferência: Estados Unidos e outros locais de servidores do Google"
+    },
+    "section5": {
+      "title": "5. Oficial de Proteção de Informações Pessoais e Contato",
+      "officer": "Oficial de Proteção de Informações Pessoais: Suha Lee",
+      "email": "E-mail de contato: swuhalee@gmail.com"
+    }
   }
 }

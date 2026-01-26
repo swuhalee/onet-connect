@@ -20,7 +20,10 @@
     "logoutSuccess": "登出成功。",
     "logoutFailed": "登出失败。",
     "profileUpdateSuccess": "个人资料更新成功。",
-    "profileUpdateFailed": "个人资料更新失败。"
+    "profileUpdateFailed": "个人资料更新失败。",
+    "deleteAccountSuccess": "账户删除成功。",
+    "deleteAccountFailed": "账户删除失败。",
+    "deleteAccountRequiresRecentLogin": "需要最近登录。请重新登录后重试。"
   },
   "navigation": {
     "game": "游戏",
@@ -34,7 +37,9 @@
     "emailPlaceholder": "邮箱",
     "country": "国家",
     "countryPlaceholder": "请选择国家",
-    "updateProfile": "更新资料"
+    "updateProfile": "更新资料",
+    "deleteAccount": "删除账户",
+    "privacyPolicy": "隐私政策"
   },
   "ranking": {
     "title": "排行榜",
@@ -54,6 +59,10 @@
       "title": "Onet Connect - 游戏",
       "description": "玩Onet Connect！经典的方块匹配益智游戏。连接相同的图案方块，清空棋盘，赢得胜利！"
     },
+    "game": {
+      "title": "Onet Connect - 游戏游玩",
+      "description": "游玩Onet Connect游戏！连接相同图案的方块来清空棋盘的经典益智游戏。"
+    },
     "ranking": {
       "title": "Onet Connect - 排行榜",
       "description": "查看Onet Connect全球排行榜。与顶尖玩家竞争，攀登排行榜！"
@@ -66,6 +75,17 @@
       "title": "Onet Connect - 找不到页面",
       "description": "您请求的页面不存在。返回首页享受游戏吧！"
     }
+  },
+  "home": {
+    "gameIntroduction": "游戏介绍",
+    "gameIntroductionText": "<0>Onet Connect</0>是一款方块匹配益智游戏。目标是找到并连接棋盘上两个相同图案的方块来移除它们。如果您在时间限制内移除所有方块，可以进入下一阶段。随着阶段增加，会应用难度递增的重力系统。这是一款需要快速判断和战略思维的挑战性游戏。",
+    "rules": "规则",
+    "rulesText1": "棋盘被分成绘有各种动物的方块。要获胜，您需要在时间限制内移除除有方块的单元格外的所有单元格。您可以通过选择两个相同图案的方块来移除方块，两个方块之间的连接路径最多只能弯曲2次。",
+    "rulesText2": "要开始新游戏，请点击屏幕中央的<0>开始游戏</0>按钮或按空格键。剩余提示数显示在左上角，时间条显示在上方中央。",
+    "gravityPattern": "各阶段重力模式",
+    "gravityPatternText": "随着阶段增加，移除方块后，剩余方块会朝特定方向移动以填充空白空间。从第3阶段开始，上下左右移动开始，在最后的第13阶段，您可以体验所有方向重力复合作用的最高难度。",
+    "hintAndShuffle": "提示和自动洗牌",
+    "hintAndShuffleText": "如果没有更多可以连接的方块，棋盘会自动<0>洗牌（Shuffle）</0>并重新排列。洗牌时不会消耗提示。当自己难以找到路径时，您可以使用<0>提示（Hint）</0>按钮或<1>F5</1>键来查看一对可连接的方块。"
   },
   "countries": {
     "AC": "阿森松岛",
@@ -329,5 +349,38 @@
     "ENGLAND": "英格兰",
     "SCOTLAND": "苏格兰",
     "WALES": "威尔士"
+  },
+  "privacyPolicy": {
+    "title": "隐私政策",
+    "effectiveDate": "生效日期: 2026年1月25日",
+    "introduction": "本服务（以下简称「Onet Connect」）由个人开发者（以下简称「运营者」）运营，为保护用户个人信息并迅速处理相关投诉，特制定并公开以下处理政策。",
+    "section1": {
+      "title": "1. 个人信息的收集和使用目的",
+      "content": "运营者为以下目的处理最少的个人信息。",
+      "item1": "用户识别和游戏数据管理: 使用Google唯一标识符（UID）存储游戏分数和进度数据",
+      "item2": "服务使用统计和排名系统: 使用用户昵称（displayName）和国家信息（country）显示排名",
+      "item3": "用户咨询响应: 使用电子邮件地址接收错误报告并提供回复指导"
+    },
+    "section2": {
+      "title": "2. 收集的个人信息项目",
+      "content": "在服务使用过程中，通过Google登录（Firebase Auth）自动收集以下信息。",
+      "items": "收集项目: Google UID、电子邮件地址、姓名（昵称）、访问国家信息"
+    },
+    "section3": {
+      "title": "3. 个人信息的处理和保留期限",
+      "content": "运营者仅在用户使用服务期间保留个人信息，当用户请求退出服务或使用目的达成时，将立即销毁该信息。"
+    },
+    "section4": {
+      "title": "4. 个人信息处理的委托和境外转移",
+      "content": "本服务为数据管理使用外部服务，在此过程中会发生个人信息的境外转移。",
+      "item1": "受托方: Google LLC（Firebase服务）",
+      "item2": "委托业务: 用户认证、数据库管理（Firestore）",
+      "item3": "转移国家: 美国等Google服务器所在地"
+    },
+    "section5": {
+      "title": "5. 个人信息保护负责人及联系方式",
+      "officer": "个人信息保护负责人: 李秀河",
+      "email": "联系邮箱: swuhalee@gmail.com"
+    }
   }
 }

@@ -3,6 +3,7 @@ import { Table, TableBody, TableRow, TableCell, TableContainer, TableHead, Circu
 import { useTranslation } from "react-i18next";
 import type { RankingObject } from "../../../models/ranking";
 import { getFlagEmoji } from "../../../utils/flags";
+import { getLocaleFromLanguage } from "../../../utils/languageDetection";
 
 interface RankingTableProps {
     data: RankingObject[];
@@ -40,14 +41,15 @@ const StyledBodyCell = styled(TableCell)(({ theme }) => ({
     },
 }));
 
-const formatDate = (createdAt: any): string => {
-    if (!createdAt) return "-";
-    const date = createdAt.toDate ? createdAt.toDate() : new Date(createdAt);
-    return date.toLocaleDateString("ko-KR");
-};
-
 const RankingTable = ({ data, isLoading, currentPage, pageSize }: RankingTableProps) => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
+    
+    const formatDate = (createdAt: any): string => {
+        if (!createdAt) return "-";
+        const date = createdAt.toDate ? createdAt.toDate() : new Date(createdAt);
+        const locale = getLocaleFromLanguage(i18n.language);
+        return date.toLocaleDateString(locale);
+    };
 
     return (
         <StyledTableContainer>

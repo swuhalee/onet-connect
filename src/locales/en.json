@@ -20,7 +20,10 @@
     "logoutSuccess": "Logout successful.",
     "logoutFailed": "Logout failed.",
     "profileUpdateSuccess": "Profile updated successfully.",
-    "profileUpdateFailed": "Profile update failed."
+    "profileUpdateFailed": "Profile update failed.",
+    "deleteAccountSuccess": "Account deleted successfully.",
+    "deleteAccountFailed": "Account deletion failed.",
+    "deleteAccountRequiresRecentLogin": "Recent login is required. Please log in again and try again."
   },
   "navigation": {
     "game": "Game",
@@ -34,7 +37,9 @@
     "emailPlaceholder": "Email",
     "country": "Country",
     "countryPlaceholder": "Select a country",
-    "updateProfile": "Update Profile"
+    "updateProfile": "Update Profile",
+    "deleteAccount": "Delete Account",
+    "privacyPolicy": "Privacy Policy"
   },
   "ranking": {
     "title": "Ranking",
@@ -54,6 +59,10 @@
       "title": "Onet Connect - Game",
       "description": "Play Onet Connect, a classic tile matching puzzle game! Connect matching pairs and clear the board to win!"
     },
+    "game": {
+      "title": "Onet Connect - Play Game",
+      "description": "Play Onet Connect game! A classic puzzle game where you connect tiles with the same pattern to clear the board."
+    },
     "ranking": {
       "title": "Onet Connect - Ranking",
       "description": "Check out the global Onet Connect rankings. Compete with top players and climb the leaderboard!"
@@ -66,6 +75,17 @@
       "title": "Onet Connect - Page Not Found",
       "description": "The page you requested does not exist. Return to home and enjoy the game!"
     }
+  },
+  "home": {
+    "gameIntroduction": "Game Introduction",
+    "gameIntroductionText": "<0>Onet Connect</0> is a tile matching puzzle game. The goal is to find and connect two tiles with the same pattern placed on the board to remove them. If you remove all tiles within the time limit, you can proceed to the next stage. As the stage increases, a gravity system with increasing difficulty is applied. It is a challenging game that requires quick judgment and strategic thinking.",
+    "rules": "Rules",
+    "rulesText1": "The board is divided into tiles with various animals drawn on them. To win, you need to remove all cells except those with tiles within the time limit. You can remove tiles by selecting two tiles with the same pattern, and the connection path between the two tiles can only bend up to 2 times.",
+    "rulesText2": "To start a new game, click the <0>Start Game</0> button in the center of the screen or press the spacebar. The number of remaining hints is displayed in the top left, and the time bar is displayed in the top center.",
+    "gravityPattern": "Gravity Pattern by Stage",
+    "gravityPatternText": "As the stage increases, the remaining tiles move in a specific direction to fill the empty space after removing tiles. Movement in all directions (up, down, left, right) starts from Stage 3, and in the final 13th stage, you can experience the highest difficulty with gravity working in all directions.",
+    "hintAndShuffle": "Hints and Auto Shuffle",
+    "hintAndShuffleText": "If there are no more tiles that can be connected, the board will automatically be <0>shuffled (Shuffle)</0> and rearranged. Hints are not consumed when shuffling. When it's difficult to find a path yourself, you can use the <0>Hint</0> button or the <1>F5</1> key to check a pair of connectable tiles."
   },
   "countries": {
     "AC": "Ascension Island",
@@ -329,5 +349,38 @@
     "ENGLAND": "England",
     "SCOTLAND": "Scotland",
     "WALES": "Wales"
+  },
+  "privacyPolicy": {
+    "title": "Privacy Policy",
+    "effectiveDate": "Effective Date: January 25, 2026",
+    "introduction": "This service (hereinafter 'Onet Connect') is operated by an individual developer (hereinafter 'Operator'), and we have established and disclosed the following processing policy to protect users' personal information and promptly handle related complaints.",
+    "section1": {
+      "title": "1. Purpose of Collection and Use of Personal Information",
+      "content": "The operator processes minimal personal information for the following purposes.",
+      "item1": "User identification and game data management: Storage of game scores and progress data using Google unique identifier (UID)",
+      "item2": "Service usage statistics and ranking system: Display of rankings using user nickname (displayName) and country information (country)",
+      "item3": "User inquiry response: Receipt of error reports and response guidance using email address"
+    },
+    "section2": {
+      "title": "2. Items of Personal Information Collected",
+      "content": "The following information is automatically collected through Google login (Firebase Auth) during service use.",
+      "items": "Collected items: Google UID, email address, name (nickname), access country information"
+    },
+    "section3": {
+      "title": "3. Processing and Retention Period of Personal Information",
+      "content": "The operator retains personal information only during the period of service use, and destroys the information without delay when the user requests withdrawal from the service or when the purpose of use is achieved."
+    },
+    "section4": {
+      "title": "4. Entrustment and Overseas Transfer of Personal Information Processing",
+      "content": "This service uses external services for data management, and personal information is transferred overseas in this process.",
+      "item1": "Consignee: Google LLC (Firebase service)",
+      "item2": "Entrusted tasks: User authentication, database management (Firestore)",
+      "item3": "Transfer country: United States and other Google server locations"
+    },
+    "section5": {
+      "title": "5. Personal Information Protection Officer and Contact",
+      "officer": "Personal Information Protection Officer: Suha Lee",
+      "email": "Contact Email: swuhalee@gmail.com"
+    }
   }
 }
