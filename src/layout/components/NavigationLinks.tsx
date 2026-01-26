@@ -1,6 +1,7 @@
 import { Link, useLocation, useParams } from "react-router";
 import { Box, styled } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import { getCurrentLanguage } from "../../utils/languageDetection";
 
 const NavigationLinksContainer = styled(Box)(({ theme }) => ({
     height: "100%",
@@ -43,15 +44,15 @@ const NavLink = styled(Link, {
 const NavigationLinks = () => {
     const location = useLocation();
     const { lng } = useParams();
-    const { t } = useTranslation();
-    const currentLng = lng || 'ko';
+    const { t, i18n } = useTranslation();
+    const currentLng = getCurrentLanguage(lng, i18n.language);
     
-    const isGameActive = location.pathname === `/${currentLng}` || location.pathname === `/${currentLng}/`;
+    const isGameActive = location.pathname === `/${currentLng}/game`;
     const isRankingActive = location.pathname === `/${currentLng}/ranking`;
 
     return (
         <NavigationLinksContainer>
-            <NavLink to={`/${currentLng}`} active={isGameActive}>
+            <NavLink to={`/${currentLng}/game`} active={isGameActive}>
                 {t('navigation.game')}
             </NavLink>
             <NavLink to={`/${currentLng}/ranking`} active={isRankingActive}>

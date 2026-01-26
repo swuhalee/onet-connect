@@ -7,8 +7,10 @@ import { detectBrowserLanguage } from './utils/languageDetection';
 
 const AppLayout = React.lazy(() => import('./layout/AppLayout'));
 const HomePage = React.lazy(() => import('./pages/HomePage/HomePage'));
+const GamePage = React.lazy(() => import('./pages/GamePage/GamePage'));
 const RankingPage = React.lazy(() => import('./pages/RankingPage/RankingPage'));
 const AccountPage = React.lazy(() => import('./pages/AccountPage/AccountPage'));
+const PrivacyPolicyPage = React.lazy(() => import('./pages/PrivacyPolicyPage/PrivacyPolicyPage'));
 const NotFoundPage = React.lazy(() => import('./pages/NotFoundPage/NotFoundPage'));
 
 function App() {
@@ -25,8 +27,10 @@ function App() {
       <Routes>
         <Route path="/:lng" element={<AppLayout />}>
           <Route index element={<HomePage />} />
+          <Route path="game" element={<GamePage />} />
           <Route path="ranking" element={<RankingPage />} />
           <Route path="account" element={<AccountPage />} />
+          <Route path="privacy" element={<PrivacyPolicyPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
         

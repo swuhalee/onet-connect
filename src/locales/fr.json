@@ -20,7 +20,10 @@
     "logoutSuccess": "Déconnexion réussie.",
     "logoutFailed": "Échec de la déconnexion.",
     "profileUpdateSuccess": "Profil mis à jour avec succès.",
-    "profileUpdateFailed": "Échec de la mise à jour du profil."
+    "profileUpdateFailed": "Échec de la mise à jour du profil.",
+    "deleteAccountSuccess": "Compte supprimé avec succès.",
+    "deleteAccountFailed": "Échec de la suppression du compte.",
+    "deleteAccountRequiresRecentLogin": "Une connexion récente est requise. Veuillez vous reconnecter et réessayer."
   },
   "navigation": {
     "game": "Jeu",
@@ -34,7 +37,9 @@
     "emailPlaceholder": "Email",
     "country": "Pays",
     "countryPlaceholder": "Sélectionnez un pays",
-    "updateProfile": "Mettre à jour le profil"
+    "updateProfile": "Mettre à jour le profil",
+    "deleteAccount": "Supprimer le compte",
+    "privacyPolicy": "Politique de confidentialité"
   },
   "ranking": {
     "title": "Classement",
@@ -54,6 +59,10 @@
       "title": "Onet Connect - Jeu",
       "description": "Jouez à Onet Connect ! Un jeu de puzzle classique d'association de tuiles. Connectez les paires identiques et nettoyez le plateau pour gagner !"
     },
+    "game": {
+      "title": "Onet Connect - Jouer",
+      "description": "Jouez à Onet Connect ! Un jeu de puzzle classique où vous connectez des tuiles avec le même motif pour nettoyer le plateau."
+    },
     "ranking": {
       "title": "Onet Connect - Classement",
       "description": "Consultez le classement mondial d'Onet Connect. Affrontez les meilleurs joueurs et grimpez dans le classement !"
@@ -66,6 +75,17 @@
       "title": "Onet Connect - Page introuvable",
       "description": "La page demandée n'existe pas. Retournez à l'accueil et profitez du jeu !"
     }
+  },
+  "home": {
+    "gameIntroduction": "Introduction au jeu",
+    "gameIntroductionText": "<0>Onet Connect</0> est un jeu de puzzle d'association de tuiles. L'objectif est de trouver et de connecter deux tuiles avec le même motif placées sur le plateau pour les supprimer. Si vous supprimez toutes les tuiles dans la limite de temps, vous pouvez passer à l'étape suivante. À mesure que l'étape augmente, un système de gravité avec une difficulté croissante est appliqué. C'est un jeu stimulant qui nécessite un jugement rapide et une pensée stratégique.",
+    "rules": "Règles",
+    "rulesText1": "Le plateau est divisé en tuiles avec divers animaux dessinés dessus. Pour gagner, vous devez supprimer toutes les cellules sauf celles avec des tuiles dans la limite de temps. Vous pouvez supprimer des tuiles en sélectionnant deux tuiles avec le même motif, et le chemin de connexion entre les deux tuiles ne peut se plier que jusqu'à 2 fois.",
+    "rulesText2": "Pour commencer un nouveau jeu, cliquez sur le bouton <0>Démarrer le jeu</0> au centre de l'écran ou appuyez sur la barre d'espace. Le nombre de indices restants est affiché en haut à gauche, et la barre de temps est affichée en haut au centre.",
+    "gravityPattern": "Modèle de gravité par étape",
+    "gravityPatternText": "À mesure que l'étape augmente, les tuiles restantes se déplacent dans une direction spécifique pour remplir l'espace vide après avoir supprimé des tuiles. Le mouvement dans toutes les directions (haut, bas, gauche, droite) commence à partir de l'Étape 3, et dans la 13e étape finale, vous pouvez vivre la plus grande difficulté avec la gravité fonctionnant dans toutes les directions.",
+    "hintAndShuffle": "Indices et mélange automatique",
+    "hintAndShuffleText": "S'il n'y a plus de tuiles qui peuvent être connectées, le plateau sera automatiquement <0>mélangé (Shuffle)</0> et réorganisé. Les indices ne sont pas consommés lors du mélange. Quand il est difficile de trouver un chemin par vous-même, vous pouvez utiliser le bouton <0>Indice</0> ou la touche <1>F5</1> pour vérifier une paire de tuiles connectables."
   },
   "countries": {
     "AC": "Île de l'Ascension",
@@ -329,5 +349,38 @@
     "ENGLAND": "Angleterre",
     "SCOTLAND": "Écosse",
     "WALES": "Pays de Galles"
+  },
+  "privacyPolicy": {
+    "title": "Politique de Confidentialité",
+    "effectiveDate": "Date d'entrée en vigueur: 25 janvier 2026",
+    "introduction": "Ce service (ci-après 'Onet Connect') est exploité par un développeur individuel (ci-après 'Opérateur'), et nous avons établi et divulgué la politique de traitement suivante pour protéger les informations personnelles des utilisateurs et traiter rapidement les plaintes connexes.",
+    "section1": {
+      "title": "1. Objectif de la collecte et de l'utilisation des informations personnelles",
+      "content": "L'opérateur traite des informations personnelles minimales aux fins suivantes.",
+      "item1": "Identification de l'utilisateur et gestion des données du jeu: Stockage des scores et des données de progression du jeu en utilisant l'identifiant unique Google (UID)",
+      "item2": "Statistiques d'utilisation du service et système de classement: Affichage des classements en utilisant le pseudonyme de l'utilisateur (displayName) et les informations sur le pays (country)",
+      "item3": "Réponse aux demandes des utilisateurs: Réception des rapports d'erreur et orientation des réponses en utilisant l'adresse e-mail"
+    },
+    "section2": {
+      "title": "2. Éléments d'informations personnelles collectés",
+      "content": "Les informations suivantes sont automatiquement collectées via la connexion Google (Firebase Auth) pendant l'utilisation du service.",
+      "items": "Éléments collectés: Google UID, adresse e-mail, nom (pseudonyme), informations sur le pays d'accès"
+    },
+    "section3": {
+      "title": "3. Traitement et période de conservation des informations personnelles",
+      "content": "L'opérateur conserve les informations personnelles uniquement pendant la période d'utilisation du service et détruit les informations sans délai lorsque l'utilisateur demande le retrait du service ou lorsque l'objectif d'utilisation est atteint."
+    },
+    "section4": {
+      "title": "4. Délégation et transfert à l'étranger du traitement des informations personnelles",
+      "content": "Ce service utilise des services externes pour la gestion des données, et dans ce processus, les informations personnelles sont transférées à l'étranger.",
+      "item1": "Consignataire: Google LLC (service Firebase)",
+      "item2": "Tâches déléguées: Authentification des utilisateurs, gestion de la base de données (Firestore)",
+      "item3": "Pays de transfert: États-Unis et autres emplacements de serveurs Google"
+    },
+    "section5": {
+      "title": "5. Responsable de la Protection des Informations Personnelles et Contact",
+      "officer": "Responsable de la Protection des Informations Personnelles: Suha Lee",
+      "email": "E-mail de contact: swuhalee@gmail.com"
+    }
   }
 }
