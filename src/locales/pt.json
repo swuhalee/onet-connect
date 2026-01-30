@@ -54,6 +54,28 @@
     "message": "A página solicitada não existe.",
     "goHome": "Ir para o início"
   },
+  "errorPage": {
+    "title": {
+      "oops": "Algo deu errado!",
+      "unknown": "Erro desconhecido",
+      "statusFormat": "{{status}} {{statusMessage}}"
+    },
+    "message": {
+      "default": "Pedimos desculpas pelo inconveniente. Ocorreu um erro inesperado."
+    },
+    "status": {
+      "400": "Requisição inválida",
+      "401": "Não autorizado",
+      "403": "Acesso negado",
+      "404": "Página não encontrada",
+      "500": "Erro do servidor",
+      "502": "Bad Gateway",
+      "503": "Serviço indisponível",
+      "default": "Erro"
+    },
+    "reloadPage": "Recarregar página",
+    "goHome": "Ir para o início"
+  },
   "meta": {
     "home": {
       "title": "Onet Connect",

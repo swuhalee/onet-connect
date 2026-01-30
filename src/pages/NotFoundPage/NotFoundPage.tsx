@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from "@mui/material";
+import { alpha, Box, Button, Typography, useTheme } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import MainContainer from "../../layout/styles/MainContainer";
@@ -7,6 +7,7 @@ import i18n from "../../i18n";
 const NotFoundPage = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const theme = useTheme();
 
   return (
     <>
@@ -35,10 +36,10 @@ const NotFoundPage = () => {
         <Typography variant="h1" sx={{ fontSize: "72px", fontWeight: "bold" }}>
           404
         </Typography>
-        <Typography variant="h5" sx={{ fontWeight: 500 }}>
+        <Typography variant="h4" component="h1">
           {t('notFound.title')}
         </Typography>
-        <Typography variant="body1" color="text.secondary">
+        <Typography variant="body1" sx={{ color: alpha(theme.palette.text.primary, 0.5) }}>
           {t('notFound.message')}
         </Typography>
         <Button
