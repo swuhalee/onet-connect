@@ -54,6 +54,28 @@
     "message": "您请求的页面不存在。",
     "goHome": "返回首页"
   },
+  "errorPage": {
+    "title": {
+      "oops": "出错了",
+      "unknown": "未知错误",
+      "statusFormat": "{{status}} {{statusMessage}}"
+    },
+    "message": {
+      "default": "给您带来不便，我们深表歉意。发生了意外错误。"
+    },
+    "status": {
+      "400": "请求错误",
+      "401": "需要登录",
+      "403": "没有访问权限",
+      "404": "找不到页面",
+      "500": "服务器错误",
+      "502": "Bad Gateway",
+      "503": "服务不可用",
+      "default": "错误"
+    },
+    "reloadPage": "重新加载",
+    "goHome": "返回首页"
+  },
   "meta": {
     "home": {
       "title": "Onet Connect",

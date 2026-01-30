@@ -6,6 +6,8 @@ import { useSyncUserProfile } from "./useSyncUserProfile";
 import { useQueryClient } from "@tanstack/react-query";
 import { enqueueSnackbar } from "notistack";
 import i18n from "../i18n";
+import { setUserId } from "../utils/analytics";
+import { auth } from "../utils/firebase";
 
 export const useLoginWithGoogle = () => {
   const { t } = useTranslation();
@@ -17,6 +19,12 @@ export const useLoginWithGoogle = () => {
     // data: { isNewUser: boolean }
     mutationFn: loginWithGoogle,
     onSuccess: (data) => {
+      // GA4에 사용자 ID 설정 (비식별화된 상태)
+      const userId = auth.currentUser?.uid;
+      if (userId) {
+        setUserId(userId);
+      }
+
       // 첫 로그인인 경우에만 프로필 동기화
       if (data?.isNewUser) {
         syncUserProfile();
