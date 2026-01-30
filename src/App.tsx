@@ -13,8 +13,9 @@ function App() {
       <SnackbarProvider
         autoHideDuration={3000}
         maxSnack={3}
-      />
-      <RouterProvider router={router} />
+      >
+        <RouterProvider router={router} />
+      </SnackbarProvider>
     </ThemeProvider>
   )
 }
