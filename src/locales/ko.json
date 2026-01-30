@@ -54,6 +54,28 @@
     "message": "요청하신 페이지가 존재하지 않습니다.",
     "goHome": "홈으로 이동"
   },
+  "errorPage": {
+    "title": {
+      "oops": "문제가 발생했습니다",
+      "unknown": "알 수 없는 오류",
+      "statusFormat": "{{status}} {{statusMessage}}"
+    },
+    "message": {
+      "default": "불편을 드려 죄송합니다. 예기치 않은 오류가 발생했습니다."
+    },
+    "status": {
+      "400": "잘못된 요청",
+      "401": "인증 필요",
+      "403": "접근 권한 없음",
+      "404": "페이지를 찾을 수 없습니다",
+      "500": "서버 오류",
+      "502": "Bad Gateway",
+      "503": "서비스를 사용할 수 없습니다",
+      "default": "오류"
+    },
+    "reloadPage": "새로고침",
+    "goHome": "홈으로 이동"
+  },
   "meta": {
     "home": {
       "title": "Onet Connect",
