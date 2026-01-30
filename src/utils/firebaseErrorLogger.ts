@@ -1,4 +1,5 @@
 import { trackFirebaseError, FirebaseService, type FirebaseServiceType } from './analytics';
+import { sanitizeErrorMessage } from './sanitizeErrorMessage';
 import { FirebaseError } from 'firebase/app';
 
 const sendErrorToGA4 = (
@@ -7,9 +8,12 @@ const sendErrorToGA4 = (
   operation: string
 ) => {
   if (error instanceof FirebaseError) {
-    trackFirebaseError(service, error.code || 'unknown', `[${operation}] ${error.message}`);
+    const sanitizedMessage = sanitizeErrorMessage(error.message);
+    const code = error.code || 'unknown';
+    trackFirebaseError(service, code, `[${operation}] ${sanitizedMessage}`);
   } else if (error instanceof Error) {
-    trackFirebaseError(service, 'unknown', `[${operation}] ${error.message}`);
+    const sanitizedMessage = sanitizeErrorMessage(error.message);
+    trackFirebaseError(service, 'unknown', `[${operation}] ${sanitizedMessage}`);
   } else {
     trackFirebaseError(service, 'unknown', `[${operation}] Unknown error`);
   }
