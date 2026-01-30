@@ -8,6 +8,7 @@ import { useDeleteUserAccount } from "../../hooks/useDeleteUserAccount";
 import countriesData from "../../constants/countries.json";
 import { getFlagEmoji } from "../../utils/flags";
 import MainContainer from "../../layout/styles/MainContainer";
+import { OG_IMAGE_URL } from "../../configs/appUrl";
 import { getCurrentLanguage } from "../../utils/languageDetection";
 import PrivacyPolicyButton from "./components/PrivacyPolicyButton";
 import DeleteAccountButton from "./components/DeleteAccountButton";
@@ -67,11 +68,11 @@ const AccountPage = () => {
       <meta property="og:title" content={t('meta.account.title')} />
       <meta property="og:description" content={t('meta.account.description')} />
       <meta property="og:type" content="website" />
-      <meta property="og:image" content="/og-image.png" />
+      <meta property="og:image" content={OG_IMAGE_URL} />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={t('meta.account.title')} />
       <meta name="twitter:description" content={t('meta.account.description')} />
-      <meta name="twitter:image" content="/og-image.png" />
+      <meta name="twitter:image" content={OG_IMAGE_URL} />
 
       <MainContainer>
         <Typography variant="h5" sx={{ fontWeight: "bold" }}>
