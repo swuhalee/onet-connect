@@ -1,6 +1,7 @@
 import { Typography, Divider } from '@mui/material';
 import { useTranslation, Trans } from 'react-i18next';
 import MainContainer from '../../layout/styles/MainContainer';
+import { OG_IMAGE_URL } from '../../configs/appUrl';
 
 const HomePage = () => {
     const { t } = useTranslation();
@@ -12,11 +13,11 @@ const HomePage = () => {
             <meta property="og:title" content={t('meta.home.title')} />
             <meta property="og:description" content={t('meta.home.description')} />
             <meta property="og:type" content="website" />
-            <meta property="og:image" content="/og-image.png" />
+            <meta property="og:image" content={OG_IMAGE_URL} />
             <meta name="twitter:card" content="summary_large_image" />
             <meta name="twitter:title" content={t('meta.home.title')} />
             <meta name="twitter:description" content={t('meta.home.description')} />
-            <meta name="twitter:image" content="/og-image.png" />
+            <meta name="twitter:image" content={OG_IMAGE_URL} />
 
             <MainContainer>
                 <Typography variant="h5" sx={{ fontWeight: "bold" }}>

@@ -54,6 +54,28 @@
     "message": "您請求的頁面不存在。",
     "goHome": "返回首頁"
   },
+  "errorPage": {
+    "title": {
+      "oops": "出錯了",
+      "unknown": "未知錯誤",
+      "statusFormat": "{{status}} {{statusMessage}}"
+    },
+    "message": {
+      "default": "給您帶來不便，我們深表歉意。發生了意外錯誤。"
+    },
+    "status": {
+      "400": "請求錯誤",
+      "401": "需要登入",
+      "403": "沒有存取權限",
+      "404": "找不到頁面",
+      "500": "伺服器錯誤",
+      "502": "Bad Gateway",
+      "503": "服務不可用",
+      "default": "錯誤"
+    },
+    "reloadPage": "重新載入",
+    "goHome": "返回首頁"
+  },
   "meta": {
     "home": {
       "title": "Onet Connect",

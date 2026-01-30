@@ -6,6 +6,7 @@ import RankingTable from "./components/RankingTable";
 import MainContainer from "../../layout/styles/MainContainer";
 import { useGetRanking } from "../../hooks/useGetRanking";
 import { useGetMyRanking } from "../../hooks/useGetMyRanking";
+import { OG_IMAGE_URL } from "../../configs/appUrl";
 
 const RankingPage = () => {
     const { t } = useTranslation();
@@ -41,11 +42,11 @@ const RankingPage = () => {
             <meta property="og:title" content={t('meta.ranking.title')} />
             <meta property="og:description" content={t('meta.ranking.description')} />
             <meta property="og:type" content="website" />
-            <meta property="og:image" content="/og-image.png" />
+            <meta property="og:image" content={OG_IMAGE_URL} />
             <meta name="twitter:card" content="summary_large_image" />
             <meta name="twitter:title" content={t('meta.ranking.title')} />
             <meta name="twitter:description" content={t('meta.ranking.description')} />
-            <meta name="twitter:image" content="/og-image.png" />
+            <meta name="twitter:image" content={OG_IMAGE_URL} />
 
             <MainContainer>
                 <Typography variant="h5" sx={{ fontWeight: "bold" }}>
