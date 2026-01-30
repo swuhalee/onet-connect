@@ -1,5 +1,6 @@
 import ReactGA from 'react-ga4';
 import { firebaseConfig } from '../configs/firebaseConfig';
+import { sanitizeErrorText } from './sanitizeErrorMessage';
 
 export const FirebaseService = {
   AUTH: 'auth',
@@ -57,7 +58,7 @@ export const trackFirebaseError = (
   trackEvent('firebase_error', {
     service,
     error_code: errorCode,
-    error_message: errorMessage,
+    error_message: sanitizeErrorText(errorMessage),
     timestamp: new Date().toISOString(),
   });
 };
@@ -69,8 +70,8 @@ export const trackError = (
 ) => {
   trackEvent('app_error', {
     error_name: errorName,
-    error_message: errorMessage,
-    error_stack: errorStack?.substring(0, 500),
+    error_message: sanitizeErrorText(errorMessage),
+    error_stack: errorStack !== undefined ? sanitizeErrorText(errorStack) : undefined,
     timestamp: new Date().toISOString(),
   });
 };
