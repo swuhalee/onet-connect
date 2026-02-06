@@ -2,6 +2,9 @@ import React, { useEffect, useRef } from 'react';
 import { useSaveScore } from '../../../hooks/useSaveScore';
 import { trackGameScore, trackGameDuration } from '../../../utils/analytics';
 
+export const isMobile = window.matchMedia('(max-width: 768px)').matches;
+const initialWidth = Math.min(window.innerWidth, 1000);
+
 const OnetWebView: React.FC = () => {
     const { mutate: saveScore } = useSaveScore();
     const gameStartTimeRef = useRef<number | null>(null);
@@ -46,10 +49,11 @@ const OnetWebView: React.FC = () => {
                 src="/games/onet/index.html"
                 title="Onet Game"
                 style={{
-                    width: '1000px',
-                    height: '690px',
-                    flexShrink: 0,
-                }}
+                    width: `${initialWidth}px`,
+                    aspectRatio: isMobile ? '690 / 1000' : '1000 / 690',
+                    border: 'none',
+                    display: 'block',
+                }} 
             />
         </>
     );
