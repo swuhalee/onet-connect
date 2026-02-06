@@ -2,6 +2,14 @@ import React, { useEffect, useRef } from 'react';
 import { useSaveScore } from '../../../hooks/useSaveScore';
 import { trackGameScore, trackGameDuration } from '../../../utils/analytics';
 
+// 브레이크포인트 불일치로 인해 뷰포트 너비가 정확히 768px일 때 레이아웃 충돌이 발생할 수 있으므로 767px로 설정
+export const isMobile = typeof window !== 'undefined'
+    ? window.matchMedia('(max-width: 767px)').matches
+    : false;
+const initialWidth = typeof window !== 'undefined'
+    ? Math.min(window.innerWidth, 1000)
+    : 1000;
+
 const OnetWebView: React.FC = () => {
     const { mutate: saveScore } = useSaveScore();
     const gameStartTimeRef = useRef<number | null>(null);
@@ -46,9 +54,10 @@ const OnetWebView: React.FC = () => {
                 src="/games/onet/index.html"
                 title="Onet Game"
                 style={{
-                    width: '1000px',
-                    height: '690px',
-                    flexShrink: 0,
+                    width: `${initialWidth}px`,
+                    aspectRatio: isMobile ? '680 / 1000' : '1000 / 690',
+                    border: 'none',
+                    display: 'block',
                 }}
             />
         </>

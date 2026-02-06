@@ -1,6 +1,6 @@
 import { Box } from "@mui/material"
 import { useTranslation } from "react-i18next"
-import OnetWebView from "./components/OnetWebView"
+import OnetWebView, { isMobile } from "./components/OnetWebView"
 import { OG_IMAGE_URL } from "../../configs/appUrl"
 
 const GamePage = () => {
@@ -24,14 +24,16 @@ const GamePage = () => {
                 sx={{
                     display: 'flex',
                     flexDirection: 'column',
-                    alignItems: { xs: 'flex-start', sm: 'center' },
+                    alignItems: 'center',
+                    ...(!isMobile && {
+                        '@media (max-width: 768px)': {
+                            alignItems: 'flex-start',
+                        },
+                    }),
                     width: '100%',
-                    overflowX: 'auto',
-                    padding: { xs: '20px', sm: 0 },
-                    scrollbarWidth: 'none',
-                    '&::-webkit-scrollbar': {
-                        display: 'none',
-                    },
+                    boxSizing: 'border-box',
+                    overflowX: isMobile ? 'hidden' : 'auto',
+                    overflowY: 'hidden',
                 }}
             >
                 <OnetWebView />

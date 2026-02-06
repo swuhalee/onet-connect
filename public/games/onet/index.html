@@ -19,6 +19,7 @@
         /* 게임 헤더 영역 */
         .header {
             display: flex;
+            flex-wrap: wrap;
             gap: 15px;
             align-items: center;
             padding: 20px;
@@ -120,6 +121,58 @@
         .hidden {
             display: none !important;
         }
+
+        @media (max-width: 767px) {
+            .header {
+                gap: 8px;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            .info,
+            .btn {
+                order: 1;
+            }
+
+            #timerContainer {
+                order: 2;
+                width: 100%;
+                max-width: 350px;
+            }
+
+            canvas {
+                max-width: 95vw;
+                height: auto;
+            }
+
+            .overlay h1 {
+                font-size: 28px;
+                margin-bottom: 12px;
+            }
+
+            .play-btn {
+                width: 70px;
+                height: 70px;
+                font-size: 28px;
+            }
+
+            .large-btn {
+                padding: 10px 28px;
+                font-size: 16px;
+            }
+
+            #scoreInfo {
+                font-size: 20px;
+                margin-bottom: 10px;
+            }
+
+            #resultMsg {
+                font-size: 14px !important;
+                margin-bottom: 15px !important;
+            }
+        }
     </style>
 </head>
 
@@ -159,11 +212,13 @@
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
 
-        const VISIBLE_ROWS = 10;
-        const VISIBLE_COLS = 14;
+        const isMobile = window.innerWidth < 768;
+
+        const VISIBLE_ROWS = isMobile ? 14 : 10;
+        const VISIBLE_COLS = isMobile ? 10 : 14;
         const ROWS = VISIBLE_ROWS + 2;
         const COLS = VISIBLE_COLS + 2;
-        const TILE_SIZE = 50;
+        const TILE_SIZE = isMobile ? Math.floor(window.innerWidth / COLS) : 50;
 
         canvas.width = COLS * TILE_SIZE;
         canvas.height = ROWS * TILE_SIZE;
@@ -273,7 +328,7 @@
                 const timeBonus = timeLeft * 10;
                 const hintBonus = hintCount * 10;
                 totalScore += timeBonus + hintBonus;
-                
+
                 // 게임 클리어 시
                 if (currentStage === 13) {
                     gameState = 'GAME_CLEAR';
@@ -522,8 +577,12 @@
         canvas.addEventListener('mousedown', e => {
             if (gameState !== 'PLAYING') return;
             const rect = canvas.getBoundingClientRect();
-            const c = Math.floor((e.clientX - rect.left) / TILE_SIZE);
-            const r = Math.floor((e.clientY - rect.top) / TILE_SIZE);
+
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+
+            const c = Math.floor(((e.clientX - rect.left) * scaleX) / TILE_SIZE);
+            const r = Math.floor(((e.clientY - rect.top) * scaleY) / TILE_SIZE);
 
             if (r < 0 || r >= ROWS || c < 0 || c >= COLS || grid[r][c] === 0) return;
 
