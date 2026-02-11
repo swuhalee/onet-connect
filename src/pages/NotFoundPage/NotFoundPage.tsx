@@ -46,6 +46,7 @@ const NotFoundPage = () => {
         <Button
           variant="contained"
           color="primary"
+          aria-label="Go home"
           onClick={() => navigate(`/${i18n.language}`)}
           sx={{
             marginTop: 2,

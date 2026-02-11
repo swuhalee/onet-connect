@@ -77,6 +77,7 @@ const RankingPage = () => {
             <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 3, marginTop: "12px" }}>
                 <Button
                     variant="outlined"
+                    aria-label="Previous"
                     onClick={handlePrevPage}
                     disabled={page === 1 || isFetching}
                     sx={{ height: "32px" }}
@@ -86,6 +87,7 @@ const RankingPage = () => {
                 <Typography fontWeight="bold">{page} {t('common.page')}</Typography>
                 <Button
                     variant="outlined"
+                    aria-label="Next"
                     onClick={handleNextPage}
                     disabled={(data?.count || 0) < pageSize || isFetching}
                     sx={{ height: "32px" }}

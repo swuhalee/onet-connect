@@ -16,6 +16,7 @@ const DeleteAccountButton = ({ onClick, disabled }: DeleteAccountButtonProps) =>
     <Button
       variant="text"
       color="inherit"
+      aria-label="Delete Account"
       onClick={onClick}
       disabled={disabled}
       startIcon={
