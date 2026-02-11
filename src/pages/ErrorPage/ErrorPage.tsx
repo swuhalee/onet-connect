@@ -63,6 +63,7 @@ const ErrorPage = () => {
           <Button
             variant="contained"
             color="primary"
+            aria-label="Reload"
             onClick={handleReload}
             sx={{
               padding: '8px 24px',
@@ -78,6 +79,7 @@ const ErrorPage = () => {
           <Button
             variant="outlined"
             color="primary"
+            aria-label="Go home"
             onClick={handleGoHome}
             sx={{
               padding: '8px 24px',
