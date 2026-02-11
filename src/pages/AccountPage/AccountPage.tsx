@@ -184,6 +184,7 @@ const AccountPage = () => {
               type="submit"
               variant="contained"
               color="primary"
+              aria-label="Update Profile"
               disabled={isLoading || isPending}
               sx={{
                 marginTop: 2,

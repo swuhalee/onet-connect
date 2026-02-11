@@ -180,11 +180,11 @@
     <div class="header">
         <div id="stageInfo" class="info">Stage 1</div>
         <div id="scoreDisplay" class="info" style="color:#FFEB3B">Score: 0</div>
-        <button id="hintBtn" class="btn" style="padding: 5px 15px;" onclick="useHint()">HINT (6, F5)</button>
+        <button id="hintBtn" aria-label="Hint" class="btn" style="padding: 5px 15px;" onclick="useHint()">HINT (6, F5)</button>
         <div id="timerContainer">
             <div id="timerBar"></div>
         </div>
-        <button id="pauseBtn" class="btn" style="padding: 5px 15px;" onclick="togglePause()">STOP (Space)</button>
+        <button id="pauseBtn" aria-label="Stop" class="btn" style="padding: 5px 15px;" onclick="togglePause()">STOP (Space)</button>
     </div>
 
     <div id="gameWrapper">
@@ -192,19 +192,19 @@
 
         <div id="startOverlay" class="overlay">
             <h1>ONET CONNECT</h1>
-            <button class="btn play-btn" onclick="startGame()">▶</button>
+            <button class="btn play-btn" aria-label="Play" onclick="startGame()">▶</button>
         </div>
 
         <div id="pauseOverlay" class="overlay hidden">
             <h1>PAUSED</h1>
-            <button class="btn play-btn" onclick="togglePause()">▶</button>
+            <button class="btn play-btn" aria-label="Paused" onclick="togglePause()">▶</button>
         </div>
 
         <div id="resultOverlay" class="overlay hidden">
             <h1 id="resultTitle">STAGE CLEAR</h1>
             <div id="scoreInfo">Total Score: 0</div>
             <p id="resultMsg" style="font-size:18px; line-height:1.6; margin-bottom:25px;">Next stage is ready!</p>
-            <button id="resultBtn" class="btn large-btn" onclick="handleResultAction()">NEXT STAGE</button>
+            <button id="resultBtn" aria-label="Next" class="btn large-btn" onclick="handleResultAction()">NEXT STAGE</button>
         </div>
     </div>
 

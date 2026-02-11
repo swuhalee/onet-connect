@@ -15,6 +15,7 @@ const PrivacyPolicyButton = ({ onClick, disabled }: PrivacyPolicyButtonProps) =>
     <Button
       variant="text"
       color="inherit"
+      aria-label="Go privacy-policy"
       onClick={onClick}
       disabled={disabled}
       sx={{
