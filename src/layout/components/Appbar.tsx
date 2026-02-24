@@ -6,8 +6,10 @@ import UserMenu from "./UserMenu";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { useGetUserProfile } from "../../hooks/useGetUserProfile";
 
+export const APPBAR_HEIGHT = 80;
+
 const AppbarWrapper = styled(Box)(({ theme }) => ({
-    height: "80px",
+    height: `${APPBAR_HEIGHT}px`,
     width: "100%",
     backgroundColor: theme.palette.background.paper,
     borderBottom: `1px solid ${theme.palette.divider}`,
