@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { useSaveScore } from '../../../hooks/useSaveScore';
 import { trackGameScore, trackGameDuration } from '../../../utils/analytics';
+import { APPBAR_HEIGHT } from '../../../layout/components/Appbar';
 
 // 브레이크포인트 불일치로 인해 뷰포트 너비가 정확히 768px일 때 레이아웃 충돌이 발생할 수 있으므로 767px로 설정
 export const isMobile = typeof window !== 'undefined'
@@ -9,6 +10,9 @@ export const isMobile = typeof window !== 'undefined'
 const initialWidth = typeof window !== 'undefined'
     ? Math.min(window.innerWidth, 1000)
     : 1000;
+// 데스크톱 iframe 고정 높이: 캔버스(600px) + 게임 헤더(~90px) 기준
+const DESKTOP_IFRAME_HEIGHT = 690;
+const dvhUnit = typeof CSS !== 'undefined' && CSS.supports('height', '100dvh') ? 'dvh' : 'vh';
 
 const OnetWebView: React.FC = () => {
     const { mutate: saveScore } = useSaveScore();
@@ -54,8 +58,8 @@ const OnetWebView: React.FC = () => {
                 src="/games/onet/index.html"
                 title="Onet Game"
                 style={{
-                    width: `${initialWidth}px`,
-                    aspectRatio: isMobile ? '680 / 1000' : '1000 / 690',
+                    width: isMobile ? '100%' : `${initialWidth}px`,
+                    height: isMobile ? `calc(100${dvhUnit} - ${APPBAR_HEIGHT}px)` : `${DESKTOP_IFRAME_HEIGHT}px`,
                     border: 'none',
                     display: 'block',
                 }}
