@@ -124,27 +124,25 @@
 
         @media (max-width: 767px) {
             .header {
-                gap: 8px;
-                justify-content: center;
+                display: grid;
+                grid-template-columns: auto 1fr auto auto;
+                grid-template-rows: auto auto auto;
+                gap: 2px 8px;
                 align-items: center;
                 width: 100%;
                 box-sizing: border-box;
             }
 
-            .info,
-            .btn {
-                order: 1;
-            }
+            #stageInfo    { grid-column: 1; grid-row: 1; }
+            #scoreDisplay { grid-column: 1; grid-row: 2; }
+            #hintBtn      { grid-column: 3; grid-row: 1 / span 2; align-self: center; }
+            #pauseBtn     { grid-column: 4; grid-row: 1 / span 2; align-self: center; }
 
             #timerContainer {
-                order: 2;
+                grid-column: 1 / -1;
+                grid-row: 3;
                 width: 100%;
-                max-width: 350px;
-            }
-
-            canvas {
-                max-width: 95vw;
-                height: auto;
+                margin-top: 6px;
             }
 
             .overlay h1 {
@@ -218,10 +216,30 @@
         const VISIBLE_COLS = isMobile ? 10 : 14;
         const ROWS = VISIBLE_ROWS + 2;
         const COLS = VISIBLE_COLS + 2;
-        const TILE_SIZE = isMobile ? Math.floor(window.innerWidth / COLS) : 50;
 
-        canvas.width = COLS * TILE_SIZE;
-        canvas.height = ROWS * TILE_SIZE;
+        // 모바일에서 키보드 단축키 텍스트 제거
+        // hintBtn 텍스트는 updateUI()에서 isMobile 분기로 처리하므로 여기선 설정하지 않음
+        if (isMobile) {
+            document.getElementById('pauseBtn').innerText = 'STOP';
+        }
+
+        // 스크립트가 HTML 맨 아래에 있어서 이 줄 실행 시 헤더가 이미 화면에 그려진 상태임
+        // 따라서 offsetHeight로 헤더 높이를 정확히 읽을 수 있음
+        const headerEl = document.querySelector('.header');
+        const headerHeight = headerEl ? headerEl.offsetHeight : 0;
+        const tileSizeByWidth  = Math.floor(window.innerWidth / COLS);
+        const tileSizeByHeight = Math.floor((window.innerHeight - headerHeight) / ROWS);
+        const TILE_SIZE = isMobile
+            ? Math.min(tileSizeByWidth, tileSizeByHeight)           // 모바일: 뷰포트에 딱 맞게
+            : Math.min(tileSizeByWidth, tileSizeByHeight, 50);      // 데스크톱: 최대 50px 캡
+
+        // DPR 스케일링: 타일이 선명하게 보이도록 캔버스 크기를 조정하고 컨텍스트 스케일링 적용
+        const dpr = window.devicePixelRatio || 1;
+        canvas.width = COLS * TILE_SIZE * dpr;
+        canvas.height = ROWS * TILE_SIZE * dpr;
+        canvas.style.width = `${COLS * TILE_SIZE}px`;
+        canvas.style.height = `${ROWS * TILE_SIZE}px`;
+        ctx.scale(dpr, dpr);
 
         // 게임 상태 변수
         let gameState = 'START'; // START, PLAYING, PAUSED, STAGE_CLEAR, GAME_CLEAR, GAME_OVER
@@ -505,7 +523,7 @@
         * 렌더링 및 UI 업데이트
         */
         function draw() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.clearRect(0, 0, COLS * TILE_SIZE, ROWS * TILE_SIZE);
             if (gameState === 'PAUSED') return; // 일시정지 시 타일 안 보임
 
             for (let r = 0; r < ROWS; r++) {
@@ -540,7 +558,7 @@
             document.getElementById('stageInfo').innerText = `Stage ${currentStage}`;
             document.getElementById('scoreDisplay').innerText = `Score: ${totalScore}`;
             const btn = document.getElementById('hintBtn');
-            btn.innerText = `HINT (${hintCount}, F5)`;
+            btn.innerText = isMobile ? `HINT (${hintCount})` : `HINT (${hintCount}, F5)`;
             btn.disabled = hintCount <= 0;
         }
 
@@ -578,11 +596,8 @@
             if (gameState !== 'PLAYING') return;
             const rect = canvas.getBoundingClientRect();
 
-            const scaleX = canvas.width / rect.width;
-            const scaleY = canvas.height / rect.height;
-
-            const c = Math.floor(((e.clientX - rect.left) * scaleX) / TILE_SIZE);
-            const r = Math.floor(((e.clientY - rect.top) * scaleY) / TILE_SIZE);
+            const c = Math.floor((e.clientX - rect.left) / TILE_SIZE);
+            const r = Math.floor((e.clientY - rect.top) / TILE_SIZE);
 
             if (r < 0 || r >= ROWS || c < 0 || c >= COLS || grid[r][c] === 0) return;
 
