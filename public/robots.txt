@@ -1,2 +1,4 @@
 User-agent: *
 Allow: /
+
+Sitemap: https://onet-connect.com/sitemap.xml
