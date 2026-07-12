@@ -1,4 +1,4 @@
-import { deleteUser, getAdditionalUserInfo, signInWithPopup, signOut } from "firebase/auth";
+import { deleteUser, getAdditionalUserInfo, reauthenticateWithPopup, signInWithPopup, signOut } from "firebase/auth";
 import { auth, db, googleProvider } from "../utils/firebase";
 import { deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
 import type { UserProfile } from "../models/user";
@@ -74,9 +74,11 @@ export const deleteUserAccount = async (): Promise<void> => {
       throw new Error("User not found");
     }
 
-    const uid = user.uid;
-    await deleteUser(user);
-    const userRef = doc(db, "users", uid);
+    await reauthenticateWithPopup(user, googleProvider);
+
+    const userRef = doc(db, "users", user.uid);
     await deleteDoc(userRef);
+
+    await deleteUser(user);
   });
 };

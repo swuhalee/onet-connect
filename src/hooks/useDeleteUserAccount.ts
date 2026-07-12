@@ -27,7 +27,9 @@ export const useDeleteUserAccount = () => {
     onError: (error: any) => {
       const message = error?.code === 'auth/requires-recent-login'
         ? t('messages.deleteAccountRequiresRecentLogin')
-        : t('messages.deleteAccountFailed');
+        : error?.code === 'auth/popup-closed-by-user'
+          ? t('messages.loginPopupClosed')
+          : t('messages.deleteAccountFailed');
       
       enqueueSnackbar(message, {
         variant: "error",
